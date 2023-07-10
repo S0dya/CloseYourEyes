@@ -25,7 +25,7 @@ public class Player : SingletonMonobehaviour<Player>
 
         rigidbody = GetComponent<Rigidbody2D>();
 
-        joystick.SetActive(false);
+        joystick.SetActive(false);//sd
         joystickTransform = joystick.GetComponent<RectTransform>();
         joystickKnob = joystick.GetComponentInChildren<RectTransform>();
         joystickSize = new Vector2(300, 300);
