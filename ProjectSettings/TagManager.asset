@@ -41,3 +41,12 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Floor
+    uniqueID: 3932555637
+    locked: 0
+  - name: Collision
+    uniqueID: 1149221791
+    locked: 0
+  - name: Instances
+    uniqueID: 3681484511
+    locked: 0

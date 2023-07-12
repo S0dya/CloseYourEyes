@@ -75,20 +75,22 @@ public class Joystick : SingletonMonobehaviour<Joystick>
     {
         Vector2 knobPos;
         float max = joystickSize.x / 2;
-        ETouch.Touch cur = moveFinger.currentTouch;
-
-        if (Vector2.Distance(cur.screenPosition, joystickTransform.anchoredPosition) > max)
+        
+        if (Vector2.Distance(moveFinger.currentTouch.screenPosition, joystickTransform.anchoredPosition) > max)
         {
-            knobPos = (cur.screenPosition - joystickTransform.anchoredPosition).normalized * max;
+            knobPos = (moveFinger.currentTouch.screenPosition - joystickTransform.anchoredPosition).normalized * max;
         }
         else
         {
-            knobPos = cur.screenPosition - joystickTransform.anchoredPosition;
+            knobPos = moveFinger.currentTouch.screenPosition - joystickTransform.anchoredPosition;
         }
-
         joystickKnob.anchoredPosition = knobPos;
+
+        float speed = Mathf.Lerp(0.5f, 2.5f, knobPos.magnitude / max);
+        player.speed = speed;
         player.movementAmount = knobPos / max;
     }
+
 
     void HandleRemoveFinger(Finger removeFinger)
     {
