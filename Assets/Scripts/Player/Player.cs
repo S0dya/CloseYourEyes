@@ -95,4 +95,10 @@ public class Player : SingletonMonobehaviour<Player>
             yield return null;
         }
     }
+
+
+    public void Die()
+    {
+        Debug.Log("die");
+    }
 }
