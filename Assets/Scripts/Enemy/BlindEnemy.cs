@@ -4,12 +4,14 @@ using UnityEngine;
 
 using Pathfinding;
 
-public class Enemy : MonoBehaviour
+public class BlindEnemy : MonoBehaviour
 {
     SpriteRenderer sprite;
     Animator animator;
     AIDestinationSetter destinationSetter;
     AI ai;
+
+    GameObject playerObject;
     Player player;
 
     [SerializeField] Transform point;
@@ -24,62 +26,70 @@ public class Enemy : MonoBehaviour
         animator = GetComponent<Animator>();
         destinationSetter = GetComponent<AIDestinationSetter>();
         ai = GetComponent<AI>();
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        playerObject = GameObject.FindGameObjectWithTag("Player");
+        player = playerObject.GetComponent<Player>();
 
-        destinationSetter.target = point;
         ai.enabled = false;
     }
 
-    public void SeePlayer(bool val)
+    public void HearPlayer(bool val)
     {
         isFollowingPlayer = val;
         if (val)
         {
-            if (fadeInCor == null)
+            if (fadeOutCor != null)
             {
-                if (fadeOutCor != null)
-                {
-                    StopCoroutine(fadeOutCor);
-                }
-                fadeInCor = StartCoroutine(FadeIn());
+                StopCoroutine(fadeOutCor);
             }
+
+            if (fadeInCor != null)
+            {
+                StopCoroutine(fadeInCor);
+            }
+            fadeInCor = StartCoroutine(FadeIn());
         }
         else
         {
-            point.position = player.transform.position;
+            destinationSetter.target = point;
+            point.position = playerObject.transform.position;
         }
+    }
+
+    public void StopFollowing(bool val)
+    {
+        ai.canMove = val;
     }
 
     public void OnDestinationReached()
     {
-        Debug.Log("d");
         fadeOutCor = StartCoroutine(FadeOut());
         ai.enabled = false;
     }
 
     IEnumerator FadeIn()
     {
-        float r = sprite.color.r; 
-        while (r < 255)
+        float b = sprite.color.b;
+        while (b <= 1)
         {
-            sprite.color = new Color(r, sprite.color.g, sprite.color.b);
-            r += Mathf.Lerp(r, 255, 0.2f);
-            Debug.Log(r);
+            b = Mathf.Lerp(b, 1.3f, 0.009f);
+            sprite.color = new Color(sprite.color.r, sprite.color.g, b);
 
             yield return null;
         }
 
-        point = player.transform;
+        if (isFollowingPlayer)
+        {
+            destinationSetter.target = playerObject.transform;
+        }
         ai.enabled = true;
     }
     IEnumerator FadeOut()
     {
-        float r = sprite.color.r;
-        while (r > 0)
+        float b = sprite.color.b;
+        while (b >= 0)
         {
-            sprite.color = new Color(r, sprite.color.g, sprite.color.b);
-            r += Mathf.Lerp(r, 0, 0.5f);
-            Debug.Log(r);
+            b = Mathf.Lerp(b, -0.3f, 0.02f);
+            sprite.color = new Color(sprite.color.r, sprite.color.g, b);
 
             yield return null;
         }
@@ -92,5 +102,4 @@ public class Enemy : MonoBehaviour
             player.Die();
         }
     }
-
 }

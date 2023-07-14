@@ -10,7 +10,8 @@ public class Player : SingletonMonobehaviour<Player>
 
     Rigidbody2D rigidbody;
     Light2D eyeVision;
-    [SerializeField] CircleCollider2D playerTrigger;
+    [SerializeField] CircleCollider2D playerVisionTrigger;
+    [SerializeField] CircleCollider2D playerSoundTrigger;
 
     [HideInInspector] public Vector2 movementAmount;
     [HideInInspector] public float speed;
@@ -39,10 +40,13 @@ public class Player : SingletonMonobehaviour<Player>
             currentVelocity = Vector2.MoveTowards(currentVelocity, moveDirection * moveDirection.magnitude, 15 * Time.deltaTime);
 
             rigidbody.velocity = currentVelocity * speed;
+            playerSoundTrigger.radius = Mathf.Max(speed * 1.5f, 1.2f);
 
             yield return null;
         }
 
+        speed = 0;
+        playerSoundTrigger.radius = 1.2f;
         currentVelocity = Vector2.zero;
         rigidbody.velocity = currentVelocity;
     }
@@ -62,7 +66,7 @@ public class Player : SingletonMonobehaviour<Player>
         while (radius < 4)
         {
             eyeVision.pointLightOuterRadius = radius;
-            playerTrigger.radius = radius;
+            playerVisionTrigger.radius = radius;
             radius = Mathf.Lerp(eyeVision.pointLightOuterRadius, 5, Time.deltaTime);
             yield return null;
         }
@@ -70,7 +74,7 @@ public class Player : SingletonMonobehaviour<Player>
         while (radius < 6.5f)
         {
             eyeVision.pointLightOuterRadius = radius;
-            playerTrigger.radius = radius;
+            playerVisionTrigger.radius = radius;
             radius = Mathf.Lerp(eyeVision.pointLightOuterRadius, 5, Time.deltaTime * 0.6f);
             yield return null;
         }
@@ -90,7 +94,7 @@ public class Player : SingletonMonobehaviour<Player>
         while (radius > 0)
         {
             eyeVision.pointLightOuterRadius = radius;
-            playerTrigger.radius = Mathf.Max(radius, 0.9f);
+            playerVisionTrigger.radius = radius;
             radius = Mathf.Lerp(eyeVision.pointLightOuterRadius, -1, 1.5f * Time.deltaTime);
             yield return null;
         }

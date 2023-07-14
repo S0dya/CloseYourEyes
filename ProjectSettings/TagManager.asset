@@ -4,7 +4,8 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Enemy
+  - DefEnemy
+  - BlindEnemy
   layers:
   - Default
   - TransparentFX
@@ -47,6 +48,9 @@ TagManager:
     locked: 0
   - name: Collision
     uniqueID: 1149221791
+    locked: 0
+  - name: BlindEnemy
+    uniqueID: 1564548609
     locked: 0
   - name: Instances
     uniqueID: 3681484511
