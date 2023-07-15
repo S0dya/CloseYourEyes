@@ -4,17 +4,33 @@ using UnityEngine;
 
 public class PlayerVisionTrigger : MonoBehaviour
 {
-    void OnTriggerEnter2D(Collider2D collision)
+    void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.CompareTag("DefEnemy"))
         {
-            DefEnemy defEnemy = collision.gameObject.GetComponent<DefEnemy>();
-            defEnemy.SeePlayer(true);
+            Vector2 direction = collision.transform.position - transform.position;
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, direction.normalized, direction.magnitude, LayerMask.GetMask("Obstacle"));
+            if (hit.collider == null)
+            {
+                DefEnemy defEnemy = collision.gameObject.GetComponent<DefEnemy>();
+                if (!defEnemy.isFollowingPlayer)
+                {
+                    defEnemy.SeePlayer(true);
+                }
+            }
         }
         else if (collision.CompareTag("BlindEnemy"))
         {
-            BlindEnemy blindEnemy = collision.gameObject.GetComponent<BlindEnemy>();
-            blindEnemy.StopFollowing(false);
+            Vector2 direction = collision.transform.position - transform.position;
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, direction.normalized, direction.magnitude, LayerMask.GetMask("Obstacle"));
+            if (hit.collider == null)
+            {
+                BlindEnemy blindEnemy = collision.gameObject.GetComponent<BlindEnemy>();
+                if (!blindEnemy.isWatched)
+                {
+                    blindEnemy.StopFollowing(true);
+                }
+            }
         }
     }
 
@@ -28,7 +44,7 @@ public class PlayerVisionTrigger : MonoBehaviour
         else if (collision.CompareTag("BlindEnemy"))
         {
             BlindEnemy blindEnemy = collision.gameObject.GetComponent<BlindEnemy>();
-            blindEnemy.StopFollowing(true);
+            blindEnemy.StopFollowing(false);
         }
     }
 }

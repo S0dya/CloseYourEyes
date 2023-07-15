@@ -100,7 +100,6 @@ public class Player : SingletonMonobehaviour<Player>
         }
     }
 
-
     public void Die()
     {
         Debug.Log("die");

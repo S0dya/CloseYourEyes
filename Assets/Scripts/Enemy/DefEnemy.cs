@@ -15,7 +15,7 @@ public class DefEnemy : MonoBehaviour
     Player player;
 
     [SerializeField] Transform point;
-    bool isFollowingPlayer;
+    [HideInInspector] public bool isFollowingPlayer;
 
     Coroutine fadeInCor;
     Coroutine fadeOutCor;

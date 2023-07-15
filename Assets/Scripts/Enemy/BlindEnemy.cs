@@ -15,7 +15,8 @@ public class BlindEnemy : MonoBehaviour
     Player player;
 
     [SerializeField] Transform point;
-    bool isFollowingPlayer;
+    [HideInInspector] public bool isFollowingPlayer;
+    [HideInInspector] public bool isWatched;
 
     Coroutine fadeInCor;
     Coroutine fadeOutCor;
@@ -57,7 +58,8 @@ public class BlindEnemy : MonoBehaviour
 
     public void StopFollowing(bool val)
     {
-        ai.canMove = val;
+        isWatched = val;
+        ai.canMove = !val;
     }
 
     public void OnDestinationReached()

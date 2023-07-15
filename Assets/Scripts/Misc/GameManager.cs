@@ -8,4 +8,11 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     {
         base.Awake();
     }
+
+
+
+    public void LevelComplete()
+    {
+        Debug.Log("LVLComplete");
+    }
 }
