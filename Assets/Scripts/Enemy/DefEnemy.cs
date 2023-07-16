@@ -9,7 +9,7 @@ public class DefEnemy : MonoBehaviour
     SpriteRenderer sprite;
     Animator animator;
     AIDestinationSetter destinationSetter;
-    AI ai;
+    [HideInInspector] public AI ai;
 
     GameObject playerObject;
     Player player;
@@ -66,6 +66,12 @@ public class DefEnemy : MonoBehaviour
         float r = sprite.color.r; 
         while (r <= 1)
         {
+            if (GameManager.Instance.isMenuOpen)
+            {
+                yield return null;
+                continue;
+            }
+
             r = Mathf.Lerp(r, 1.3f, 0.009f);
             sprite.color = new Color(r, sprite.color.g, sprite.color.b);
 
@@ -83,6 +89,12 @@ public class DefEnemy : MonoBehaviour
         float r = sprite.color.r;
         while (r >= 0)
         {
+            if (GameManager.Instance.isMenuOpen)
+            {
+                yield return null;
+                continue;
+            }
+
             r = Mathf.Lerp(r, -0.3f, 0.02f);
             sprite.color = new Color(r, sprite.color.g, sprite.color.b);
 

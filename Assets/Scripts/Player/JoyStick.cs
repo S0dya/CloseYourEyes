@@ -42,7 +42,7 @@ public class Joystick : SingletonMonobehaviour<Joystick>
 
     void HandleFingerDown(Finger touchedFinger)
     {
-        if (movementFinger == null && touchedFinger.screenPosition.x <= Screen.width / 2f)
+        if (movementFinger == null && touchedFinger.screenPosition.x <= Screen.width / 2f && !GameManager.Instance.isMenuOpen)
         {
             movementFinger = touchedFinger;
             joystickTransform.sizeDelta = joystickSize;
@@ -73,6 +73,11 @@ public class Joystick : SingletonMonobehaviour<Joystick>
 
     void HandleFingerMove(Finger moveFinger)
     {
+        if (GameManager.Instance.isMenuOpen)
+        {
+            return;
+        }
+
         Vector2 knobPos;
         float max = joystickSize.x / 2;
         
@@ -94,7 +99,7 @@ public class Joystick : SingletonMonobehaviour<Joystick>
 
     void HandleRemoveFinger(Finger removeFinger)
     {
-        if (removeFinger == movementFinger)
+        if (removeFinger == movementFinger && !GameManager.Instance.isMenuOpen)
         {
             movementFinger = null;
             joystickKnob.anchoredPosition = Vector2.zero;

@@ -36,6 +36,13 @@ public class Player : SingletonMonobehaviour<Player>
     {
         while (isFingerDown)
         {
+            if (GameManager.Instance.isMenuOpen)
+            {
+                yield return null;
+                Debug.Log("asd");
+                continue;
+            }
+
             Vector2 moveDirection = movementAmount.normalized;
             currentVelocity = Vector2.MoveTowards(currentVelocity, moveDirection * moveDirection.magnitude, 15 * Time.deltaTime);
 
@@ -65,6 +72,12 @@ public class Player : SingletonMonobehaviour<Player>
         float radius = eyeVision.pointLightOuterRadius;
         while (radius < 4)
         {
+            if (GameManager.Instance.isMenuOpen)
+            {
+                yield return null;
+                continue;
+            }
+
             eyeVision.pointLightOuterRadius = radius;
             playerVisionTrigger.radius = radius;
             radius = Mathf.Lerp(eyeVision.pointLightOuterRadius, 5, Time.deltaTime);
@@ -93,6 +106,13 @@ public class Player : SingletonMonobehaviour<Player>
         float radius = eyeVision.pointLightOuterRadius;
         while (radius > 0)
         {
+            if (GameManager.Instance.isMenuOpen)
+            {
+                yield return null;
+                continue;
+            }
+
+
             eyeVision.pointLightOuterRadius = radius;
             playerVisionTrigger.radius = radius;
             radius = Mathf.Lerp(eyeVision.pointLightOuterRadius, -1, 1.5f * Time.deltaTime);
@@ -102,6 +122,7 @@ public class Player : SingletonMonobehaviour<Player>
 
     public void Die()
     {
-        Debug.Log("die");
+        GameMenu.Instance.GameOver();
+        rigidbody.velocity = Vector2.zero;
     }
 }

@@ -9,7 +9,7 @@ public class BlindEnemy : MonoBehaviour
     SpriteRenderer sprite;
     Animator animator;
     AIDestinationSetter destinationSetter;
-    AI ai;
+    [HideInInspector] public AI ai;
 
     GameObject playerObject;
     Player player;
@@ -73,6 +73,11 @@ public class BlindEnemy : MonoBehaviour
         float b = sprite.color.b;
         while (b <= 1)
         {
+            if (GameManager.Instance.isMenuOpen)
+            {
+                yield return null;
+            }
+
             b = Mathf.Lerp(b, 1.3f, 0.009f);
             sprite.color = new Color(sprite.color.r, sprite.color.g, b);
 
@@ -90,6 +95,11 @@ public class BlindEnemy : MonoBehaviour
         float b = sprite.color.b;
         while (b >= 0)
         {
+            if (GameManager.Instance.isMenuOpen)
+            {
+                yield return null;
+            }
+
             b = Mathf.Lerp(b, -0.3f, 0.02f);
             sprite.color = new Color(sprite.color.r, sprite.color.g, b);
 
