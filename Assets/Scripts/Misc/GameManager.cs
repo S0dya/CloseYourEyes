@@ -5,7 +5,12 @@ using UnityEngine;
 public class GameManager : SingletonMonobehaviour<GameManager>
 {
     [HideInInspector] public bool isMenuOpen;
-    
+
+    protected override void Awake()
+    {
+        base.Awake();
+
+    }
 
     public void LevelComplete()
     {

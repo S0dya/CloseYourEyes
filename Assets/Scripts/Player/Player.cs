@@ -5,9 +5,6 @@ using UnityEngine.Rendering.Universal;
 
 public class Player : SingletonMonobehaviour<Player>
 {
-    //delater
-    [SerializeField] Light2D globalLight;
-
     Rigidbody2D rigidbody;
     Light2D eyeVision;
     [SerializeField] CircleCollider2D playerVisionTrigger;
@@ -29,19 +26,20 @@ public class Player : SingletonMonobehaviour<Player>
         rigidbody = GetComponent<Rigidbody2D>();
         eyeVision = GetComponentInChildren<Light2D>();
 
-        globalLight.intensity = 0f;
     }
 
     public IEnumerator Move()
     {
         while (isFingerDown)
         {
+            /*
             if (GameManager.Instance.isMenuOpen)
             {
                 yield return null;
                 Debug.Log("asd");
                 continue;
             }
+            */
 
             Vector2 moveDirection = movementAmount.normalized;
             currentVelocity = Vector2.MoveTowards(currentVelocity, moveDirection * moveDirection.magnitude, 15 * Time.deltaTime);

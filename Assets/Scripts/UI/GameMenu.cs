@@ -1,21 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class GameMenu : SingletonMonobehaviour<GameMenu>
 {
+    //delater
+    Light2D globalLight;
     [SerializeField] GameObject gameMenu;
-
     [SerializeField] GameObject pauseBar;
     [SerializeField] GameObject gameOverBar;
 
-    [SerializeField] List<DefEnemy> defEnemyList;
-    [SerializeField] List<BlindEnemy> blindEnemyList;
+
+    GameObject[] defEnemyArr;
+    GameObject[] blindEnemArr;
 
     protected override void Awake()
     {
         base.Awake();
 
+        defEnemyArr = GameObject.FindGameObjectsWithTag("DefEnemy");
+        blindEnemArr = GameObject.FindGameObjectsWithTag("BlindEnemy");
+
+
+        globalLight = GameObject.FindGameObjectWithTag("REMOVELATER").GetComponent<Light2D>();
+        globalLight.intensity = 0f;
     }
 
     void Start()
@@ -42,7 +51,7 @@ public class GameMenu : SingletonMonobehaviour<GameMenu>
 
     public void HomeButton()
     {
-
+        LoadingScene.Instance.StartCoroutine(LoadingScene.Instance.LoadSceneAsync(1, Settings.curSceneNum));
     }
 
     public void MusicButton()
@@ -79,18 +88,14 @@ public class GameMenu : SingletonMonobehaviour<GameMenu>
 
     void EnableMoving(bool val)
     {
-        foreach (var def in defEnemyList)
+        foreach (var def in defEnemyArr)
         {
-            def.ai.canMove = val;
+            def.SetActive(val);
         }
      
-        foreach (var blind in blindEnemyList)
+        foreach (var blind in blindEnemArr)
         {
-            if (blind.isWatched && val)
-            {
-                continue;
-            }
-            blind.ai.canMove = val;
+            blind.SetActive(val);
         }
     }
 }

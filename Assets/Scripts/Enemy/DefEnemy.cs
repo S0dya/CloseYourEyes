@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using System.Linq;
 
 using Pathfinding;
 
@@ -26,7 +28,7 @@ public class DefEnemy : MonoBehaviour
         animator = GetComponent<Animator>();
         destinationSetter = GetComponent<AIDestinationSetter>();
         ai = GetComponent<AI>();
-        playerObject = GameObject.FindGameObjectWithTag("Player");
+        playerObject = SceneManager.GetSceneByName("PersistantScene").GetRootGameObjects().FirstOrDefault(obj => obj.CompareTag("Player"));
         player = playerObject.GetComponent<Player>();
 
         ai.enabled = false;
