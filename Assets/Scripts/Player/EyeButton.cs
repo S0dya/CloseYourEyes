@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 
 public class EyeButton : SingletonMonobehaviour<EyeButton>, IPointerDownHandler, IPointerUpHandler
 {
-    Animator eye;
+    [HideInInspector] public Animator eye;
 
     protected override void Awake()
     {
@@ -15,13 +15,14 @@ public class EyeButton : SingletonMonobehaviour<EyeButton>, IPointerDownHandler,
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        Player.Instance.OpenEye();
-        eye.Play("OpenEye");
+        if (Player.Instance.canOpenEye)
+        {
+            Player.Instance.OpenEye();
+        }
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
         Player.Instance.CloseEye();
-        eye.Play("CloseEye");
     }
 }

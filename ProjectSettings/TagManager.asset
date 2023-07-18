@@ -49,15 +49,21 @@ TagManager:
   - name: Floor
     uniqueID: 3932555637
     locked: 0
+  - name: 
+    uniqueID: 1356748303
+    locked: 0
+  - name: Collision
+    uniqueID: 4113659229
+    locked: 0
   - name: Exit
     uniqueID: 345191517
     locked: 0
   - name: Obstacle
     uniqueID: 1149221791
     locked: 0
-  - name: BlindEnemy
-    uniqueID: 1564548609
-    locked: 0
   - name: Instances
     uniqueID: 3681484511
+    locked: 0
+  - name: BlindEnemy
+    uniqueID: 1564548609
     locked: 0

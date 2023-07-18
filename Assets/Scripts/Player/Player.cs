@@ -13,11 +13,14 @@ public class Player : SingletonMonobehaviour<Player>
     [HideInInspector] public Vector2 movementAmount;
     [HideInInspector] public float speed;
     [HideInInspector] public bool isFingerDown;
+    [HideInInspector] public bool canOpenEye = true;
+    [HideInInspector] public bool onWater;
 
     Vector2 currentVelocity = new Vector2(0, 0);
 
     Coroutine openEyeCor;
     Coroutine closeEyeCor;
+
 
     protected override void Awake()
     {
@@ -26,12 +29,17 @@ public class Player : SingletonMonobehaviour<Player>
         rigidbody = GetComponent<Rigidbody2D>();
         eyeVision = GetComponentInChildren<Light2D>();
 
+
     }
 
     void OnDisable()
     {
         transform.position = Vector2.zero;
         StopAllCoroutines();
+        playerVisionTrigger.radius = 0;
+        playerSoundTrigger.radius = 0;
+        eyeVision.pointLightOuterRadius = 0;
+        canOpenEye = true;
     }
 
     public IEnumerator Move()
@@ -50,14 +58,14 @@ public class Player : SingletonMonobehaviour<Player>
             Vector2 moveDirection = movementAmount.normalized;
             currentVelocity = Vector2.MoveTowards(currentVelocity, moveDirection * moveDirection.magnitude, 15 * Time.deltaTime);
 
-            rigidbody.velocity = currentVelocity * speed;
-            playerSoundTrigger.radius = Mathf.Max(speed * 1.5f, 1.2f);
+            rigidbody.velocity = currentVelocity * speed * (onWater ? 0.6f : 1);
+            playerSoundTrigger.radius = Mathf.Max(speed * (onWater ? 2.5f : 1.5f), 1.2f);
 
             yield return null;
         }
 
         speed = 0;
-        playerSoundTrigger.radius = 1.2f;
+        playerSoundTrigger.radius = 1f;
         currentVelocity = Vector2.zero;
         rigidbody.velocity = currentVelocity;
     }
@@ -65,16 +73,18 @@ public class Player : SingletonMonobehaviour<Player>
 
     public void OpenEye()
     {
+        canOpenEye = false;
         if (closeEyeCor != null)
         {
             StopCoroutine(closeEyeCor);
         }
+        EyeButton.Instance.eye.Play("OpenEye");
         openEyeCor = StartCoroutine(OpenEyeCor());
     }
     IEnumerator OpenEyeCor()
     {
         float radius = eyeVision.pointLightOuterRadius;
-        while (radius < 4)
+        while (radius < 6.5f)
         {
             if (GameManager.Instance.isMenuOpen)
             {
@@ -84,17 +94,12 @@ public class Player : SingletonMonobehaviour<Player>
 
             eyeVision.pointLightOuterRadius = radius;
             playerVisionTrigger.radius = radius;
-            radius = Mathf.Lerp(eyeVision.pointLightOuterRadius, 5, Time.deltaTime);
+            radius = Mathf.Lerp(eyeVision.pointLightOuterRadius, 8, Time.deltaTime);
             yield return null;
         }
-
-        while (radius < 6.5f)
-        {
-            eyeVision.pointLightOuterRadius = radius;
-            playerVisionTrigger.radius = radius;
-            radius = Mathf.Lerp(eyeVision.pointLightOuterRadius, 5, Time.deltaTime * 0.6f);
-            yield return null;
-        }
+        
+        yield return GameManager.Instance.StartCoroutine(GameManager.Instance.Timer(2f));
+        CloseEye();
     }
 
     public void CloseEye()
@@ -104,6 +109,7 @@ public class Player : SingletonMonobehaviour<Player>
             StopCoroutine(openEyeCor);
         }
         closeEyeCor = StartCoroutine(CloseEyeCor());
+        EyeButton.Instance.eye.Play("CloseEye");
     }
     IEnumerator CloseEyeCor()
     {
@@ -115,13 +121,13 @@ public class Player : SingletonMonobehaviour<Player>
                 yield return null;
                 continue;
             }
-
-
             eyeVision.pointLightOuterRadius = radius;
             playerVisionTrigger.radius = radius;
-            radius = Mathf.Lerp(eyeVision.pointLightOuterRadius, -1, 1.5f * Time.deltaTime);
+            radius = Mathf.Lerp(eyeVision.pointLightOuterRadius, -9, Time.deltaTime);
             yield return null;
         }
+
+        canOpenEye = true;
     }
 
     public void Die()

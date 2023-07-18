@@ -18,7 +18,7 @@ public class Joystick : SingletonMonobehaviour<Joystick>
 
         player = GetComponent<Player>();
 
-        joystick.SetActive(false);//sd
+        //joystick.SetActive(false);//sd
         joystickTransform = joystick.GetComponent<RectTransform>();
         joystickSize = new Vector2(300, 300);
     }
@@ -49,7 +49,7 @@ public class Joystick : SingletonMonobehaviour<Joystick>
             joystickTransform.anchoredPosition = ClampStartPosition(touchedFinger.screenPosition);
             player.isFingerDown = true;
             player.StartCoroutine(player.Move());
-            joystick.SetActive(true);
+            //joystick.SetActive(true);
         }
     }
     Vector2 ClampStartPosition(Vector2 startPosition)
@@ -73,7 +73,7 @@ public class Joystick : SingletonMonobehaviour<Joystick>
 
     void HandleFingerMove(Finger moveFinger)
     {
-        if (GameManager.Instance.isMenuOpen)
+        if (movementFinger == null || GameManager.Instance.isMenuOpen)
         {
             return;
         }
@@ -104,7 +104,7 @@ public class Joystick : SingletonMonobehaviour<Joystick>
             movementFinger = null;
             joystickKnob.anchoredPosition = Vector2.zero;
             player.isFingerDown = false;
-            joystick.SetActive(false);
+            //joystick.SetActive(false);
         }
     }
 }
