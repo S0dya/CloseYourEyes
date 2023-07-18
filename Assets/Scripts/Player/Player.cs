@@ -28,6 +28,12 @@ public class Player : SingletonMonobehaviour<Player>
 
     }
 
+    void OnDisable()
+    {
+        transform.position = Vector2.zero;
+        StopAllCoroutines();
+    }
+
     public IEnumerator Move()
     {
         while (isFingerDown)

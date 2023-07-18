@@ -5,4 +5,5 @@ using UnityEngine;
 public static class Settings
 {
     public static int curSceneNum;
+    public static int CemplitedLevelsAmount;
 }

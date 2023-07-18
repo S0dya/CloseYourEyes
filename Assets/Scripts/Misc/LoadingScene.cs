@@ -21,7 +21,6 @@ public class LoadingScene : SingletonMonobehaviour<LoadingScene>
         StartCoroutine(LoadGame());
     }
 
-
     public IEnumerator LoadGame()
     {
         AsyncOperation operation = SceneManager.LoadSceneAsync(1, LoadSceneMode.Additive);
@@ -56,6 +55,7 @@ public class LoadingScene : SingletonMonobehaviour<LoadingScene>
             yield return null;
         }
 
+        Settings.curSceneNum = sceneId;
         TogglePlayer();
         LoadingScreen.SetActive(false);
     }

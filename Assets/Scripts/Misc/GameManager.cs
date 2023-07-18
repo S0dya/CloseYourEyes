@@ -5,6 +5,7 @@ using UnityEngine;
 public class GameManager : SingletonMonobehaviour<GameManager>
 {
     [HideInInspector] public bool isMenuOpen;
+    
 
     protected override void Awake()
     {
@@ -14,6 +15,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 
     public void LevelComplete()
     {
+        Settings.CemplitedLevelsAmount++;
         Debug.Log("LVLComplete");
     }
 }

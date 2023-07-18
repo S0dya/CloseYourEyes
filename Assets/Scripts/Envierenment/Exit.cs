@@ -53,6 +53,7 @@ public class Exit : MonoBehaviour
             yield return null;
         }
 
+        GameMenu.Instance.LevelComplete();
         GameManager.Instance.LevelComplete();
     }
 

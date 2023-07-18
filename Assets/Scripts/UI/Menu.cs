@@ -6,7 +6,7 @@ public class Menu : SingletonMonobehaviour<Menu>
 {
     [SerializeField] GameObject levelsBar;
     [SerializeField] GameObject settingsBar;
-    [SerializeField] GameObject[] levels;
+    [SerializeField] Level[] levels;
 
 
     protected override void Awake()
@@ -18,12 +18,16 @@ public class Menu : SingletonMonobehaviour<Menu>
 
     void Start()
     {
-        
+        for (int i = 0; i < Settings.CemplitedLevelsAmount; i++)
+        {
+            levels[i].SetRune();
+        }
+        levels[Settings.CemplitedLevelsAmount].UnLock();
+
     }
 
     public void PlayButton()
     {
-        LevelButton(2);
         levelsBar.SetActive(!levelsBar.activeSelf);
         if (settingsBar.activeSelf)
         {
@@ -47,7 +51,10 @@ public class Menu : SingletonMonobehaviour<Menu>
 
     public void LevelButton(int index)
     {
-        LoadingScene.Instance.StartCoroutine(LoadingScene.Instance.LoadSceneAsync(index, 1));
-        Settings.curSceneNum = index;
+        if (Settings.CemplitedLevelsAmount >= index)
+        {
+            index += 2;
+            LoadingScene.Instance.StartCoroutine(LoadingScene.Instance.LoadSceneAsync(index, 1));
+        }
     }
 }

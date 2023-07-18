@@ -8,8 +8,9 @@ public class GameMenu : SingletonMonobehaviour<GameMenu>
     //delater
     Light2D globalLight;
     [SerializeField] GameObject gameMenu;
-    [SerializeField] GameObject pauseBar;
-    [SerializeField] GameObject gameOverBar;
+    [SerializeField] GameObject playButton;
+    [SerializeField] GameObject rePlayButton;
+    [SerializeField] GameObject nextLevelButton;
 
 
     GameObject[] defEnemyArr;
@@ -35,8 +36,8 @@ public class GameMenu : SingletonMonobehaviour<GameMenu>
     //Buttons
     public void PauseButton()
     {
-        pauseBar.SetActive(true);
         OpenGameMenu();
+        playButton.SetActive(true);
     }
 
     public void PlayButton()
@@ -46,7 +47,14 @@ public class GameMenu : SingletonMonobehaviour<GameMenu>
 
     public void ReplayButton()
     {
+        LoadingScene.Instance.StartCoroutine(LoadingScene.Instance.LoadSceneAsync(Settings.curSceneNum, Settings.curSceneNum));
+        LoadingScene.Instance.TogglePlayer();
+    }
 
+    public void NextLevelButton()
+    {
+        LoadingScene.Instance.StartCoroutine(LoadingScene.Instance.LoadSceneAsync(Settings.curSceneNum+1, Settings.curSceneNum));
+        LoadingScene.Instance.TogglePlayer();
     }
 
     public void HomeButton()
@@ -54,9 +62,9 @@ public class GameMenu : SingletonMonobehaviour<GameMenu>
         LoadingScene.Instance.StartCoroutine(LoadingScene.Instance.LoadSceneAsync(1, Settings.curSceneNum));
     }
 
-    public void MusicButton()
+    public void ExitButton()
     {
-
+        Application.Quit();
     }
 
 
@@ -74,14 +82,21 @@ public class GameMenu : SingletonMonobehaviour<GameMenu>
         gameMenu.SetActive(false);
         EnableMoving(true);
 
-        pauseBar.SetActive(false);
-        gameOverBar.SetActive(false);
+        playButton.SetActive(false);
+        rePlayButton.SetActive(false);
+        nextLevelButton.SetActive(false);
+    }
+
+    public void LevelComplete()
+    {
+        OpenGameMenu();
+        nextLevelButton.SetActive(true);
     }
 
     public void GameOver()
     {
         OpenGameMenu();
-        gameOverBar.SetActive(true);
+        rePlayButton.SetActive(true);
     }
 
 

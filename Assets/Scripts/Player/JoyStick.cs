@@ -99,7 +99,7 @@ public class Joystick : SingletonMonobehaviour<Joystick>
 
     void HandleRemoveFinger(Finger removeFinger)
     {
-        if (removeFinger == movementFinger && !GameManager.Instance.isMenuOpen)
+        if (removeFinger == movementFinger)
         {
             movementFinger = null;
             joystickKnob.anchoredPosition = Vector2.zero;
