@@ -18,11 +18,11 @@ public class Menu : SingletonMonobehaviour<Menu>
 
     void Start()
     {
-        for (int i = 0; i < Settings.CemplitedLevelsAmount; i++)
+        for (int i = 0; i < Settings.cemplitedLevelsAmount; i++)
         {
             levels[i].SetRune();
         }
-        levels[Settings.CemplitedLevelsAmount].UnLock();
+        levels[Settings.cemplitedLevelsAmount].UnLock();
 
     }
 
@@ -51,7 +51,7 @@ public class Menu : SingletonMonobehaviour<Menu>
 
     public void LevelButton(int index)
     {
-        if (Settings.CemplitedLevelsAmount >= index)
+        if (Settings.cemplitedLevelsAmount >= index)
         {
             index += 2;
             LoadingScene.Instance.StartCoroutine(LoadingScene.Instance.LoadSceneAsync(index, 1));

@@ -7,6 +7,7 @@ public class Player : SingletonMonobehaviour<Player>
 {
     Rigidbody2D rigidbody;
     Light2D eyeVision;
+    Animator animator;
     [SerializeField] CircleCollider2D playerVisionTrigger;
     [SerializeField] CircleCollider2D playerSoundTrigger;
 
@@ -28,6 +29,7 @@ public class Player : SingletonMonobehaviour<Player>
 
         rigidbody = GetComponent<Rigidbody2D>();
         eyeVision = GetComponentInChildren<Light2D>();
+        animator = GetComponent<Animator>();
 
 
     }
@@ -44,6 +46,7 @@ public class Player : SingletonMonobehaviour<Player>
 
     public IEnumerator Move()
     {
+        animator.Play("PlayerWalking");
         while (isFingerDown)
         {
             /*
@@ -58,12 +61,15 @@ public class Player : SingletonMonobehaviour<Player>
             Vector2 moveDirection = movementAmount.normalized;
             currentVelocity = Vector2.MoveTowards(currentVelocity, moveDirection * moveDirection.magnitude, 15 * Time.deltaTime);
 
+            animator.speed = speed /3;
             rigidbody.velocity = currentVelocity * speed * (onWater ? 0.6f : 1);
             playerSoundTrigger.radius = Mathf.Max(speed * (onWater ? 2.5f : 1.5f), 1.2f);
 
             yield return null;
         }
 
+        animator.speed = 1f;
+        animator.Play("PlayerIDLE");
         speed = 0;
         playerSoundTrigger.radius = 1f;
         currentVelocity = Vector2.zero;
@@ -128,6 +134,11 @@ public class Player : SingletonMonobehaviour<Player>
         }
 
         canOpenEye = true;
+    }
+
+    public void PlayStepSound()
+    {
+        AudioManager.Instance.PlayOneShot(FMODManager.Instance.PlayerStepSound, Vector2.zero, speed/3);
     }
 
     public void Die()

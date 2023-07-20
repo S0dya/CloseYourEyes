@@ -16,7 +16,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 
     public void LevelComplete()
     {
-        Settings.CemplitedLevelsAmount++;
+        Settings.cemplitedLevelsAmount++;
         Debug.Log("LVLComplete");
     }
 
