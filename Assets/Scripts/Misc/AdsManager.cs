@@ -8,10 +8,10 @@ public class AdsManager : SingletonMonobehaviour<AdsManager>, IUnityAdsInitializ
 {
 #if UNITY_IOS
     const string rewardedVideo = "Rewarded_iOS";
-    string gameId = "5321780";
+    string gameId = "5354573";
 #else
     const string rewardedVideo = "Rewarded_Android";
-    string gameId = "5321781";
+    string gameId = "5354572";
 #endif
 
 
@@ -70,7 +70,7 @@ public class AdsManager : SingletonMonobehaviour<AdsManager>, IUnityAdsInitializ
     public void OnUnityAdsShowComplete(string placementId, UnityAdsShowCompletionState showCompletionState)
     {
         //AudioManager.Instance.ToggleSound(true);
-        //GameManager.Instance.RewardPlayer();
+        GameMenu.Instance.RewardPlayer();
     }
     #endregion
 

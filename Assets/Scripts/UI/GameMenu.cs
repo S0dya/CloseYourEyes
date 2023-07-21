@@ -11,7 +11,9 @@ public class GameMenu : SingletonMonobehaviour<GameMenu>
     [SerializeField] GameObject playButton;
     [SerializeField] GameObject rePlayButton;
     [SerializeField] GameObject nextLevelButton;
+    [SerializeField] GameObject rewardedAdBar;
 
+    bool canReplay;
 
     GameObject[] defEnemyArr;
     GameObject[] blindEnemArr;
@@ -47,8 +49,16 @@ public class GameMenu : SingletonMonobehaviour<GameMenu>
 
     public void ReplayButton()
     {
-        LoadingScene.Instance.StartCoroutine(LoadingScene.Instance.LoadSceneAsync(Settings.curSceneNum, Settings.curSceneNum));
-        LoadingScene.Instance.TogglePlayer();
+        if (canReplay)
+        {
+            LoadingScene.Instance.StartCoroutine(LoadingScene.Instance.LoadSceneAsync(Settings.curSceneNum, Settings.curSceneNum));
+            LoadingScene.Instance.TogglePlayer();
+        }
+        else
+        {
+            ToggleRewardedAds(true);
+        }
+
     }
 
     public void NextLevelButton()
@@ -65,6 +75,16 @@ public class GameMenu : SingletonMonobehaviour<GameMenu>
     public void ExitButton()
     {
         Application.Quit();
+    }
+
+    public void PlayRewardAdButton()
+    {
+        AdsManager.Instance.ShowRewardedAd();
+    }
+
+    public void CloseRewardAdButton()
+    {
+        ToggleRewardedAds(false);
     }
 
 
@@ -85,6 +105,21 @@ public class GameMenu : SingletonMonobehaviour<GameMenu>
         playButton.SetActive(false);
         rePlayButton.SetActive(false);
         nextLevelButton.SetActive(false);
+        rewardedAdBar.SetActive(false);
+        canReplay = false;
+    }
+
+    void ToggleRewardedAds(bool val)
+    {
+        rewardedAdBar.SetActive(val);
+    }
+
+
+    public void RewardPlayer()
+    {
+        Settings.complitedLevelsAmount = Settings.curComplitedLevelsAmount;
+        canReplay = true;
+        ToggleRewardedAds(false);
     }
 
     public void LevelComplete()
@@ -95,6 +130,8 @@ public class GameMenu : SingletonMonobehaviour<GameMenu>
 
     public void GameOver()
     {
+        Settings.curComplitedLevelsAmount = Settings.complitedLevelsAmount;
+        Settings.complitedLevelsAmount = 0;
         OpenGameMenu();
         rePlayButton.SetActive(true);
     }

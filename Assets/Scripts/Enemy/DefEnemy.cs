@@ -18,9 +18,11 @@ public class DefEnemy : MonoBehaviour
 
     [SerializeField] Transform point;
     [HideInInspector] public bool isFollowingPlayer;
+    Vector2 startPos;
 
     Coroutine fadeInCor;
     Coroutine fadeOutCor;
+    Coroutine waitBeforeReturning;
 
     void Awake()
     {
@@ -32,6 +34,11 @@ public class DefEnemy : MonoBehaviour
         player = playerObject.GetComponent<Player>();
 
         ai.enabled = false;
+    }
+
+    void Start()
+    {
+        startPos = transform.position;
     }
 
     public void SeePlayer(bool val)
@@ -59,12 +66,29 @@ public class DefEnemy : MonoBehaviour
 
     public void OnDestinationReached()
     {
+        if (Vector2.Distance(startPos, transform.position) > 1f)
+        {
+            waitBeforeReturning = StartCoroutine(WaitBeforeReturning());
+        }
+
         fadeOutCor = StartCoroutine(FadeOut());
         ai.enabled = false;
+    }
+    
+    IEnumerator WaitBeforeReturning()
+    {
+        yield return GameManager.Instance.StartCoroutine(GameManager.Instance.Timer(4f));
+
+        point.position = startPos;
+        ai.enabled = true;
     }
 
     IEnumerator FadeIn()
     {
+        if (waitBeforeReturning != null)
+        {
+            StopCoroutine(waitBeforeReturning);
+        }
         float r = sprite.color.r; 
         while (r <= 1)
         {

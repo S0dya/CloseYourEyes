@@ -8,6 +8,7 @@ public class Menu : SingletonMonobehaviour<Menu>
     [SerializeField] GameObject settingsBar;
     [SerializeField] Level[] levels;
 
+    bool isLevelBarSet;
 
     protected override void Awake()
     {
@@ -16,22 +17,17 @@ public class Menu : SingletonMonobehaviour<Menu>
 
     }
 
-    void Start()
-    {
-        for (int i = 0; i < Settings.cemplitedLevelsAmount; i++)
-        {
-            levels[i].SetRune();
-        }
-        levels[Settings.cemplitedLevelsAmount].UnLock();
-
-    }
-
     public void PlayButton()
     {
+
         levelsBar.SetActive(!levelsBar.activeSelf);
         if (settingsBar.activeSelf)
         {
             settingsBar.SetActive(!settingsBar.activeSelf);
+        }
+        if (levelsBar.activeSelf && !isLevelBarSet)
+        {
+            StartCoroutine(OpenLevels());
         }
     }
 
@@ -51,10 +47,33 @@ public class Menu : SingletonMonobehaviour<Menu>
 
     public void LevelButton(int index)
     {
-        if (Settings.cemplitedLevelsAmount >= index)
+        if (Settings.complitedLevelsAmount >= index)
         {
             index += 2;
             LoadingScene.Instance.StartCoroutine(LoadingScene.Instance.LoadSceneAsync(index, 1));
         }
     }
+
+    IEnumerator OpenLevels()
+    {
+        for (int i = levels.Length - 1; i >= 0; i--)
+        {
+            if (i > Settings.complitedLevelsAmount)
+            {
+                levels[i].Lock();
+            }
+            else if (i < Settings.complitedLevelsAmount)
+            {
+                levels[i].SetRune();
+            }
+            else
+            {
+                levels[i].UnLock();
+            }
+
+            yield return new WaitForSeconds(0.025f);
+        }
+        isLevelBarSet = true;
+    }
+
 }

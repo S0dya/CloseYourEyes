@@ -12,11 +12,12 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     {
         base.Awake();
 
+        Settings.complitedLevelsAmount = 14;
     }
 
     public void LevelComplete()
     {
-        Settings.cemplitedLevelsAmount++;
+        Settings.complitedLevelsAmount++;
         Debug.Log("LVLComplete");
     }
 

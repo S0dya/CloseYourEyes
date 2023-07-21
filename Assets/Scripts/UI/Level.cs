@@ -9,15 +9,18 @@ public class Level : MonoBehaviour
     [SerializeField] GameObject unLocked;
     [SerializeField] GameObject rune;
 
+    public void Lock()
+    {
+        locked.SetActive(true);
+    }
+    
     public void SetRune()
     {
-        locked.SetActive(false);
         rune.SetActive(true);
     }
 
     public void UnLock()
     {
-        locked.SetActive(false);
         unLocked.SetActive(true);
     }
 }

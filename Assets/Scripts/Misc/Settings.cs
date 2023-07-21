@@ -5,7 +5,8 @@ using UnityEngine;
 public static class Settings
 {
     public static int curSceneNum;
-    public static int cemplitedLevelsAmount;
+    public static int complitedLevelsAmount;
+    public static int curComplitedLevelsAmount;
 
     //sound
     public static float ambienceVolume;

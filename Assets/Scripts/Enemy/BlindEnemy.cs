@@ -19,9 +19,11 @@ public class BlindEnemy : MonoBehaviour
     [SerializeField] Transform point;
     [HideInInspector] public bool isFollowingPlayer;
     [HideInInspector] public bool isWatched;
+    Vector2 startPos;
 
     Coroutine fadeInCor;
     Coroutine fadeOutCor;
+    Coroutine waitBeforeReturning;
 
     void Awake()
     {
@@ -35,8 +37,15 @@ public class BlindEnemy : MonoBehaviour
         ai.enabled = false;
     }
 
+    void Start()
+    {
+        startPos = transform.position;
+    }
+
     public void HearPlayer(bool val)
     {
+        
+
         isFollowingPlayer = val;
         if (val)
         {
@@ -60,18 +69,37 @@ public class BlindEnemy : MonoBehaviour
 
     public void StopFollowing(bool val)
     {
+        
         isWatched = val;
         ai.canMove = !val;
     }
 
     public void OnDestinationReached()
     {
+        if (Vector2.Distance(startPos, transform.position) > 1f)
+        {
+            waitBeforeReturning = StartCoroutine(WaitBeforeReturning());
+        }
         fadeOutCor = StartCoroutine(FadeOut());
         ai.enabled = false;
     }
 
+    IEnumerator WaitBeforeReturning()
+    {
+        yield return GameManager.Instance.StartCoroutine(GameManager.Instance.Timer(4f));
+
+        point.position = startPos;
+        ai.enabled = true;
+    }
+
+
     IEnumerator FadeIn()
     {
+        if (waitBeforeReturning != null)
+        {
+            StopCoroutine(waitBeforeReturning);
+        }
+
         float b = sprite.color.b;
         while (b <= 1)
         {
