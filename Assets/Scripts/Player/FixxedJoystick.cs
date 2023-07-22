@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem.EnhancedTouch;
 using ETouch = UnityEngine.InputSystem.EnhancedTouch;
 
-public class Joystick : SingletonMonobehaviour<Joystick>
+public class FixxedJoystick : SingletonMonobehaviour<FixxedJoystick>
 {
     Player player;
 
@@ -18,13 +18,13 @@ public class Joystick : SingletonMonobehaviour<Joystick>
 
         player = GetComponent<Player>();
 
-        //joystick.SetActive(false);//sd
         joystickTransform = joystick.GetComponent<RectTransform>();
         joystickSize = new Vector2(300, 300);
     }
 
     void OnEnable()
     {
+        joystick.SetActive(true);
         EnhancedTouchSupport.Enable();
         ETouch.Touch.onFingerDown += HandleFingerDown;
         ETouch.Touch.onFingerMove += HandleFingerMove;
@@ -49,7 +49,6 @@ public class Joystick : SingletonMonobehaviour<Joystick>
             joystickTransform.anchoredPosition = ClampStartPosition(touchedFinger.screenPosition);
             player.isFingerDown = true;
             player.StartCoroutine(player.Move());
-            //joystick.SetActive(true);
         }
     }
     Vector2 ClampStartPosition(Vector2 startPosition)
@@ -80,7 +79,7 @@ public class Joystick : SingletonMonobehaviour<Joystick>
 
         Vector2 knobPos;
         float max = joystickSize.x / 2;
-        
+
         if (Vector2.Distance(moveFinger.currentTouch.screenPosition, joystickTransform.anchoredPosition) > max)
         {
             knobPos = (moveFinger.currentTouch.screenPosition - joystickTransform.anchoredPosition).normalized * max;
@@ -104,7 +103,6 @@ public class Joystick : SingletonMonobehaviour<Joystick>
             movementFinger = null;
             joystickKnob.anchoredPosition = Vector2.zero;
             player.isFingerDown = false;
-            //joystick.SetActive(false);
         }
     }
 }

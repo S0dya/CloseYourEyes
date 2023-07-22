@@ -72,6 +72,7 @@ GameObject:
   - component: {fileID: 8214989070735641723}
   - component: {fileID: 8214989070735641720}
   - component: {fileID: 8214989070735641716}
+  - component: {fileID: 269540404937276857}
   - component: {fileID: 8214989070735641719}
   - component: {fileID: 8214989070735641718}
   - component: {fileID: 8214989070735641721}
@@ -130,6 +131,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 083ace47ad07f1b41b42bf62a490f7cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  joystick: {fileID: 0}
+  joystickKnob: {fileID: 0}
+--- !u!114 &269540404937276857
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8214989070735641722}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41bffcaa39645344ab73e898f0d5e769, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   joystick: {fileID: 0}

@@ -25,7 +25,6 @@ public class GameMenu : SingletonMonobehaviour<GameMenu>
         defEnemyArr = GameObject.FindGameObjectsWithTag("DefEnemy");
         blindEnemArr = GameObject.FindGameObjectsWithTag("BlindEnemy");
 
-
         globalLight = GameObject.FindGameObjectWithTag("REMOVELATER").GetComponent<Light2D>();
         globalLight.intensity = 0f;
     }
@@ -49,10 +48,10 @@ public class GameMenu : SingletonMonobehaviour<GameMenu>
 
     public void ReplayButton()
     {
-        if (canReplay)
+        if (canReplay || Settings.isGameFinished)
         {
             LoadingScene.Instance.StartCoroutine(LoadingScene.Instance.LoadSceneAsync(Settings.curSceneNum, Settings.curSceneNum));
-            LoadingScene.Instance.TogglePlayer();
+            LoadingScene.Instance.TogglePlayer(false);
         }
         else
         {
@@ -64,12 +63,12 @@ public class GameMenu : SingletonMonobehaviour<GameMenu>
     public void NextLevelButton()
     {
         LoadingScene.Instance.StartCoroutine(LoadingScene.Instance.LoadSceneAsync(Settings.curSceneNum+1, Settings.curSceneNum));
-        LoadingScene.Instance.TogglePlayer();
+        LoadingScene.Instance.TogglePlayer(false);
     }
 
     public void HomeButton()
     {
-        LoadingScene.Instance.StartCoroutine(LoadingScene.Instance.LoadSceneAsync(1, Settings.curSceneNum));
+        LoadingScene.Instance.StartCoroutine(LoadingScene.Instance.LoadMenuAsync(Settings.curSceneNum));
     }
 
     public void ExitButton()
@@ -118,20 +117,34 @@ public class GameMenu : SingletonMonobehaviour<GameMenu>
     public void RewardPlayer()
     {
         Settings.complitedLevelsAmount = Settings.curComplitedLevelsAmount;
+        Settings.lives = 3;
         canReplay = true;
+        SaveManager.Instance.SaveDataToFile();
         ToggleRewardedAds(false);
     }
 
     public void LevelComplete()
     {
+        SaveManager.Instance.SaveDataToFile();
         OpenGameMenu();
         nextLevelButton.SetActive(true);
     }
 
     public void GameOver()
     {
-        Settings.curComplitedLevelsAmount = Settings.complitedLevelsAmount;
-        Settings.complitedLevelsAmount = 0;
+        Settings.lives--;
+        if (Settings.lives == 0) 
+        {
+            canReplay = false;
+            Settings.curComplitedLevelsAmount = Settings.complitedLevelsAmount;
+            Settings.complitedLevelsAmount = 0;
+        }
+        else
+        {
+            canReplay = true;
+        }
+
+        SaveManager.Instance.SaveDataToFile();
         OpenGameMenu();
         rePlayButton.SetActive(true);
     }

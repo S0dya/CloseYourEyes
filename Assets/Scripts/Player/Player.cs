@@ -49,15 +49,6 @@ public class Player : SingletonMonobehaviour<Player>
         animator.Play("PlayerWalking");
         while (isFingerDown)
         {
-            /*
-            if (GameManager.Instance.isMenuOpen)
-            {
-                yield return null;
-                Debug.Log("asd");
-                continue;
-            }
-            */
-
             Vector2 moveDirection = movementAmount.normalized;
             currentVelocity = Vector2.MoveTowards(currentVelocity, moveDirection * moveDirection.magnitude, 15 * Time.deltaTime);
 

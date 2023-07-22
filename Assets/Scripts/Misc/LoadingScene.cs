@@ -1,24 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class LoadingScene : SingletonMonobehaviour<LoadingScene>
 {
     [SerializeField] GameObject LoadingScreen;
     [SerializeField] Image LoadingBarFill;
+    [SerializeField] TextMeshProUGUI Epigraph;
 
     [SerializeField] GameObject inputPlayer;
     GameObject playerObject;
+
+    Coroutine epigraphFadeOut;
 
     protected override void Awake()
     {
         base.Awake();
 
         playerObject = GameObject.FindGameObjectWithTag("Player");
-        TogglePlayer();
+        TogglePlayer(false);
         StartCoroutine(LoadGame());
+        Epigraph.enabled = false;
     }
 
     public IEnumerator LoadGame()
@@ -37,12 +43,13 @@ public class LoadingScene : SingletonMonobehaviour<LoadingScene>
         }
 
         LoadingScreen.SetActive(false);
+        
     }
 
-    public IEnumerator LoadSceneAsync(int sceneId, int sceneToClose)
+    public IEnumerator LoadMenuAsync(int sceneToClose)
     {
         AsyncOperation unloadOperation = SceneManager.UnloadSceneAsync(sceneToClose);
-        AsyncOperation operation = SceneManager.LoadSceneAsync(sceneId, LoadSceneMode.Additive);
+        AsyncOperation operation = SceneManager.LoadSceneAsync(1, LoadSceneMode.Additive);
 
         LoadingScreen.SetActive(true);
 
@@ -54,16 +61,62 @@ public class LoadingScene : SingletonMonobehaviour<LoadingScene>
 
             yield return null;
         }
+        Settings.curSceneNum = 1;
 
-        Settings.curSceneNum = sceneId;
-        TogglePlayer();
+        TogglePlayer(false);
         LoadingScreen.SetActive(false);
     }
 
-
-    public void TogglePlayer()
+    public IEnumerator LoadSceneAsync(int sceneId, int sceneToClose)
     {
-        playerObject.SetActive(!playerObject.activeSelf);
-        inputPlayer.SetActive(!inputPlayer.activeSelf);
+        AsyncOperation unloadOperation = SceneManager.UnloadSceneAsync(sceneToClose);
+        AsyncOperation operation = SceneManager.LoadSceneAsync(sceneId, LoadSceneMode.Additive);
+
+        if (epigraphFadeOut != null)
+        {
+            StopCoroutine(epigraphFadeOut);
+            Epigraph.color = new Color(Epigraph.color.r, Epigraph.color.g, Epigraph.color.b, 1);
+        }
+        Epigraph.text = Settings.epigraphs[sceneId - 2];
+        Epigraph.enabled = true;
+        LoadingScreen.SetActive(true);
+
+        while (!operation.isDone)
+        {
+            float progression = Mathf.Clamp01(operation.progress / 0.9f);
+
+            LoadingBarFill.fillAmount = progression;
+
+            
+            yield return null;
+        }
+        Settings.curSceneNum = sceneId;
+        
+        epigraphFadeOut = StartCoroutine(FadeOutEpigraph());
+        TogglePlayer(true);
+        LoadingScreen.SetActive(false);
+    }
+
+    IEnumerator FadeOutEpigraph()
+    {
+        Color curC = Epigraph.color;
+        float newAlpha = curC.a;
+        while (newAlpha > 0)
+        {
+            newAlpha = Mathf.Lerp(newAlpha, -0.3f, 0.009f);
+            Epigraph.color = new Color(curC.r, curC.g, curC.b, newAlpha);
+
+            yield return null;
+        }
+        
+        Epigraph.enabled = false;
+        Epigraph.color = new Color(curC.r, curC.g, curC.b, 1);
+    }
+
+
+    public void TogglePlayer(bool val)
+    {
+        playerObject.SetActive(val);
+        inputPlayer.SetActive(val);
     }
 }

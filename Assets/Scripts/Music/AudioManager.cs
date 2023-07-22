@@ -102,16 +102,19 @@ public class AudioManager : SingletonMonobehaviour<AudioManager>
     public void SetSFXVolume(float volume)
     {
         RuntimeManager.GetBus("bus:/SFX").setVolume(volume);
+        Settings.sfxVolume = volume;
     }
 
     public void SetAmbienceVolume(float volume)
     {
         RuntimeManager.GetBus("bus:/AMBIENCE").setVolume(volume);
+        Settings.ambienceVolume = volume;
     }
 
     public void SetMusicVolume(float volume)
     {
         RuntimeManager.GetBus("bus:/MUSIC").setVolume(volume);
+        Settings.musicVolume = volume;
     }
 
     IEnumerator FadeOutMusic(EventInstance music)

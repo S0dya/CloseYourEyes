@@ -44,8 +44,6 @@ public class BlindEnemy : MonoBehaviour
 
     public void HearPlayer(bool val)
     {
-        
-
         isFollowingPlayer = val;
         if (val)
         {

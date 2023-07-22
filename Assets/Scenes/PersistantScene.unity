@@ -216,6 +216,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1400504434}
+  - {fileID: 780058967}
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -591,13 +592,13 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 780058966}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1400504434}
-  m_RootOrder: 0
+  m_Father: {fileID: 9371838}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.036145832, y: 0.30340743}
   m_AnchorMax: {x: 0.9592292, y: 0.95829636}
@@ -735,7 +736,7 @@ RectTransform:
   m_Children:
   - {fileID: 1485924178}
   m_Father: {fileID: 1400504434}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.021312501, y: 0.0695926}
   m_AnchorMax: {x: 0.98, y: 0.110851854}
@@ -859,7 +860,6 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 780058967}
   - {fileID: 839497691}
   - {fileID: 2029625103}
   m_Father: {fileID: 9371838}
@@ -1369,6 +1369,50 @@ MonoBehaviour:
       Data3: 0
       Data4: 0
     Path: 
+--- !u!1 &1952029822
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1952029823}
+  - component: {fileID: 1952029824}
+  m_Layer: 0
+  m_Name: SaveManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1952029823
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1952029822}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2086135175}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1952029824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1952029822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e17dde10aafe3bf4d80fbc152d5194e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2029625102
 GameObject:
   m_ObjectHideFlags: 0
@@ -1400,7 +1444,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1400504434}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.33400002, y: 0.14525929}
   m_AnchorMax: {x: 0.66800004, y: 0.24800001}
@@ -1552,6 +1596,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LoadingScreen: {fileID: 1400504433}
   LoadingBarFill: {fileID: 1485924179}
+  Epigraph: {fileID: 780058968}
   inputPlayer: {fileID: 1460834919}
 --- !u!1 &2086135172
 GameObject:
@@ -1601,6 +1646,7 @@ Transform:
   - {fileID: 2073052984}
   - {fileID: 1144687352}
   - {fileID: 1403449476}
+  - {fileID: 1952029823}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1712,6 +1758,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 269540404937276857, guid: 1e418c4c25bc6974b86ddc09ebe1da9d, type: 3}
+      propertyPath: joystick
+      value: 
+      objectReference: {fileID: 207260933}
+    - target: {fileID: 269540404937276857, guid: 1e418c4c25bc6974b86ddc09ebe1da9d, type: 3}
+      propertyPath: joystickKnob
+      value: 
+      objectReference: {fileID: 1100413531}
     - target: {fileID: 8214989070735641716, guid: 1e418c4c25bc6974b86ddc09ebe1da9d, type: 3}
       propertyPath: joystick
       value: 

@@ -1,12 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Menu : SingletonMonobehaviour<Menu>
 {
     [SerializeField] GameObject levelsBar;
     [SerializeField] GameObject settingsBar;
+    [SerializeField] GameObject newGameBar;
     [SerializeField] Level[] levels;
+
+    [SerializeField] Slider sfxSlider;
+    [SerializeField] Slider ambienceSlider;
+    [SerializeField] Slider musicSlider;
+
+    [SerializeField] Image flexibleJoystick;
+    [SerializeField] Image fixedJoystick;
 
     bool isLevelBarSet;
 
@@ -14,12 +23,23 @@ public class Menu : SingletonMonobehaviour<Menu>
     {
         base.Awake();
 
-
     }
 
+    void Start()
+    {
+        sfxSlider.value = Settings.sfxVolume;
+        ambienceSlider.value = Settings.ambienceVolume;
+        musicSlider.value = Settings.musicVolume;
+        AudioManager.Instance.SetSFXVolume(sfxSlider.value);
+        AudioManager.Instance.SetAmbienceVolume(ambienceSlider.value);
+        AudioManager.Instance.SetMusicVolume(musicSlider.value);
+
+        ToggleFlexibilityOfJoystick(Settings.isJoystickFlexible);
+    }
+
+    //Buttons
     public void PlayButton()
     {
-
         levelsBar.SetActive(!levelsBar.activeSelf);
         if (settingsBar.activeSelf)
         {
@@ -54,6 +74,63 @@ public class Menu : SingletonMonobehaviour<Menu>
         }
     }
 
+    public void CloseNewGameBar()
+    {
+        newGameBar.SetActive(false);
+    }
+
+    public void NewGameButtonInSettings()
+    {
+        newGameBar.SetActive(true);
+    }
+
+    public void NewGameButton()
+    {
+        Settings.complitedLevelsAmount = 0;
+        Settings.curComplitedLevelsAmount = 0;
+        LoadingScene.Instance.StartCoroutine(LoadingScene.Instance.LoadSceneAsync(1, 1));
+    }
+
+    public void JoystickButton(bool val)
+    {
+        ToggleFlexibilityOfJoystick(val);
+    }
+
+    public void SFXVolumeChange()
+    {
+        AudioManager.Instance.SetSFXVolume(sfxSlider.value);
+    }
+
+    public void AmbienceVolumeChange()
+    {
+        AudioManager.Instance.SetAmbienceVolume(ambienceSlider.value);
+    }
+
+    public void MusicVolumeChange()
+    {
+        AudioManager.Instance.SetMusicVolume(musicSlider.value);
+    }
+
+    //OtherMethods
+    public void ToggleFlexibilityOfJoystick(bool val)
+    {
+        Settings.isJoystickFlexible = val;
+        if (val)
+        {
+            flexibleJoystick.color = new(flexibleJoystick.color.r, flexibleJoystick.color.g, flexibleJoystick.color.b, 1f);
+            fixedJoystick.color = new(fixedJoystick.color.r, fixedJoystick.color.g, fixedJoystick.color.b, 0.3f);
+            FlexibleJoystick.Instance.enabled = true;
+            FixxedJoystick.Instance.enabled = false;
+        }
+        else
+        {
+            fixedJoystick.color = new(fixedJoystick.color.r, fixedJoystick.color.g, fixedJoystick.color.b, 1);
+            flexibleJoystick.color = new(flexibleJoystick.color.r, flexibleJoystick.color.g, flexibleJoystick.color.b, 0.3f);
+            FlexibleJoystick.Instance.enabled = false;
+            FixxedJoystick.Instance.enabled = true;
+        }
+    }
+
     IEnumerator OpenLevels()
     {
         for (int i = levels.Length - 1; i >= 0; i--)
@@ -75,5 +152,4 @@ public class Menu : SingletonMonobehaviour<Menu>
         }
         isLevelBarSet = true;
     }
-
 }
