@@ -23,5 +23,7 @@ public static class Settings
     /// </summary>
     public static int curSceneNum;
     public static int curComplitedLevelsAmount;
+
+    public static float[] visionTime = { 4, 1 };
     public static string[] epigraphs = { "...i dont see...", "...i dont hear..." };
 }

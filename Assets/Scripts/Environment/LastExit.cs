@@ -4,7 +4,7 @@ using UnityEngine;
 
 using UnityEngine.Rendering.Universal;
 
-public class Exit : MonoBehaviour
+public class LastExit : MonoBehaviour
 {
     Light2D light;
 
@@ -53,7 +53,7 @@ public class Exit : MonoBehaviour
             yield return null;
         }
 
-        Debug.Log("d");
+        Settings.isGameFinished = true;
         GameMenu.Instance.LevelComplete();
         GameManager.Instance.LevelComplete();
     }

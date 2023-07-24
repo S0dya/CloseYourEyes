@@ -1758,6 +1758,118 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 132982859, guid: 1e418c4c25bc6974b86ddc09ebe1da9d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 132982861, guid: 1e418c4c25bc6974b86ddc09ebe1da9d, type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 132982861, guid: 1e418c4c25bc6974b86ddc09ebe1da9d, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 132982861, guid: 1e418c4c25bc6974b86ddc09ebe1da9d, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 132982861, guid: 1e418c4c25bc6974b86ddc09ebe1da9d, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 132982861, guid: 1e418c4c25bc6974b86ddc09ebe1da9d, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 132982861, guid: 1e418c4c25bc6974b86ddc09ebe1da9d, type: 3}
+      propertyPath: m_FalloffIntensity
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 132982861, guid: 1e418c4c25bc6974b86ddc09ebe1da9d, type: 3}
+      propertyPath: m_PointLightOuterRadius
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 401235463, guid: 1e418c4c25bc6974b86ddc09ebe1da9d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 401235465, guid: 1e418c4c25bc6974b86ddc09ebe1da9d, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 401235465, guid: 1e418c4c25bc6974b86ddc09ebe1da9d, type: 3}
+      propertyPath: m_FalloffIntensity
+      value: 0.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 695381414, guid: 1e418c4c25bc6974b86ddc09ebe1da9d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 695381416, guid: 1e418c4c25bc6974b86ddc09ebe1da9d, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 695381416, guid: 1e418c4c25bc6974b86ddc09ebe1da9d, type: 3}
+      propertyPath: m_FalloffIntensity
+      value: 0.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 787285120, guid: 1e418c4c25bc6974b86ddc09ebe1da9d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 787285122, guid: 1e418c4c25bc6974b86ddc09ebe1da9d, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 787285122, guid: 1e418c4c25bc6974b86ddc09ebe1da9d, type: 3}
+      propertyPath: m_FalloffIntensity
+      value: 0.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 829688329, guid: 1e418c4c25bc6974b86ddc09ebe1da9d, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 829688329, guid: 1e418c4c25bc6974b86ddc09ebe1da9d, type: 3}
+      propertyPath: m_FalloffIntensity
+      value: 0.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 995015961, guid: 1e418c4c25bc6974b86ddc09ebe1da9d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 995015963, guid: 1e418c4c25bc6974b86ddc09ebe1da9d, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 995015963, guid: 1e418c4c25bc6974b86ddc09ebe1da9d, type: 3}
+      propertyPath: m_FalloffIntensity
+      value: 0.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 2073911632, guid: 1e418c4c25bc6974b86ddc09ebe1da9d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2073911634, guid: 1e418c4c25bc6974b86ddc09ebe1da9d, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2073911634, guid: 1e418c4c25bc6974b86ddc09ebe1da9d, type: 3}
+      propertyPath: m_FalloffIntensity
+      value: 0.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 2109828901, guid: 1e418c4c25bc6974b86ddc09ebe1da9d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2109828903, guid: 1e418c4c25bc6974b86ddc09ebe1da9d, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2109828903, guid: 1e418c4c25bc6974b86ddc09ebe1da9d, type: 3}
+      propertyPath: m_FalloffIntensity
+      value: 0.85
+      objectReference: {fileID: 0}
     - target: {fileID: 269540404937276857, guid: 1e418c4c25bc6974b86ddc09ebe1da9d, type: 3}
       propertyPath: joystick
       value: 

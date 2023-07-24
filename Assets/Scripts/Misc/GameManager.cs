@@ -24,7 +24,6 @@ public class GameManager : SingletonMonobehaviour<GameManager>, ISaveable
 
     void Start()
     {
-        //SaveManager.Instance.SaveDataToFile();
         SaveManager.Instance.LoadDataFromFile();
     }
 

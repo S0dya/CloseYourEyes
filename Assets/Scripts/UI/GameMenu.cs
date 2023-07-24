@@ -31,7 +31,7 @@ public class GameMenu : SingletonMonobehaviour<GameMenu>
 
     void Start()
     {
-        CloseGameMenu();
+        CloseGameMenu(); //dellater
     }
 
     //Buttons
@@ -48,6 +48,7 @@ public class GameMenu : SingletonMonobehaviour<GameMenu>
 
     public void ReplayButton()
     {
+        Debug.Log(Settings.lives);
         if (canReplay || Settings.isGameFinished)
         {
             LoadingScene.Instance.StartCoroutine(LoadingScene.Instance.LoadSceneAsync(Settings.curSceneNum, Settings.curSceneNum));
@@ -133,7 +134,7 @@ public class GameMenu : SingletonMonobehaviour<GameMenu>
     public void GameOver()
     {
         Settings.lives--;
-        if (Settings.lives == 0) 
+        if (Settings.lives <= 0) 
         {
             canReplay = false;
             Settings.curComplitedLevelsAmount = Settings.complitedLevelsAmount;

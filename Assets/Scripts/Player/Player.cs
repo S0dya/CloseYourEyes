@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 using UnityEngine.Rendering.Universal;
 
 public class Player : SingletonMonobehaviour<Player>
@@ -32,6 +33,11 @@ public class Player : SingletonMonobehaviour<Player>
         animator = GetComponent<Animator>();
 
 
+    }
+
+    void OnEnable()
+    {
+        ThunderManager.Instance.StartThunder();
     }
 
     void OnDisable()
@@ -95,7 +101,7 @@ public class Player : SingletonMonobehaviour<Player>
             yield return null;
         }
         
-        yield return GameManager.Instance.StartCoroutine(GameManager.Instance.Timer(2f));
+        yield return GameManager.Instance.StartCoroutine(GameManager.Instance.Timer(Settings.visionTime[Settings.curSceneNum-2]));
         CloseEye();
     }
 
@@ -134,6 +140,7 @@ public class Player : SingletonMonobehaviour<Player>
 
     public void Die()
     {
+        speed = 0;
         GameMenu.Instance.GameOver();
         rigidbody.velocity = Vector2.zero;
     }
