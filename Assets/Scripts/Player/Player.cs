@@ -31,8 +31,6 @@ public class Player : SingletonMonobehaviour<Player>
         rigidbody = GetComponent<Rigidbody2D>();
         eyeVision = GetComponentInChildren<Light2D>();
         animator = GetComponent<Animator>();
-
-
     }
 
     void OnEnable()

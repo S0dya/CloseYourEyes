@@ -4,15 +4,11 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Linq;
 
-using Pathfinding;
-
 public class DefEnemy : MonoBehaviour
 {
     SpriteRenderer sprite;
+    Rigidbody2D rigidbody;
     Animator animator;
-    AIDestinationSetter destinationSetter;
-    [HideInInspector] public AI ai;
-
     GameObject playerObject;
     Player player;
 
@@ -20,6 +16,7 @@ public class DefEnemy : MonoBehaviour
     [HideInInspector] public bool isFollowingPlayer;
     Vector2 startPos;
 
+    Coroutine movingCor;
     Coroutine fadeInCor;
     Coroutine fadeOutCor;
     Coroutine waitBeforeReturning;
@@ -27,13 +24,10 @@ public class DefEnemy : MonoBehaviour
     void Awake()
     {
         sprite = GetComponent<SpriteRenderer>();
+        rigidbody = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        destinationSetter = GetComponent<AIDestinationSetter>();
-        ai = GetComponent<AI>();
         playerObject = SceneManager.GetSceneByName("PersistantScene").GetRootGameObjects().FirstOrDefault(obj => obj.CompareTag("Player"));
         player = playerObject.GetComponent<Player>();
-
-        ai.enabled = false;
     }
 
     void Start()
@@ -41,27 +35,64 @@ public class DefEnemy : MonoBehaviour
         startPos = transform.position;
     }
 
-    public void SeePlayer(bool val)
+    void OnDisable()
     {
-        isFollowingPlayer = val;
+        StopAllCoroutines();
+    }
+
+    public void StartFollowoingPlayer()
+    {
+        if (fadeOutCor != null)
+        {
+            StopCoroutine(fadeOutCor);
+        }
+        if (fadeInCor != null)
+        {
+            StopCoroutine(fadeInCor);
+        }
+        fadeInCor = StartCoroutine(FadeIn());
+    }
+    public void SeePlayer()
+    {
+        point.position = playerObject.transform.position;
+    }
+
+    public void StopFollowing(bool val)
+    {
         if (val)
         {
-            if (fadeOutCor != null)
+            if (movingCor != null)
             {
-                StopCoroutine(fadeOutCor);
+                StopCoroutine(movingCor);
             }
-
-            if (fadeInCor != null)
-            {
-                StopCoroutine(fadeInCor);
-            }
-            fadeInCor = StartCoroutine(FadeIn());
         }
         else
         {
-            destinationSetter.target = point;
-            point.position = playerObject.transform.position;
+            movingCor = StartCoroutine(MoveToTarget());
         }
+    }
+
+    public IEnumerator MoveToTarget()
+    {
+        while (true)
+        {
+            Vector2 direction = (Vector2)point.position - rigidbody.position;
+            float distance = direction.magnitude;
+
+            if (distance > 0.1f)
+            {
+                direction.Normalize();
+                rigidbody.velocity = direction * 5;
+            }
+            else
+            {
+                OnDestinationReached();
+                break;
+            }
+
+            yield return null;
+        }
+        rigidbody.velocity = Vector2.zero;
     }
 
     public void OnDestinationReached()
@@ -70,17 +101,15 @@ public class DefEnemy : MonoBehaviour
         {
             waitBeforeReturning = StartCoroutine(WaitBeforeReturning());
         }
-
         fadeOutCor = StartCoroutine(FadeOut());
-        ai.enabled = false;
     }
-    
+
     IEnumerator WaitBeforeReturning()
     {
         yield return GameManager.Instance.StartCoroutine(GameManager.Instance.Timer(4f));
 
         point.position = startPos;
-        ai.enabled = true;
+        movingCor = StartCoroutine(MoveToTarget());
     }
 
     IEnumerator FadeIn()
@@ -104,11 +133,7 @@ public class DefEnemy : MonoBehaviour
             yield return null;
         }
 
-        if (isFollowingPlayer)
-        {
-            destinationSetter.target = playerObject.transform;
-        }
-        ai.enabled = true;
+        movingCor = StartCoroutine(MoveToTarget());
     }
     IEnumerator FadeOut()
     {

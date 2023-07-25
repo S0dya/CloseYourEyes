@@ -147,13 +147,4 @@ public class GameManager : SingletonMonobehaviour<GameManager>, ISaveable
             }
         }
     }
-
-    public void ISaveableStoreScene(string sceneName)
-    {
-    }
-
-
-    public void ISaveableRestoreScene(string sceneName)
-    {
-    }
 }

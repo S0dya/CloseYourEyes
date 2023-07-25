@@ -88,7 +88,7 @@ public class Menu : SingletonMonobehaviour<Menu>
     {
         Settings.complitedLevelsAmount = 0;
         Settings.curComplitedLevelsAmount = 0;
-        LoadingScene.Instance.StartCoroutine(LoadingScene.Instance.LoadSceneAsync(1, 1));
+        LoadingScene.Instance.StartCoroutine(LoadingScene.Instance.LoadMenuAsync(1));
     }
 
     public void JoystickButton(bool val)
@@ -117,17 +117,15 @@ public class Menu : SingletonMonobehaviour<Menu>
         Settings.isJoystickFlexible = val;
         if (val)
         {
-            flexibleJoystick.color = new(flexibleJoystick.color.r, flexibleJoystick.color.g, flexibleJoystick.color.b, 1f);
-            fixedJoystick.color = new(fixedJoystick.color.r, fixedJoystick.color.g, fixedJoystick.color.b, 0.3f);
-            FlexibleJoystick.Instance.enabled = true;
-            FixxedJoystick.Instance.enabled = false;
+            flexibleJoystick.color = new(255, 255, 255, 1f);
+            fixedJoystick.color = new(255, 255, 255, 0.3f);
+            FlexibleJoystick.Instance.Toggle(true);
         }
         else
         {
-            fixedJoystick.color = new(fixedJoystick.color.r, fixedJoystick.color.g, fixedJoystick.color.b, 1);
-            flexibleJoystick.color = new(flexibleJoystick.color.r, flexibleJoystick.color.g, flexibleJoystick.color.b, 0.3f);
-            FlexibleJoystick.Instance.enabled = false;
-            FixxedJoystick.Instance.enabled = true;
+            fixedJoystick.color = new(255, 255, 255, 1);
+            flexibleJoystick.color = new(255, 255, 255, 0.3f);
+            FlexibleJoystick.Instance.Toggle(false);
         }
     }
 

@@ -73,5 +73,4 @@ public class AdsManager : SingletonMonobehaviour<AdsManager>, IUnityAdsInitializ
         GameMenu.Instance.RewardPlayer();
     }
     #endregion
-
 }

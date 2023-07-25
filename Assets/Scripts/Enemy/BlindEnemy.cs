@@ -4,23 +4,19 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Linq;
 
-using Pathfinding;
-
 public class BlindEnemy : MonoBehaviour
 {
     SpriteRenderer sprite;
+    Rigidbody2D rigidbody;
     Animator animator;
-    AIDestinationSetter destinationSetter;
-    [HideInInspector] public AI ai;
-
     GameObject playerObject;
     Player player;
 
     [SerializeField] Transform point;
-    [HideInInspector] public bool isFollowingPlayer;
     [HideInInspector] public bool isWatched;
     Vector2 startPos;
 
+    Coroutine movingCor;
     Coroutine fadeInCor;
     Coroutine fadeOutCor;
     Coroutine waitBeforeReturning;
@@ -28,13 +24,10 @@ public class BlindEnemy : MonoBehaviour
     void Awake()
     {
         sprite = GetComponent<SpriteRenderer>();
+        rigidbody = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        destinationSetter = GetComponent<AIDestinationSetter>();
-        ai = GetComponent<AI>();
         playerObject = SceneManager.GetSceneByName("PersistantScene").GetRootGameObjects().FirstOrDefault(obj => obj.CompareTag("Player"));
         player = playerObject.GetComponent<Player>();
-
-        ai.enabled = false;
     }
 
     void Start()
@@ -42,52 +35,88 @@ public class BlindEnemy : MonoBehaviour
         startPos = transform.position;
     }
 
-    public void HearPlayer(bool val)
+    void OnDisable()
     {
-        isFollowingPlayer = val;
-        if (val)
-        {
-            if (fadeOutCor != null)
-            {
-                StopCoroutine(fadeOutCor);
-            }
+        StopAllCoroutines();
+    }
 
-            if (fadeInCor != null)
-            {
-                StopCoroutine(fadeInCor);
-            }
-            fadeInCor = StartCoroutine(FadeIn());
-        }
-        else
+    public void StartFollowoingPlayer()
+    {
+        if (fadeOutCor != null)
         {
-            destinationSetter.target = point;
-            point.position = playerObject.transform.position;
+            StopCoroutine(fadeOutCor);
         }
+        if (fadeInCor != null)
+        {
+            StopCoroutine(fadeInCor);
+        }
+        fadeInCor = StartCoroutine(FadeIn());
+    }
+    public void HearPlayer()
+    {
+        point.position = playerObject.transform.position;
     }
 
     public void StopFollowing(bool val)
     {
-        
         isWatched = val;
-        ai.canMove = !val;
+        if (!val)
+        {
+            movingCor = StartCoroutine(MoveToTarget());
+        }
+    }
+
+    public IEnumerator MoveToTarget()
+    {
+        while (!isWatched)
+        {
+            Vector2 direction = (Vector2)point.position - rigidbody.position;
+            float distance = direction.magnitude;
+
+            if (distance > 0.1f)
+            {
+                direction.Normalize();
+                rigidbody.velocity = direction * 5;
+            }
+            else
+            {
+                OnDestinationReached();
+                break;
+            }
+
+            yield return null;
+        }
+        rigidbody.velocity = Vector2.zero;
     }
 
     public void OnDestinationReached()
     {
         if (Vector2.Distance(startPos, transform.position) > 1f)
         {
-            waitBeforeReturning = StartCoroutine(WaitBeforeReturning());
+            waitBeforeReturning = StartCoroutine(WaitBeforeReturning(4));
         }
         fadeOutCor = StartCoroutine(FadeOut());
-        ai.enabled = false;
     }
 
-    IEnumerator WaitBeforeReturning()
+    IEnumerator WaitBeforeReturning(float duration)
     {
-        yield return GameManager.Instance.StartCoroutine(GameManager.Instance.Timer(4f));
+        float elapsedTime = 0f;
+
+        while (elapsedTime < duration)
+        {
+            if (GameManager.Instance.isMenuOpen || isWatched)
+            {
+                yield return null;
+            }
+            else
+            {
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+        }
 
         point.position = startPos;
-        ai.enabled = true;
+        movingCor = StartCoroutine(MoveToTarget());
     }
 
 
@@ -112,18 +141,14 @@ public class BlindEnemy : MonoBehaviour
             yield return null;
         }
 
-        if (isFollowingPlayer)
-        {
-            destinationSetter.target = playerObject.transform;
-        }
-        ai.enabled = true;
+        movingCor = StartCoroutine(MoveToTarget());
     }
     IEnumerator FadeOut()
     {
         float b = sprite.color.b;
         while (b >= 0)
         {
-            if (GameManager.Instance.isMenuOpen)
+            if (GameManager.Instance.isMenuOpen || isWatched)
             {
                 yield return null;
             }

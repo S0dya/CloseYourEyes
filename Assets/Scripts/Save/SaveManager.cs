@@ -37,20 +37,4 @@ public class SaveManager : SingletonMonobehaviour<SaveManager>
         File.WriteAllText(filePath, json);
 
     }
-
-    public void StoreCurrentSceneData()
-    {
-        foreach (ISaveable iSaveableObject in iSaveableObjectList)
-        {
-            iSaveableObject.ISaveableStoreScene(SceneManager.GetActiveScene().name);
-        }
-    }
-
-    public void RestoreCurrentSceneData()
-    {
-        foreach (ISaveable iSaveableObject in iSaveableObjectList)
-        {
-            iSaveableObject.ISaveableRestoreScene(SceneManager.GetActiveScene().name);
-        }
-    }
 }

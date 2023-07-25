@@ -11,12 +11,14 @@ public class FlexibleJoystick : SingletonMonobehaviour<FlexibleJoystick>
     RectTransform joystickTransform;
     [SerializeField] RectTransform joystickKnob;
     Finger movementFinger;
+    FixxedJoystick fixxed;
 
     protected override void Awake()
     {
         base.Awake();
 
         player = GetComponent<Player>();
+        fixxed = GetComponent<FixxedJoystick>();
 
         joystickTransform = joystick.GetComponent<RectTransform>();
         joystickSize = new Vector2(300, 300);
@@ -110,5 +112,11 @@ public class FlexibleJoystick : SingletonMonobehaviour<FlexibleJoystick>
             player.isFingerDown = false;
             joystick.SetActive(false);
         }
+    }
+
+    public void Toggle(bool val)
+    {
+        this.enabled = val;
+        fixxed.enabled = !val;
     }
 }
