@@ -44,7 +44,6 @@ public class ThunderManager : SingletonMonobehaviour<ThunderManager>
     {
         while (true)
         {
-            Debug.Log("asd");
             yield return GameManager.Instance.StartCoroutine(GameManager.Instance.Timer(Random.Range(4f, 24f)));
 
             int index = Random.Range(0, thunders.Length);

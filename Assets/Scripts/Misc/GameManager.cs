@@ -5,6 +5,7 @@ using UnityEngine;
 public class GameManager : SingletonMonobehaviour<GameManager>, ISaveable
 {
     [HideInInspector] public bool isMenuOpen;
+    [HideInInspector] public bool isInGame;
 
     public int[] visionTime;
 
@@ -17,7 +18,8 @@ public class GameManager : SingletonMonobehaviour<GameManager>, ISaveable
     {
         base.Awake();
         GameObjectSave = new GameObjectSave();
-        
+
+        Settings.Initialize();
         Settings.complitedLevelsAmount = 14;
         Settings.lives = 1;
     }
@@ -30,7 +32,6 @@ public class GameManager : SingletonMonobehaviour<GameManager>, ISaveable
     public void LevelComplete()
     {
         Settings.complitedLevelsAmount++;
-        Debug.Log("LVLComplete");
     }
 
     public IEnumerator Timer(float duration)

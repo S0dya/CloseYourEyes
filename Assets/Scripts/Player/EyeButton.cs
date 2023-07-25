@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class EyeButton : SingletonMonobehaviour<EyeButton>, IPointerDownHandler, IPointerUpHandler
+public class EyeButton : SingletonMonobehaviour<EyeButton>, IPointerDownHandler, IPointerExitHandler
 {
     [HideInInspector] public Animator eye;
 
@@ -21,7 +21,7 @@ public class EyeButton : SingletonMonobehaviour<EyeButton>, IPointerDownHandler,
         }
     }
 
-    public void OnPointerUp(PointerEventData eventData)
+    public void OnPointerExit(PointerEventData eventData)
     {
         Player.Instance.CloseEye();
     }

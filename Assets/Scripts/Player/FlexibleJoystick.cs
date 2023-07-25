@@ -42,7 +42,7 @@ public class FlexibleJoystick : SingletonMonobehaviour<FlexibleJoystick>
 
     void HandleFingerDown(Finger touchedFinger)
     {
-        if (movementFinger == null && touchedFinger.screenPosition.x <= Screen.width / 2f && !GameManager.Instance.isMenuOpen)
+        if (movementFinger == null && touchedFinger.screenPosition.x <= Settings.screenHalf.x && !GameManager.Instance.isMenuOpen)
         {
             movementFinger = touchedFinger;
             joystickTransform.sizeDelta = joystickSize;
@@ -63,9 +63,9 @@ public class FlexibleJoystick : SingletonMonobehaviour<FlexibleJoystick>
         {
             startPosition.y = joystickSize.y / 2;
         }
-        else if (startPosition.y > Screen.height - joystickSize.y / 2)
+        else if (startPosition.y > Settings.screen.y - joystickSize.y / 2)
         {
-            startPosition.y = Screen.height - joystickSize.y / 2;
+            startPosition.y = Settings.screen.y - joystickSize.y / 2;
         }
 
         return startPosition;
@@ -74,6 +74,10 @@ public class FlexibleJoystick : SingletonMonobehaviour<FlexibleJoystick>
     void HandleFingerMove(Finger moveFinger)
     {
         if (movementFinger == null || GameManager.Instance.isMenuOpen)
+        {
+            return;
+        }
+        if (GameManager.Instance.isInGame && moveFinger.currentTouch.screenPosition.x > Settings.placeForJoystickMovement.x && moveFinger.currentTouch.screenPosition.y < Settings.placeForJoystickMovement.y)
         {
             return;
         }

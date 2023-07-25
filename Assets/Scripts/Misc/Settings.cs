@@ -18,6 +18,13 @@ public static class Settings
     public static float musicVolume;
 
     public static string GameScene = "Menu";
+
+    //game
+    public static Vector2 screen { get; private set; }
+    public static Vector2 screenHalf { get; private set; }
+    public static Vector2 placeForJoystickMovement { get; private set; }
+
+
     /// <summary>
     /// inGane
     /// </summary>
@@ -26,4 +33,12 @@ public static class Settings
 
     public static float[] visionTime = { 4, 1 };
     public static string[] epigraphs = { "...i dont see...", "...i dont hear..." };
+
+
+    public static void Initialize()
+    {
+        screen = new Vector2(Screen.width, Screen.height);
+        screenHalf = screen/2;
+        placeForJoystickMovement = new Vector2(Screen.width /1.5f, screenHalf.y);
+    }
 }

@@ -6,6 +6,8 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
 
+using Pathfinding;
+
 public class LoadingScene : SingletonMonobehaviour<LoadingScene>
 {
     [SerializeField] GameObject LoadingScreen;
@@ -95,6 +97,7 @@ public class LoadingScene : SingletonMonobehaviour<LoadingScene>
         epigraphFadeOut = StartCoroutine(FadeOutEpigraph());
         TogglePlayer(true);
         LoadingScreen.SetActive(false);
+        AstarPath.active.Scan();
     }
 
     IEnumerator FadeOutEpigraph()
@@ -116,6 +119,7 @@ public class LoadingScene : SingletonMonobehaviour<LoadingScene>
 
     public void TogglePlayer(bool val)
     {
+        GameManager.Instance.isInGame = val;
         playerObject.SetActive(val);
         inputPlayer.SetActive(val);
     }
