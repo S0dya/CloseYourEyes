@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using FMODUnity;
 using System.Linq;
 
 public class BlindEnemy : MonoBehaviour
@@ -33,11 +34,7 @@ public class BlindEnemy : MonoBehaviour
     void Start()
     {
         startPos = transform.position;
-    }
-
-    void OnDisable()
-    {
-        StopAllCoroutines();
+        point.position = startPos;
     }
 
     public void StartFollowoingPlayer()
@@ -51,6 +48,7 @@ public class BlindEnemy : MonoBehaviour
             StopCoroutine(fadeInCor);
         }
         fadeInCor = StartCoroutine(FadeIn());
+        GameManager.Instance.isBlindFollowingPlayer = true;
     }
     public void HearPlayer()
     {
@@ -70,23 +68,26 @@ public class BlindEnemy : MonoBehaviour
     {
         while (!isWatched)
         {
-            Vector2 direction = (Vector2)point.position - rigidbody.position;
-            float distance = direction.magnitude;
+            if (!GameManager.Instance.isMenuOpen)
+            {
+                Vector2 direction = (Vector2)point.position - rigidbody.position;
+                float distance = direction.magnitude;
 
-            if (distance > 0.1f)
-            {
-                direction.Normalize();
-                rigidbody.velocity = direction * 5;
-            }
-            else
-            {
-                OnDestinationReached();
-                break;
+                if (distance > 0.05f)
+                {
+                    direction.Normalize();
+                    Vector2 targetPosition = rigidbody.position + direction * 12 * Time.deltaTime;
+                    rigidbody.MovePosition(targetPosition);
+                }
+                else
+                {
+                    OnDestinationReached();
+                    break;
+                }
             }
 
             yield return null;
         }
-        rigidbody.velocity = Vector2.zero;
     }
 
     public void OnDestinationReached()
@@ -94,6 +95,10 @@ public class BlindEnemy : MonoBehaviour
         if (Vector2.Distance(startPos, transform.position) > 1f)
         {
             waitBeforeReturning = StartCoroutine(WaitBeforeReturning(4));
+        }
+        else
+        {
+            GameManager.Instance.isBlindFollowingPlayer = false;
         }
         fadeOutCor = StartCoroutine(FadeOut());
     }
@@ -104,15 +109,12 @@ public class BlindEnemy : MonoBehaviour
 
         while (elapsedTime < duration)
         {
-            if (GameManager.Instance.isMenuOpen || isWatched)
-            {
-                yield return null;
-            }
-            else
+            if (!GameManager.Instance.isMenuOpen && !isWatched)
             {
                 elapsedTime += Time.deltaTime;
-                yield return null;
             }
+
+            yield return null;
         }
 
         point.position = startPos;
@@ -130,13 +132,11 @@ public class BlindEnemy : MonoBehaviour
         float b = sprite.color.b;
         while (b <= 1)
         {
-            if (GameManager.Instance.isMenuOpen)
+            if (!GameManager.Instance.isMenuOpen)
             {
-                yield return null;
+                b = Mathf.Lerp(b, 1.3f, 0.009f);
+                sprite.color = new Color(sprite.color.r, sprite.color.g, b);
             }
-
-            b = Mathf.Lerp(b, 1.3f, 0.009f);
-            sprite.color = new Color(sprite.color.r, sprite.color.g, b);
 
             yield return null;
         }
@@ -148,13 +148,11 @@ public class BlindEnemy : MonoBehaviour
         float b = sprite.color.b;
         while (b >= 0)
         {
-            if (GameManager.Instance.isMenuOpen || isWatched)
+            if (!GameManager.Instance.isMenuOpen && !isWatched)
             {
-                yield return null;
+                b = Mathf.Lerp(b, -0.3f, 0.02f);
+                sprite.color = new Color(sprite.color.r, sprite.color.g, b);
             }
-
-            b = Mathf.Lerp(b, -0.3f, 0.02f);
-            sprite.color = new Color(sprite.color.r, sprite.color.g, b);
 
             yield return null;
         }

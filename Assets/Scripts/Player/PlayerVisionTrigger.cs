@@ -12,6 +12,11 @@ public class PlayerVisionTrigger : MonoBehaviour
             RaycastHit2D hit = Physics2D.Raycast(transform.position, direction.normalized, direction.magnitude, LayerMask.GetMask("Obstacle"));
             if (hit.collider == null)
             {
+                if (!GameManager.Instance.isBlindFollowingPlayer)
+                {
+                    AudioManager.Instance.PlayOneShot(FMODManager.Instance.BlindJump, collision.transform.position);
+                }
+
                 DefEnemy defEnemy = collision.gameObject.GetComponent<DefEnemy>();
                 if (!defEnemy.isFollowingPlayer)
                 {

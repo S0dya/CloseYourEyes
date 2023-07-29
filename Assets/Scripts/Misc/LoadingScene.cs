@@ -43,11 +43,11 @@ public class LoadingScene : SingletonMonobehaviour<LoadingScene>
         }
 
         LoadingScreen.SetActive(false);
-        
     }
 
     public IEnumerator LoadMenuAsync(int sceneToClose)
     {
+        AudioManager.Instance.ToggleRandomSFX(false);
         AsyncOperation unloadOperation = SceneManager.UnloadSceneAsync(sceneToClose);
         AsyncOperation operation = SceneManager.LoadSceneAsync(1, LoadSceneMode.Additive);
 
@@ -69,6 +69,8 @@ public class LoadingScene : SingletonMonobehaviour<LoadingScene>
 
     public IEnumerator LoadSceneAsync(int sceneId, int sceneToClose)
     {
+        AudioManager.Instance.ToggleRandomSFX(false);
+        AudioManager.Instance.StopAllEmitters();
         AsyncOperation unloadOperation = SceneManager.UnloadSceneAsync(sceneToClose);
         AsyncOperation operation = SceneManager.LoadSceneAsync(sceneId, LoadSceneMode.Additive);
 
@@ -81,20 +83,20 @@ public class LoadingScene : SingletonMonobehaviour<LoadingScene>
         Epigraph.enabled = true;
         LoadingScreen.SetActive(true);
 
+        while (!unloadOperation.isDone)
+        {
+            yield return null;
+        }
+
         while (!operation.isDone)
         {
             float progression = Mathf.Clamp01(operation.progress / 0.9f);
-
             LoadingBarFill.fillAmount = progression;
-
-            
             yield return null;
         }
+
+        ClearForNewScene();
         Settings.curSceneNum = sceneId;
-        
-        epigraphFadeOut = StartCoroutine(FadeOutEpigraph());
-        TogglePlayer(true);
-        LoadingScreen.SetActive(false);
     }
 
     IEnumerator FadeOutEpigraph()
@@ -113,6 +115,16 @@ public class LoadingScene : SingletonMonobehaviour<LoadingScene>
         Epigraph.color = new Color(curC.r, curC.g, curC.b, 1);
     }
 
+    void ClearForNewScene()
+    {
+        GameManager.Instance.isBlindFollowingPlayer = false;
+        GameManager.Instance.isDefFollowingPlayer = false;
+        AudioManager.Instance.ToggleRandomSFX(true);
+        GameManager.Instance.isMenuOpen = false;
+        epigraphFadeOut = StartCoroutine(FadeOutEpigraph());
+        TogglePlayer(true);
+        LoadingScreen.SetActive(false);
+    }
 
     public void TogglePlayer(bool val)
     {

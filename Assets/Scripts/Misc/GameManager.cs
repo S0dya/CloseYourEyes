@@ -7,6 +7,9 @@ public class GameManager : SingletonMonobehaviour<GameManager>, ISaveable
     [HideInInspector] public bool isMenuOpen;
     [HideInInspector] public bool isInGame;
 
+    [HideInInspector] public bool isBlindFollowingPlayer;
+    [HideInInspector] public bool isDefFollowingPlayer;
+
     public int[] visionTime;
 
 

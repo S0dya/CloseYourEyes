@@ -31,7 +31,7 @@ public class GameMenu : SingletonMonobehaviour<GameMenu>
 
     void Start()
     {
-        CloseGameMenu(); //dellater
+        AudioManager.Instance.ToggleSFX(true);
     }
 
     //Buttons
@@ -48,11 +48,11 @@ public class GameMenu : SingletonMonobehaviour<GameMenu>
 
     public void ReplayButton()
     {
-        Debug.Log(Settings.lives);
         if (canReplay || Settings.isGameFinished)
         {
-            LoadingScene.Instance.StartCoroutine(LoadingScene.Instance.LoadSceneAsync(Settings.curSceneNum, Settings.curSceneNum));
+            AudioManager.Instance.StopAllEmitters();
             LoadingScene.Instance.TogglePlayer(false);
+            LoadingScene.Instance.StartCoroutine(LoadingScene.Instance.LoadSceneAsync(Settings.curSceneNum, Settings.curSceneNum));
         }
         else
         {
@@ -64,11 +64,13 @@ public class GameMenu : SingletonMonobehaviour<GameMenu>
     public void NextLevelButton()
     {
         LoadingScene.Instance.StartCoroutine(LoadingScene.Instance.LoadSceneAsync(Settings.curSceneNum+1, Settings.curSceneNum));
-        LoadingScene.Instance.TogglePlayer(false);
+        AudioManager.Instance.StopAllEmitters();
     }
 
     public void HomeButton()
     {
+        AudioManager.Instance.StopAllEmitters();
+        AudioManager.Instance.ToggleSFX(true);
         LoadingScene.Instance.StartCoroutine(LoadingScene.Instance.LoadMenuAsync(Settings.curSceneNum));
     }
 
@@ -91,22 +93,22 @@ public class GameMenu : SingletonMonobehaviour<GameMenu>
     //otherMethods
     void OpenGameMenu()
     {
+        AudioManager.Instance.ToggleSFX(false);
         GameManager.Instance.isMenuOpen = true;
         gameMenu.SetActive(true);
-        EnableMoving(false);
     }
 
     void CloseGameMenu()
     {
         GameManager.Instance.isMenuOpen = false;
         gameMenu.SetActive(false);
-        EnableMoving(true);
 
         playButton.SetActive(false);
         rePlayButton.SetActive(false);
         nextLevelButton.SetActive(false);
         rewardedAdBar.SetActive(false);
         canReplay = false;
+        AudioManager.Instance.ToggleSFX(true);
     }
 
     void ToggleRewardedAds(bool val)
@@ -148,20 +150,5 @@ public class GameMenu : SingletonMonobehaviour<GameMenu>
         SaveManager.Instance.SaveDataToFile();
         OpenGameMenu();
         rePlayButton.SetActive(true);
-    }
-
-
-
-    void EnableMoving(bool val)
-    {
-        foreach (var def in defEnemyArr)
-        {
-            def.SetActive(val);
-        }
-     
-        foreach (var blind in blindEnemArr)
-        {
-            blind.SetActive(val);
-        }
     }
 }

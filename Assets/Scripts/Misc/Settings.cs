@@ -16,6 +16,7 @@ public static class Settings
     public static float sfxVolume;
     public static float ambienceVolume;
     public static float musicVolume;
+    public static float curSfxVolume;
 
     public static string GameScene = "Menu";
 

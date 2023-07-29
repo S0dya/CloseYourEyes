@@ -87,15 +87,14 @@ public class Player : SingletonMonobehaviour<Player>
         float radius = eyeVision.pointLightOuterRadius;
         while (radius < 6.5f)
         {
-            if (GameManager.Instance.isMenuOpen)
+            if (!GameManager.Instance.isMenuOpen)
             {
-                yield return null;
-                continue;
+                eyeVision.pointLightOuterRadius = radius;
+                playerVisionTrigger.radius = radius;
+                radius = Mathf.Lerp(eyeVision.pointLightOuterRadius, 8, Time.deltaTime);
             }
 
-            eyeVision.pointLightOuterRadius = radius;
-            playerVisionTrigger.radius = radius;
-            radius = Mathf.Lerp(eyeVision.pointLightOuterRadius, 8, Time.deltaTime);
+            
             yield return null;
         }
         
@@ -117,14 +116,13 @@ public class Player : SingletonMonobehaviour<Player>
         float radius = eyeVision.pointLightOuterRadius;
         while (radius > 0)
         {
-            if (GameManager.Instance.isMenuOpen)
+            if (!GameManager.Instance.isMenuOpen)
             {
-                yield return null;
-                continue;
+                eyeVision.pointLightOuterRadius = radius;
+                playerVisionTrigger.radius = radius;
+                radius = Mathf.Lerp(eyeVision.pointLightOuterRadius, -9, Time.deltaTime);
             }
-            eyeVision.pointLightOuterRadius = radius;
-            playerVisionTrigger.radius = radius;
-            radius = Mathf.Lerp(eyeVision.pointLightOuterRadius, -9, Time.deltaTime);
+            
             yield return null;
         }
 
@@ -138,6 +136,7 @@ public class Player : SingletonMonobehaviour<Player>
 
     public void Die()
     {
+        AudioManager.Instance.PlayOneShot("DieSound");
         speed = 0;
         GameMenu.Instance.GameOver();
         rigidbody.velocity = Vector2.zero;

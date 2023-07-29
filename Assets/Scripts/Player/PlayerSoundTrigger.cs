@@ -12,6 +12,11 @@ public class PlayerSoundTrigger : MonoBehaviour
             RaycastHit2D hit = Physics2D.Raycast(transform.position, direction.normalized, direction.magnitude, LayerMask.GetMask("Obstacle"));
             if (hit.collider == null)
             {
+                if (!GameManager.Instance.isBlindFollowingPlayer)
+                {
+                    AudioManager.Instance.PlayOneShot(FMODManager.Instance.DefJump, collision.transform.position);
+                }
+
                 BlindEnemy blindEnemy = collision.gameObject.GetComponent<BlindEnemy>();
                 if (!blindEnemy.isWatched)
                 {

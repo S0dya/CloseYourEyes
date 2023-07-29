@@ -27,6 +27,7 @@ public class Menu : SingletonMonobehaviour<Menu>
 
     void Start()
     {
+        AudioManager.Instance.ToggleMusic(true);
         sfxSlider.value = Settings.sfxVolume;
         ambienceSlider.value = Settings.ambienceVolume;
         musicSlider.value = Settings.musicVolume;
@@ -49,6 +50,8 @@ public class Menu : SingletonMonobehaviour<Menu>
         {
             StartCoroutine(OpenLevels());
         }
+
+        AudioManager.Instance.SetCurSFX();
     }
 
     public void SettingsButton()
@@ -69,6 +72,7 @@ public class Menu : SingletonMonobehaviour<Menu>
     {
         if (Settings.complitedLevelsAmount >= index)
         {
+            AudioManager.Instance.ToggleMusic(false);
             index += 2;
             LoadingScene.Instance.StartCoroutine(LoadingScene.Instance.LoadSceneAsync(index, 1));
         }
@@ -127,6 +131,11 @@ public class Menu : SingletonMonobehaviour<Menu>
             flexibleJoystick.color = new(255, 255, 255, 0.3f);
             FlexibleJoystick.Instance.Toggle(false);
         }
+    }
+
+    public void PlayButtonSound()
+    {
+        AudioManager.Instance.PlayOneShot("ButtonPress");
     }
 
     IEnumerator OpenLevels()

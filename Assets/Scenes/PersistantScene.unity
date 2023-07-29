@@ -1017,6 +1017,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isMenuOpen: 0
   isInGame: 0
+  isBlindFollowingPlayer: 0
+  isDefFollowingPlayer: 0
   visionTime: 
 --- !u!1 &1460834919 stripped
 GameObject:
@@ -1335,6 +1337,13 @@ MonoBehaviour:
       Data3: -1079997269
       Data4: -594325686
     Path: event:/Ambience/Ambience
+  <Rain>k__BackingField:
+    Guid:
+      Data1: -1732123114
+      Data2: 1097778108
+      Data3: -1147118917
+      Data4: -100115236
+    Path: event:/Ambience/Rain
   <Music>k__BackingField:
     Guid:
       Data1: 483023052
@@ -1342,6 +1351,13 @@ MonoBehaviour:
       Data3: 1446802562
       Data4: 474364196
     Path: event:/Music/Music
+  <RandomSFX>k__BackingField:
+    Guid:
+      Data1: 1907207221
+      Data2: 1092354568
+      Data3: 1916915332
+      Data4: 1198218980
+    Path: event:/SFX/RandomSFX/RandomSFX
   <PlayerStepSound>k__BackingField:
     Guid:
       Data1: -249521726
@@ -1356,63 +1372,49 @@ MonoBehaviour:
       Data3: 0
       Data4: 0
     Path: 
+  <DieSound>k__BackingField:
+    Guid:
+      Data1: -1976331137
+      Data2: 1211522746
+      Data3: -1882493035
+      Data4: -1294922876
+    Path: event:/SFX/Player/PlayerDeath
   <DefIdle>k__BackingField:
     Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
-  <DefStepSound>k__BackingField:
+      Data1: -1938910857
+      Data2: 1194362282
+      Data3: 18555825
+      Data4: -779879486
+    Path: event:/SFX/Enemy/DefEnemyIdle
+  <DefJump>k__BackingField:
     Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
-  <DefStepSoundOnWater>k__BackingField:
-    Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+      Data1: -2128249412
+      Data2: 1122493049
+      Data3: -484384620
+      Data4: -718011856
+    Path: event:/SFX/Enemy/DefEnemyJump
   <BlindIdle>k__BackingField:
     Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
-  <BlindStepSound>k__BackingField:
+      Data1: -827177339
+      Data2: 1180936786
+      Data3: -995366484
+      Data4: 881877227
+    Path: event:/SFX/Enemy/BlindEnemyIdle
+  <BlindJump>k__BackingField:
     Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
-  <BlindStepSoundOnWater>k__BackingField:
-    Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+      Data1: -1061471871
+      Data2: 1239061616
+      Data3: -148368208
+      Data4: 1069325266
+    Path: event:/SFX/Enemy/BlindEnemyJump
   <ButtonPress>k__BackingField:
     Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+      Data1: 501112465
+      Data2: 1117102090
+      Data3: -1534009724
+      Data4: 1643611253
+    Path: event:/SFX/UI/PressButton
   <PlaySound>k__BackingField:
-    Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
-  <GameOverSound>k__BackingField:
     Guid:
       Data1: 0
       Data2: 0

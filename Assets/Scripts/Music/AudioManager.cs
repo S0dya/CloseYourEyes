@@ -14,6 +14,7 @@ public class AudioManager : SingletonMonobehaviour<AudioManager>
     bool calmMusicIsCurrentlyPlaying;
 
     Coroutine fadeOutCoroutine;
+    Coroutine randomSFXCor;
 
     protected override void Awake()
     {
@@ -27,25 +28,23 @@ public class AudioManager : SingletonMonobehaviour<AudioManager>
 
     void Start()
     {
-        EventInstancesDict.Add("Music", CreateInstance(FMODManager.Instance.Music));
+        EventInstancesDict.Add("Music", CreateInstance(FMODManager.Instance.Music)); 
+        EventInstancesDict.Add("RandomSFX", CreateInstance(FMODManager.Instance.RandomSFX));
         EventInstancesDict.Add("Amnbience", CreateInstance(FMODManager.Instance.Amnbience));
+        EventInstancesDict.Add("Rain", CreateInstance(FMODManager.Instance.Rain));
 
-        //EventInstancesDict.Add("ButtonPress", CreateInstance(FMODManager.Instance.ButtonPress));
+        EventInstancesDict.Add("ButtonPress", CreateInstance(FMODManager.Instance.ButtonPress));
+        Debug.Log("d");
         //EventInstancesDict.Add("PlaySound", CreateInstance(FMODManager.Instance.PlaySound));
         //EventInstancesDict.Add("GameOverSound", CreateInstance(FMODManager.Instance.GameOverSound));
 
         EventInstancesDict.Add("PlayerStepSound", CreateInstance(FMODManager.Instance.PlayerStepSound));
+        EventInstancesDict.Add("DieSound", CreateInstance(FMODManager.Instance.DieSound));
+
         /*
         EventInstancesDict.Add("PlayerStepSoundOnWater", CreateInstance(FMODManager.Instance.PlayerStepSoundOnWater));
-
-        EventInstancesDict.Add("DefIdle", CreateInstance(FMODManager.Instance.DefIdle));
-        EventInstancesDict.Add("DefStepSound", CreateInstance(FMODManager.Instance.DefStepSound));
-        EventInstancesDict.Add("DefStepSoundOnWater", CreateInstance(FMODManager.Instance.DefStepSoundOnWater));
-        EventInstancesDict.Add("BlindIdle", CreateInstance(FMODManager.Instance.BlindIdle));
-        EventInstancesDict.Add("BlindStepSound", CreateInstance(FMODManager.Instance.BlindStepSound));
-        EventInstancesDict.Add("BlindStepSoundOnWater", CreateInstance(FMODManager.Instance.BlindStepSoundOnWater));
         */
-        
+
         EventInstancesDict["Amnbience"].start();
     }
 
@@ -65,11 +64,14 @@ public class AudioManager : SingletonMonobehaviour<AudioManager>
     }
 
 
+    public void PlayOneShot(string sound)
+    {
+        EventInstancesDict[sound].start();
+    }
     public void PlayOneShot(EventReference sound, Vector2 position)
     {
         RuntimeManager.PlayOneShot(sound, position);
     }
-
     public void PlayOneShot(EventReference sound, Vector2 position, float volume)
     {
         FMOD.Studio.EventInstance soundEvent = FMODUnity.RuntimeManager.CreateInstance(sound);
@@ -99,6 +101,52 @@ public class AudioManager : SingletonMonobehaviour<AudioManager>
         return emitter;
     }
 
+    public void StopAllEmitters()
+    {
+        foreach (var emitter in eventEmitters)
+        {
+            if (emitter != null && emitter.IsPlaying())
+            {
+                emitter.Stop();
+            }
+        }
+    }
+
+    public void ToggleRandomSFX(bool val)
+    {
+        if (randomSFXCor != null)
+        {
+            StopCoroutine(randomSFXCor);
+        }
+
+        if (val)
+        {
+            randomSFXCor = StartCoroutine(RandomSFXCor());
+        }
+    }
+
+    public void ToggleSFX(bool val)
+    {
+        if (val)
+        {
+            RuntimeManager.GetBus("bus:/SFX").setVolume(Settings.curSfxVolume);
+        }
+        else
+        {
+            float volume = 0f;
+            RuntimeManager.GetBus("bus:/SFX").getVolume(out volume);
+            Settings.curSfxVolume = volume;
+            RuntimeManager.GetBus("bus:/SFX").setVolume(0);
+        }
+    }
+
+    public void SetCurSFX()
+    {
+        float volume = 0f;
+        RuntimeManager.GetBus("bus:/SFX").getVolume(out volume);
+        Settings.curSfxVolume = volume;
+    }
+
     public void SetSFXVolume(float volume)
     {
         RuntimeManager.GetBus("bus:/SFX").setVolume(volume);
@@ -117,29 +165,27 @@ public class AudioManager : SingletonMonobehaviour<AudioManager>
         Settings.musicVolume = volume;
     }
 
-    IEnumerator FadeOutMusic(EventInstance music)
+
+    IEnumerator RandomSFXCor()
     {
-        float timer = 1f;
-
-        while (timer > 0)
+        while (true)
         {
-            music.setVolume(timer);
-            timer -= Time.deltaTime;
+            yield return GameManager.Instance.StartCoroutine(GameManager.Instance.Timer(Random.Range(12, 45)));
 
-            yield return null;
+            EventInstancesDict["RandomSFX"].start();
         }
     }
 
-    IEnumerator FadeInMusic(EventInstance music)
+    public void ToggleMusic(bool val)
     {
-        float timer = 0;
-
-        while (timer < 1)
+        if (val)
         {
-            music.setVolume(timer);
-            timer += Time.deltaTime;
-
-            yield return null;
+            EventInstancesDict["Music"].start();
         }
+        else
+        {
+            EventInstancesDict["Music"].stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        }
+
     }
 }

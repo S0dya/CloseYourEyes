@@ -51,6 +51,7 @@ public class DefEnemy : MonoBehaviour
             StopCoroutine(fadeInCor);
         }
         fadeInCor = StartCoroutine(FadeIn());
+        GameManager.Instance.isDefFollowingPlayer = true;
     }
     public void SeePlayer()
     {
@@ -100,6 +101,10 @@ public class DefEnemy : MonoBehaviour
         if (Vector2.Distance(startPos, transform.position) > 1f)
         {
             waitBeforeReturning = StartCoroutine(WaitBeforeReturning());
+        }
+        else
+        {
+            GameManager.Instance.isDefFollowingPlayer = false;
         }
         fadeOutCor = StartCoroutine(FadeOut());
     }
