@@ -6,6 +6,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>, ISaveable
 {
     [HideInInspector] public bool isMenuOpen;
     [HideInInspector] public bool isInGame;
+    public GameObject inputUI;
 
     [HideInInspector] public bool isBlindFollowingPlayer;
     [HideInInspector] public bool isDefFollowingPlayer;
@@ -55,14 +56,16 @@ public class GameManager : SingletonMonobehaviour<GameManager>, ISaveable
         }
     }
 
+   
 
-    
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
+
+
     void OnEnable()
     {
         ISaveableRegister();

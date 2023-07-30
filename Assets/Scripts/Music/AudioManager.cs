@@ -30,11 +30,10 @@ public class AudioManager : SingletonMonobehaviour<AudioManager>
     {
         EventInstancesDict.Add("Music", CreateInstance(FMODManager.Instance.Music)); 
         EventInstancesDict.Add("RandomSFX", CreateInstance(FMODManager.Instance.RandomSFX));
-        EventInstancesDict.Add("Amnbience", CreateInstance(FMODManager.Instance.Amnbience));
+        EventInstancesDict.Add("Ambience", CreateInstance(FMODManager.Instance.Ambience));
         EventInstancesDict.Add("Rain", CreateInstance(FMODManager.Instance.Rain));
 
         EventInstancesDict.Add("ButtonPress", CreateInstance(FMODManager.Instance.ButtonPress));
-        Debug.Log("d");
         //EventInstancesDict.Add("PlaySound", CreateInstance(FMODManager.Instance.PlaySound));
         //EventInstancesDict.Add("GameOverSound", CreateInstance(FMODManager.Instance.GameOverSound));
 
@@ -44,8 +43,6 @@ public class AudioManager : SingletonMonobehaviour<AudioManager>
         /*
         EventInstancesDict.Add("PlayerStepSoundOnWater", CreateInstance(FMODManager.Instance.PlayerStepSoundOnWater));
         */
-
-        EventInstancesDict["Amnbience"].start();
     }
 
     public void SetParameter(string instanceName, string parameterName, float value)
@@ -170,9 +167,23 @@ public class AudioManager : SingletonMonobehaviour<AudioManager>
     {
         while (true)
         {
-            yield return GameManager.Instance.StartCoroutine(GameManager.Instance.Timer(Random.Range(12, 45)));
+            yield return GameManager.Instance.StartCoroutine(GameManager.Instance.Timer(Random.Range(35, 90)));
 
             EventInstancesDict["RandomSFX"].start();
+        }
+    }
+
+    public void ToggleMusicWithRain(bool val)
+    {
+        if (val)
+        {
+            EventInstancesDict["Rain"].stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+            EventInstancesDict["Music"].start();
+        }
+        else
+        {
+            EventInstancesDict["Music"].stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+            EventInstancesDict["Rain"].start();
         }
     }
 
@@ -180,12 +191,13 @@ public class AudioManager : SingletonMonobehaviour<AudioManager>
     {
         if (val)
         {
+            EventInstancesDict["Ambience"].stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
             EventInstancesDict["Music"].start();
         }
         else
         {
             EventInstancesDict["Music"].stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+            EventInstancesDict["Ambience"].start();
         }
-
     }
 }

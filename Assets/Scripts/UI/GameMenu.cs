@@ -8,6 +8,7 @@ public class GameMenu : SingletonMonobehaviour<GameMenu>
     //delater
     Light2D globalLight;
     [SerializeField] GameObject gameMenu;
+    [SerializeField] GameObject inGameMenu;
     [SerializeField] GameObject playButton;
     [SerializeField] GameObject rePlayButton;
     [SerializeField] GameObject nextLevelButton;
@@ -135,6 +136,7 @@ public class GameMenu : SingletonMonobehaviour<GameMenu>
 
     public void GameOver()
     {
+        GameManager.Instance.isMenuOpen = true;
         Settings.lives--;
         if (Settings.lives <= 0) 
         {
@@ -146,8 +148,17 @@ public class GameMenu : SingletonMonobehaviour<GameMenu>
         {
             canReplay = true;
         }
-
         SaveManager.Instance.SaveDataToFile();
+    }
+
+    public void ToggleUnputUI(bool val)
+    {
+        inGameMenu.SetActive(val);
+        GameManager.Instance.inputUI.SetActive(val);
+    }
+
+    public void OpenGameOver()
+    {
         OpenGameMenu();
         rePlayButton.SetActive(true);
     }

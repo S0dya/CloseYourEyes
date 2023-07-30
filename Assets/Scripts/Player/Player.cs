@@ -22,7 +22,7 @@ public class Player : SingletonMonobehaviour<Player>
 
     Coroutine openEyeCor;
     Coroutine closeEyeCor;
-
+    
 
     protected override void Awake()
     {
@@ -50,7 +50,8 @@ public class Player : SingletonMonobehaviour<Player>
 
     public IEnumerator Move()
     {
-        animator.Play("PlayerWalking");
+        PlayWalking();
+
         while (isFingerDown)
         {
             Vector2 moveDirection = movementAmount.normalized;
@@ -129,16 +130,43 @@ public class Player : SingletonMonobehaviour<Player>
         canOpenEye = true;
     }
 
+
+    public void PlayWalking()
+    {
+        if (onWater)
+        {
+            animator.Play("PlayerWalkingOnWater");
+        }
+        else
+        {
+            animator.Play("PlayerWalking");
+        }
+    }
+
     public void PlayStepSound()
     {
         AudioManager.Instance.PlayOneShot(FMODManager.Instance.PlayerStepSound, Vector2.zero, speed/3);
     }
 
+    public void PlayStepSoundOnWater()
+    {
+        AudioManager.Instance.PlayOneShot(FMODManager.Instance.PlayerStepSoundOnWater, Vector2.zero, speed /3);
+    }
+
     public void Die()
     {
         AudioManager.Instance.PlayOneShot("DieSound");
-        speed = 0;
+        GameMenu.Instance.ToggleUnputUI(false);
         GameMenu.Instance.GameOver();
+        StopAllCoroutines();
+        speed = 0;
         rigidbody.velocity = Vector2.zero;
+        animator.Play("PlayerDeath");
+    }
+
+    public void OpenGameOver()
+    {
+        GameMenu.Instance.OpenGameOver();
+        GameMenu.Instance.ToggleUnputUI(true);
     }
 }

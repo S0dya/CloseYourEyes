@@ -9,6 +9,7 @@ public class Water : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             Player.Instance.onWater = true;
+            Player.Instance.PlayWalking();
         }
     }
 
@@ -17,6 +18,7 @@ public class Water : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             Player.Instance.onWater = false;
+            Player.Instance.PlayWalking();
         }
     }
 }

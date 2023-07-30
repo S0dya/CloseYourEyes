@@ -7,13 +7,17 @@ public class FMODManager : SingletonMonobehaviour<FMODManager>
 {
     [field: Header("Ambience")]
 
-    [field: SerializeField] public EventReference Amnbience { get; private set; }
+    [field: SerializeField] public EventReference Ambience { get; private set; }
     [field: SerializeField] public EventReference Rain { get; private set; }
 
     [field: Header("Music")]
 
     [field: SerializeField] public EventReference Music { get; private set; }
+
+    [field: Header("Enverenment")]
     [field: SerializeField] public EventReference RandomSFX { get; private set; }
+    [field: SerializeField] public EventReference Thunder { get; private set; }
+
 
     [field: Header("Player")]
 

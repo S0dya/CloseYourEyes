@@ -402,8 +402,8 @@ MonoBehaviour:
   m_ShowCameraFrustum: 1
   m_IgnoreTimeScale: 0
   m_WorldUpOverride: {fileID: 0}
-  m_UpdateMethod: 0
-  m_BlendUpdateMethod: 0
+  m_UpdateMethod: 2
+  m_BlendUpdateMethod: 1
   m_DefaultBlend:
     m_Style: 1
     m_Time: 2
@@ -1017,6 +1017,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isMenuOpen: 0
   isInGame: 0
+  inputUI: {fileID: 1460834919}
   isBlindFollowingPlayer: 0
   isDefFollowingPlayer: 0
   visionTime: 
@@ -1330,7 +1331,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f06a066065b25264098fa16464e3e162, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Amnbience>k__BackingField:
+  <Ambience>k__BackingField:
     Guid:
       Data1: 79992516
       Data2: 1262429184
@@ -1358,6 +1359,13 @@ MonoBehaviour:
       Data3: 1916915332
       Data4: 1198218980
     Path: event:/SFX/RandomSFX/RandomSFX
+  <Thunder>k__BackingField:
+    Guid:
+      Data1: 1866296080
+      Data2: 1104625879
+      Data3: 1735320996
+      Data4: 720549917
+    Path: event:/SFX/Thunder/Lightning
   <PlayerStepSound>k__BackingField:
     Guid:
       Data1: -249521726
@@ -1367,11 +1375,11 @@ MonoBehaviour:
     Path: event:/SFX/Player/FootSteps
   <PlayerStepSoundOnWater>k__BackingField:
     Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+      Data1: -2105458855
+      Data2: 1267938457
+      Data3: 801781170
+      Data4: 1755753964
+    Path: event:/SFX/Player/FootStepsWater
   <DieSound>k__BackingField:
     Guid:
       Data1: -1976331137
@@ -1811,14 +1819,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 269540404937276857, guid: 1e418c4c25bc6974b86ddc09ebe1da9d, type: 3}
-      propertyPath: joystick
-      value: 
-      objectReference: {fileID: 207260933}
-    - target: {fileID: 269540404937276857, guid: 1e418c4c25bc6974b86ddc09ebe1da9d, type: 3}
-      propertyPath: joystickKnob
-      value: 
-      objectReference: {fileID: 1100413531}
     - target: {fileID: 5028059462607881068, guid: 1e418c4c25bc6974b86ddc09ebe1da9d, type: 3}
       propertyPath: joystick
       value: 
@@ -1835,6 +1835,18 @@ PrefabInstance:
       propertyPath: joystickKnob
       value: 
       objectReference: {fileID: 1100413531}
+    - target: {fileID: 8214989070735641718, guid: 1e418c4c25bc6974b86ddc09ebe1da9d, type: 3}
+      propertyPath: m_Interpolate
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8214989070735641719, guid: 1e418c4c25bc6974b86ddc09ebe1da9d, type: 3}
+      propertyPath: m_SortingLayer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8214989070735641719, guid: 1e418c4c25bc6974b86ddc09ebe1da9d, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -381446131
+      objectReference: {fileID: 0}
     - target: {fileID: 8214989070735641722, guid: 1e418c4c25bc6974b86ddc09ebe1da9d, type: 3}
       propertyPath: m_Name
       value: Player
@@ -1882,6 +1894,10 @@ PrefabInstance:
     - target: {fileID: 8214989070735641723, guid: 1e418c4c25bc6974b86ddc09ebe1da9d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8214989070840363491, guid: 1e418c4c25bc6974b86ddc09ebe1da9d, type: 3}
+      propertyPath: m_ApplyToSortingLayers.Array.size
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1e418c4c25bc6974b86ddc09ebe1da9d, type: 3}

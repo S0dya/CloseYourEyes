@@ -7,6 +7,7 @@ using UnityEngine.Rendering.Universal;
 public class ThunderManager : SingletonMonobehaviour<ThunderManager>
 {
     [SerializeField] Light2D[] thunders;
+    [SerializeField] Transform[] thundersTransform;
 
     Coroutine thunderCor;
 
@@ -51,6 +52,7 @@ public class ThunderManager : SingletonMonobehaviour<ThunderManager>
 
             thunders[index].enabled = true;
             yield return GameManager.Instance.StartCoroutine(GameManager.Instance.Timer(Random.Range(0.05f, 0.3f)));
+            AudioManager.Instance.PlayOneShot(FMODManager.Instance.Thunder, thundersTransform[index].position);
             thunders[index].enabled = false;
 
             yield return null;
