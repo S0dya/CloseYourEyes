@@ -109,34 +109,6 @@ public class AudioManager : SingletonMonobehaviour<AudioManager>
         }
     }
 
-    public void ToggleRandomSFX(bool val)
-    {
-        if (randomSFXCor != null)
-        {
-            StopCoroutine(randomSFXCor);
-        }
-
-        if (val)
-        {
-            randomSFXCor = StartCoroutine(RandomSFXCor());
-        }
-    }
-
-    public void ToggleSFX(bool val)
-    {
-        if (val)
-        {
-            RuntimeManager.GetBus("bus:/SFX").setVolume(Settings.curSfxVolume);
-        }
-        else
-        {
-            float volume = 0f;
-            RuntimeManager.GetBus("bus:/SFX").getVolume(out volume);
-            Settings.curSfxVolume = volume;
-            RuntimeManager.GetBus("bus:/SFX").setVolume(0);
-        }
-    }
-
     public void SetCurSFX()
     {
         float volume = 0f;
@@ -167,37 +139,72 @@ public class AudioManager : SingletonMonobehaviour<AudioManager>
     {
         while (true)
         {
-            yield return GameManager.Instance.StartCoroutine(GameManager.Instance.Timer(Random.Range(35, 90)));
+            yield return GameManager.Instance.StartCoroutine(GameManager.Instance.Timer(Random.Range(70, 150)));
 
             EventInstancesDict["RandomSFX"].start();
         }
     }
+    
 
-    public void ToggleMusicWithRain(bool val)
+    public void ToggleSFX(bool val)
     {
         if (val)
         {
-            EventInstancesDict["Rain"].stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-            EventInstancesDict["Music"].start();
+            RuntimeManager.GetBus("bus:/SFX").setVolume(Settings.curSfxVolume);
         }
         else
         {
-            EventInstancesDict["Music"].stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-            EventInstancesDict["Rain"].start();
+            float volume = 0f;
+            RuntimeManager.GetBus("bus:/SFX").getVolume(out volume);
+            Settings.curSfxVolume = volume;
+            RuntimeManager.GetBus("bus:/SFX").setVolume(0);
         }
     }
 
+    public void ToggleRandomSFX(bool val)
+    {
+        if (randomSFXCor != null)
+        {
+            StopCoroutine(randomSFXCor);
+        }
+
+        if (val)
+        {
+            randomSFXCor = StartCoroutine(RandomSFXCor());
+        }
+    }
+
+    public void ToggleAmbience(bool val)
+    {
+        if (val)
+        {
+            EventInstancesDict["Ambience"].start();
+        }
+        else
+        {
+            EventInstancesDict["Ambience"].stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        }
+    }
     public void ToggleMusic(bool val)
     {
         if (val)
         {
-            EventInstancesDict["Ambience"].stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
             EventInstancesDict["Music"].start();
         }
         else
         {
             EventInstancesDict["Music"].stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-            EventInstancesDict["Ambience"].start();
+        }
+    }
+    public void ToggleMusicWithRain(bool val)
+    {
+        if (val)
+        {
+            EventInstancesDict["Music"].start();
+        }
+        else
+        {
+            EventInstancesDict["Music"].stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         }
     }
 }

@@ -17,6 +17,7 @@ public class Player : SingletonMonobehaviour<Player>
     [HideInInspector] public bool isFingerDown;
     [HideInInspector] public bool canOpenEye = true;
     [HideInInspector] public bool onWater;
+    [HideInInspector] public bool isThunderLevel;
 
     Vector2 currentVelocity = new Vector2(0, 0);
 
@@ -35,7 +36,11 @@ public class Player : SingletonMonobehaviour<Player>
 
     void OnEnable()
     {
-        ThunderManager.Instance.StartThunder();
+        Debug.Log(isThunderLevel);
+        if (isThunderLevel)
+        {
+            ThunderManager.Instance.StartThunder();
+        }
     }
 
     void OnDisable()

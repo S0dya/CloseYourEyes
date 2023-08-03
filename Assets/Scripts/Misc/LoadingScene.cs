@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
+using System.Linq;
 
 public class LoadingScene : SingletonMonobehaviour<LoadingScene>
 {
@@ -74,6 +75,16 @@ public class LoadingScene : SingletonMonobehaviour<LoadingScene>
         AsyncOperation unloadOperation = SceneManager.UnloadSceneAsync(sceneToClose);
         AsyncOperation operation = SceneManager.LoadSceneAsync(sceneId, LoadSceneMode.Additive);
 
+        if (!Settings.rainLevels.Contains(sceneToClose - 2))
+        {
+            AudioManager.Instance.ToggleAmbience(false);
+        }
+        else if (sceneToClose > 1)
+        {
+            Debug.Log("as");
+            AudioManager.Instance.ToggleMusicWithRain(false);
+        }
+
         if (epigraphFadeOut != null)
         {
             StopCoroutine(epigraphFadeOut);
@@ -94,7 +105,19 @@ public class LoadingScene : SingletonMonobehaviour<LoadingScene>
             LoadingBarFill.fillAmount = progression;
             yield return null;
         }
-
+        
+        if (!Settings.rainLevels.Contains(sceneId-2))
+        {
+            AudioManager.Instance.ToggleAmbience(true);
+            Player.Instance.isThunderLevel = false;
+            AudioManager.Instance.ToggleRandomSFX(true);
+        }
+        else
+        {
+            Debug.Log("QWE");
+            AudioManager.Instance.ToggleMusicWithRain(true);
+            Player.Instance.isThunderLevel = true;
+        }
         ClearForNewScene();
         Settings.curSceneNum = sceneId;
     }
@@ -119,10 +142,10 @@ public class LoadingScene : SingletonMonobehaviour<LoadingScene>
     {
         GameManager.Instance.isBlindFollowingPlayer = false;
         GameManager.Instance.isDefFollowingPlayer = false;
-        AudioManager.Instance.ToggleRandomSFX(true);
         GameManager.Instance.isMenuOpen = false;
-        epigraphFadeOut = StartCoroutine(FadeOutEpigraph());
         TogglePlayer(true);
+
+        epigraphFadeOut = StartCoroutine(FadeOutEpigraph());
         LoadingScreen.SetActive(false);
     }
 

@@ -35,7 +35,10 @@ public class GameManager : SingletonMonobehaviour<GameManager>, ISaveable
 
     public void LevelComplete()
     {
-        Settings.complitedLevelsAmount++;
+        if (Settings.curSceneNum == Settings.complitedLevelsAmount)
+        {
+            Settings.complitedLevelsAmount++;
+        }
     }
 
     public IEnumerator Timer(float duration)

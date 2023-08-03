@@ -65,6 +65,7 @@ public class GameMenu : SingletonMonobehaviour<GameMenu>
     public void NextLevelButton()
     {
         LoadingScene.Instance.StartCoroutine(LoadingScene.Instance.LoadSceneAsync(Settings.curSceneNum+1, Settings.curSceneNum));
+        LoadingScene.Instance.TogglePlayer(false);
         AudioManager.Instance.StopAllEmitters();
     }
 
@@ -136,6 +137,7 @@ public class GameMenu : SingletonMonobehaviour<GameMenu>
 
     public void GameOver()
     {
+
         GameManager.Instance.isMenuOpen = true;
         Settings.lives--;
         if (Settings.lives <= 0) 
