@@ -182,13 +182,13 @@ MonoBehaviour:
       Data4: -779879486
     Path: event:/SFX/Enemy/DefEnemyIdle
   Event: 
-  PlayEvent: 0
-  StopEvent: 0
+  PlayEvent: 11
+  StopEvent: 12
   AllowFadeout: 1
   TriggerOnce: 0
   Preload: 0
   AllowNonRigidbodyDoppler: 0
   Params: []
   OverrideAttenuation: 0
-  OverrideMinDistance: 1
-  OverrideMaxDistance: 20
+  OverrideMinDistance: 5
+  OverrideMaxDistance: 25

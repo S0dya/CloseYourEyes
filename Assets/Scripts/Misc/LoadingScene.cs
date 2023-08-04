@@ -15,6 +15,7 @@ public class LoadingScene : SingletonMonobehaviour<LoadingScene>
 
     [SerializeField] GameObject inputPlayer;
     GameObject playerObject;
+    Player player;
 
     Coroutine epigraphFadeOut;
 
@@ -23,6 +24,7 @@ public class LoadingScene : SingletonMonobehaviour<LoadingScene>
         base.Awake();
 
         playerObject = GameObject.FindGameObjectWithTag("Player");
+        player = playerObject.GetComponent<Player>();
         TogglePlayer(false);
         StartCoroutine(LoadGame());
         Epigraph.enabled = false;
@@ -49,6 +51,7 @@ public class LoadingScene : SingletonMonobehaviour<LoadingScene>
     public IEnumerator LoadMenuAsync(int sceneToClose)
     {
         AudioManager.Instance.ToggleRandomSFX(false);
+        AudioManager.Instance.ToggleAmbience(false);
         AsyncOperation unloadOperation = SceneManager.UnloadSceneAsync(sceneToClose);
         AsyncOperation operation = SceneManager.LoadSceneAsync(1, LoadSceneMode.Additive);
 
@@ -82,7 +85,7 @@ public class LoadingScene : SingletonMonobehaviour<LoadingScene>
         else if (sceneToClose > 1)
         {
             Debug.Log("as");
-            AudioManager.Instance.ToggleMusicWithRain(false);
+            AudioManager.Instance.ToggleMusicRain(false);
         }
 
         if (epigraphFadeOut != null)
@@ -109,14 +112,14 @@ public class LoadingScene : SingletonMonobehaviour<LoadingScene>
         if (!Settings.rainLevels.Contains(sceneId-2))
         {
             AudioManager.Instance.ToggleAmbience(true);
-            Player.Instance.isThunderLevel = false;
+            player.isThunderLevel = false;
             AudioManager.Instance.ToggleRandomSFX(true);
         }
         else
         {
             Debug.Log("QWE");
-            AudioManager.Instance.ToggleMusicWithRain(true);
-            Player.Instance.isThunderLevel = true;
+            AudioManager.Instance.ToggleMusicRain(true);
+            player.isThunderLevel = true;
         }
         ClearForNewScene();
         Settings.curSceneNum = sceneId;

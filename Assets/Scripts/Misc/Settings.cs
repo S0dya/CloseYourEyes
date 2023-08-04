@@ -34,7 +34,7 @@ public static class Settings
 
     public static float[] visionTime = { 4, 1 };
     public static string[] epigraphs = { "...i dont see...", "...i dont hear..." };
-    public static int[] rainLevels = { 2, 3, 4, 5 };
+    public static int[] rainLevels = { 1, 3, 4, 5 };
 
 
 

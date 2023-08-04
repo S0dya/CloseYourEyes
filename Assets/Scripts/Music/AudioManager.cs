@@ -196,15 +196,15 @@ public class AudioManager : SingletonMonobehaviour<AudioManager>
             EventInstancesDict["Music"].stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         }
     }
-    public void ToggleMusicWithRain(bool val)
+    public void ToggleMusicRain(bool val)
     {
         if (val)
         {
-            EventInstancesDict["Music"].start();
+            EventInstancesDict["Rain"].start();
         }
         else
         {
-            EventInstancesDict["Music"].stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+            EventInstancesDict["Rain"].stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         }
     }
 }
