@@ -30,10 +30,20 @@ public static class Settings
     /// inGane
     /// </summary>
     public static int curSceneNum;
+    public static int curLvlNum;
     public static int curComplitedLevelsAmount;
 
-    public static float[] visionTime = { 4, 1 };
-    public static string[] epigraphs = { "...i dont see...", "...i dont hear..." };
+    public static float curVisionRadious;
+
+    public static float[] visionRadious = { 6.5f, 3f, 6.3f, 6.2f, 6.1f, 6.5f, 3f, 6.3f, 6.2f, 6.1f, 6.5f, 3f, 6.3f, 6.2f, 6.1f };
+    public static float[] visionTime = { 4, 1, 4, 1, 4, 1, 4, 1, 4, 1, 4, 1, 4, 1, 4, 1, 4, 1, 4, 1, };
+    public static string[] epigraphs = 
+        { 
+        ".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",
+        "...i dont see...","...i dont hear...","...i dont hear...","...i dont hear...","...i dont hear...","...i dont hear...",
+        "...i dont hear...","...i dont hear...","...i dont hear...","...i dont hear...","...i dont hear...","...i dont hear...",
+        "...i dont hear...","...i dont hear...","...i dont hear...","...i dont hear...","...i dont hear...","...i dont hear..." 
+        };
     public static int[] rainLevels = { 1, 3, 4, 5 };
 
 

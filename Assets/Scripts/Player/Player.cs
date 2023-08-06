@@ -36,7 +36,6 @@ public class Player : SingletonMonobehaviour<Player>
 
     void OnEnable()
     {
-        Debug.Log(isThunderLevel);
         if (isThunderLevel)
         {
             ThunderManager.Instance.StartThunder();
@@ -64,7 +63,7 @@ public class Player : SingletonMonobehaviour<Player>
 
             animator.speed = speed /3;
             rigidbody.velocity = currentVelocity * speed * (onWater ? 0.6f : 1);
-            playerSoundTrigger.radius = Mathf.Max(speed * (onWater ? 2.5f : 1.5f), 1.2f);
+            playerSoundTrigger.radius = Mathf.Max(speed * (onWater ? 2.75f : 1.75f), 1.2f);
 
             yield return null;
         }
@@ -91,7 +90,9 @@ public class Player : SingletonMonobehaviour<Player>
     IEnumerator OpenEyeCor()
     {
         float radius = eyeVision.pointLightOuterRadius;
-        while (radius < 6.5f)
+        float maxRadius = Settings.curVisionRadious;
+
+        while (radius < maxRadius)
         {
             if (!GameManager.Instance.isMenuOpen)
             {

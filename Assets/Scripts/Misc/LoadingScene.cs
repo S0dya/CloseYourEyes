@@ -57,6 +57,15 @@ public class LoadingScene : SingletonMonobehaviour<LoadingScene>
 
         LoadingScreen.SetActive(true);
 
+        if (!Settings.rainLevels.Contains(sceneToClose - 2))
+        {
+            AudioManager.Instance.ToggleAmbience(false);
+        }
+        else if (sceneToClose > 1)
+        {
+            AudioManager.Instance.ToggleMusicRain(false);
+        }
+
         while (!operation.isDone)
         {
             float progression = Mathf.Clamp01(operation.progress / 0.9f);
@@ -84,7 +93,6 @@ public class LoadingScene : SingletonMonobehaviour<LoadingScene>
         }
         else if (sceneToClose > 1)
         {
-            Debug.Log("as");
             AudioManager.Instance.ToggleMusicRain(false);
         }
 
@@ -117,12 +125,12 @@ public class LoadingScene : SingletonMonobehaviour<LoadingScene>
         }
         else
         {
-            Debug.Log("QWE");
             AudioManager.Instance.ToggleMusicRain(true);
             player.isThunderLevel = true;
         }
         ClearForNewScene();
         Settings.curSceneNum = sceneId;
+        Settings.curVisionRadious = Settings.visionRadious[sceneId-2];
     }
 
     IEnumerator FadeOutEpigraph()

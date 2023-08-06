@@ -15,6 +15,7 @@ public class BlindEnemy : MonoBehaviour
 
     [SerializeField] Transform point;
     [HideInInspector] public bool isWatched;
+    [HideInInspector] public bool isFollowing;
     Vector2 startPos;
 
     Coroutine movingCor;
@@ -37,22 +38,33 @@ public class BlindEnemy : MonoBehaviour
         point.position = startPos;
     }
 
-    public void StartFollowoingPlayer()
-    {
-        if (fadeOutCor != null)
-        {
-            StopCoroutine(fadeOutCor);
-        }
-        if (fadeInCor != null)
-        {
-            StopCoroutine(fadeInCor);
-        }
-        fadeInCor = StartCoroutine(FadeIn());
-        GameManager.Instance.isBlindFollowingPlayer = true;
-    }
     public void HearPlayer()
     {
         point.position = playerObject.transform.position;
+        if (!isFollowing)
+        {
+            isFollowing = true;
+
+            if (!GameManager.Instance.isBlindFollowingPlayer)
+            {
+                AudioManager.Instance.PlayOneShot(FMODManager.Instance.DefJump, transform.position);
+            }
+
+            if (waitBeforeReturning != null)
+            {
+                StopCoroutine(waitBeforeReturning);
+            }
+            if (fadeOutCor != null)
+            {
+                StopCoroutine(fadeOutCor);
+            }
+            if (fadeInCor != null)
+            {
+                StopCoroutine(fadeInCor);
+            }
+            fadeInCor = StartCoroutine(FadeIn());
+            GameManager.Instance.isBlindFollowingPlayer = true;
+        }
     }
 
     public void StopFollowing(bool val)
@@ -73,10 +85,10 @@ public class BlindEnemy : MonoBehaviour
                 Vector2 direction = (Vector2)point.position - rigidbody.position;
                 float distance = direction.magnitude;
 
-                if (distance > 0.05f)
+                if (distance > 0.1f)
                 {
                     direction.Normalize();
-                    Vector2 targetPosition = rigidbody.position + direction * 12 * Time.deltaTime;
+                    Vector2 targetPosition = rigidbody.position + direction * 13 * Time.deltaTime;
                     rigidbody.MovePosition(targetPosition);
                 }
                 else
@@ -134,7 +146,7 @@ public class BlindEnemy : MonoBehaviour
         {
             if (!GameManager.Instance.isMenuOpen)
             {
-                b = Mathf.Lerp(b, 1.3f, 0.009f);
+                b = Mathf.Lerp(b, 1.3f, 0.01f);
                 sprite.color = new Color(sprite.color.r, sprite.color.g, b);
             }
 
@@ -150,7 +162,7 @@ public class BlindEnemy : MonoBehaviour
         {
             if (!GameManager.Instance.isMenuOpen && !isWatched)
             {
-                b = Mathf.Lerp(b, -0.3f, 0.02f);
+                b = Mathf.Lerp(b, -0.3f, 0.025f);
                 sprite.color = new Color(sprite.color.r, sprite.color.g, b);
             }
 

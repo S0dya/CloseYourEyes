@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class GameManager : SingletonMonobehaviour<GameManager>, ISaveable
 {
@@ -24,10 +25,8 @@ public class GameManager : SingletonMonobehaviour<GameManager>, ISaveable
         GameObjectSave = new GameObjectSave();
 
         Settings.Initialize();
-        Settings.complitedLevelsAmount = 14;
-        Settings.lives = 1;
     }
-
+    
     void Start()
     {
         SaveManager.Instance.LoadDataFromFile();
@@ -35,9 +34,10 @@ public class GameManager : SingletonMonobehaviour<GameManager>, ISaveable
 
     public void LevelComplete()
     {
-        if (Settings.curSceneNum == Settings.complitedLevelsAmount)
+        if (Settings.curSceneNum > Settings.complitedLevelsAmount)
         {
-            Settings.complitedLevelsAmount++;
+            Settings.lives = Math.Min(Settings.lives+1, 3);
+            Settings.complitedLevelsAmount = Settings.curSceneNum-1;
         }
     }
 

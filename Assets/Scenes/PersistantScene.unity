@@ -1819,14 +1819,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 5028059462607881068, guid: 1e418c4c25bc6974b86ddc09ebe1da9d, type: 3}
-      propertyPath: joystick
-      value: 
-      objectReference: {fileID: 207260933}
-    - target: {fileID: 5028059462607881068, guid: 1e418c4c25bc6974b86ddc09ebe1da9d, type: 3}
-      propertyPath: joystickKnob
-      value: 
-      objectReference: {fileID: 1100413531}
     - target: {fileID: 5822626226400075458, guid: 1e418c4c25bc6974b86ddc09ebe1da9d, type: 3}
       propertyPath: joystick
       value: 
@@ -1835,18 +1827,22 @@ PrefabInstance:
       propertyPath: joystickKnob
       value: 
       objectReference: {fileID: 1100413531}
-    - target: {fileID: 8214989070735641718, guid: 1e418c4c25bc6974b86ddc09ebe1da9d, type: 3}
-      propertyPath: m_Interpolate
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8214989070735641719, guid: 1e418c4c25bc6974b86ddc09ebe1da9d, type: 3}
-      propertyPath: m_SortingLayer
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 8214989070735641719, guid: 1e418c4c25bc6974b86ddc09ebe1da9d, type: 3}
-      propertyPath: m_SortingLayerID
-      value: -381446131
-      objectReference: {fileID: 0}
+    - target: {fileID: 5979705582856242108, guid: 1e418c4c25bc6974b86ddc09ebe1da9d, type: 3}
+      propertyPath: joystick
+      value: 
+      objectReference: {fileID: 207260933}
+    - target: {fileID: 5979705582856242108, guid: 1e418c4c25bc6974b86ddc09ebe1da9d, type: 3}
+      propertyPath: joystickKnob
+      value: 
+      objectReference: {fileID: 1100413531}
+    - target: {fileID: 6924734275847838800, guid: 1e418c4c25bc6974b86ddc09ebe1da9d, type: 3}
+      propertyPath: joystick
+      value: 
+      objectReference: {fileID: 207260933}
+    - target: {fileID: 6924734275847838800, guid: 1e418c4c25bc6974b86ddc09ebe1da9d, type: 3}
+      propertyPath: joystickKnob
+      value: 
+      objectReference: {fileID: 1100413531}
     - target: {fileID: 8214989070735641722, guid: 1e418c4c25bc6974b86ddc09ebe1da9d, type: 3}
       propertyPath: m_Name
       value: Player
@@ -1894,10 +1890,6 @@ PrefabInstance:
     - target: {fileID: 8214989070735641723, guid: 1e418c4c25bc6974b86ddc09ebe1da9d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8214989070840363491, guid: 1e418c4c25bc6974b86ddc09ebe1da9d, type: 3}
-      propertyPath: m_ApplyToSortingLayers.Array.size
-      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1e418c4c25bc6974b86ddc09ebe1da9d, type: 3}

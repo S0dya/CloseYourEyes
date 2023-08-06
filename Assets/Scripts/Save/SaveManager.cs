@@ -37,4 +37,17 @@ public class SaveManager : SingletonMonobehaviour<SaveManager>
         File.WriteAllText(filePath, json);
 
     }
+
+    void OnApplicationPause(bool pauseStatus)
+    {
+        if (pauseStatus)
+        {
+            SaveDataToFile();
+        }
+    }
+
+    void OnApplicationQuit()
+    {
+        SaveDataToFile();
+    }
 }

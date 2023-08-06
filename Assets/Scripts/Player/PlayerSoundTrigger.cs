@@ -4,42 +4,34 @@ using UnityEngine;
 
 public class PlayerSoundTrigger : MonoBehaviour
 {
-    void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("BlindEnemy"))
-        {
-            Vector2 direction = collision.transform.position - transform.position;
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, direction.normalized, direction.magnitude, LayerMask.GetMask("Obstacle"));
-            if (hit.collider == null)
-            {
-                if (!GameManager.Instance.isBlindFollowingPlayer)
-                {
-                    AudioManager.Instance.PlayOneShot(FMODManager.Instance.DefJump, collision.transform.position);
-                }
-
-                BlindEnemy blindEnemy = collision.gameObject.GetComponent<BlindEnemy>();
-                if (!blindEnemy.isWatched)
-                {
-                    blindEnemy.StartFollowoingPlayer();
-                }
-            }
-        }
-    }
-
     void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.CompareTag("BlindEnemy"))
         {
             Vector2 direction = collision.transform.position - transform.position;
             RaycastHit2D hit = Physics2D.Raycast(transform.position, direction.normalized, direction.magnitude, LayerMask.GetMask("Obstacle"));
+            BlindEnemy blindEnemy = collision.gameObject.GetComponent<BlindEnemy>();
+
             if (hit.collider == null)
             {
-                BlindEnemy blindEnemy = collision.gameObject.GetComponent<BlindEnemy>();
                 if (!blindEnemy.isWatched)
                 {
                     blindEnemy.HearPlayer();
                 }
             }
+            else
+            {
+                blindEnemy.isFollowing = false;
+            }
+        }
+    }
+    
+    void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("BlindEnemy"))
+        {
+            BlindEnemy blindEnemy = collision.gameObject.GetComponent<BlindEnemy>();
+            blindEnemy.isFollowing = false;
         }
     }
 }

@@ -13,7 +13,7 @@ public class DefEnemy : MonoBehaviour
     Player player;
 
     [SerializeField] Transform point;
-    [HideInInspector] public bool isFollowingPlayer;
+    [HideInInspector] public bool isFollowing;
     Vector2 startPos;
 
     Coroutine movingCor;
@@ -40,22 +40,30 @@ public class DefEnemy : MonoBehaviour
         StopAllCoroutines();
     }
 
-    public void StartFollowoingPlayer()
-    {
-        if (fadeOutCor != null)
-        {
-            StopCoroutine(fadeOutCor);
-        }
-        if (fadeInCor != null)
-        {
-            StopCoroutine(fadeInCor);
-        }
-        fadeInCor = StartCoroutine(FadeIn());
-        GameManager.Instance.isDefFollowingPlayer = true;
-    }
     public void SeePlayer()
     {
         point.position = playerObject.transform.position;
+
+        if (!isFollowing)
+        {
+            isFollowing = true;
+
+            if (!GameManager.Instance.isBlindFollowingPlayer)
+            {
+                AudioManager.Instance.PlayOneShot(FMODManager.Instance.BlindJump, transform.position);
+            }
+
+            if (fadeOutCor != null)
+            {
+                StopCoroutine(fadeOutCor);
+            }
+            if (fadeInCor != null)
+            {
+                StopCoroutine(fadeInCor);
+            }
+            fadeInCor = StartCoroutine(FadeIn());
+            GameManager.Instance.isDefFollowingPlayer = true;
+        }
     }
 
     public void StopFollowing(bool val)
@@ -83,7 +91,8 @@ public class DefEnemy : MonoBehaviour
             if (distance > 0.1f)
             {
                 direction.Normalize();
-                rigidbody.velocity = direction * 5;
+                Vector2 targetPosition = rigidbody.position + direction * 16 * Time.deltaTime;
+                rigidbody.MovePosition(targetPosition);
             }
             else
             {
@@ -132,7 +141,7 @@ public class DefEnemy : MonoBehaviour
                 continue;
             }
 
-            r = Mathf.Lerp(r, 1.3f, 0.009f);
+            r = Mathf.Lerp(r, 1.3f, 0.01f);
             sprite.color = new Color(r, sprite.color.g, sprite.color.b);
 
             yield return null;
@@ -151,7 +160,7 @@ public class DefEnemy : MonoBehaviour
                 continue;
             }
 
-            r = Mathf.Lerp(r, -0.3f, 0.02f);
+            r = Mathf.Lerp(r, -0.3f, 0.025f);
             sprite.color = new Color(r, sprite.color.g, sprite.color.b);
 
             yield return null;

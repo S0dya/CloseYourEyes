@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
+using TMPro;
 
 public class GameMenu : SingletonMonobehaviour<GameMenu>
 {
@@ -9,12 +10,13 @@ public class GameMenu : SingletonMonobehaviour<GameMenu>
     Light2D globalLight;
     [SerializeField] GameObject gameMenu;
     [SerializeField] GameObject inGameMenu;
-    [SerializeField] GameObject playButton;
-    [SerializeField] GameObject rePlayButton;
-    [SerializeField] GameObject nextLevelButton;
     [SerializeField] GameObject rewardedAdBar;
+    [SerializeField] TextMeshProUGUI mainButtonText;
 
     bool canReplay;
+
+    bool inMenu;
+    bool inGameOver;
 
     GameObject[] defEnemyArr;
     GameObject[] blindEnemArr;
@@ -28,6 +30,7 @@ public class GameMenu : SingletonMonobehaviour<GameMenu>
 
         globalLight = GameObject.FindGameObjectWithTag("REMOVELATER").GetComponent<Light2D>();
         globalLight.intensity = 0f;
+
     }
 
     void Start()
@@ -38,35 +41,36 @@ public class GameMenu : SingletonMonobehaviour<GameMenu>
     //Buttons
     public void PauseButton()
     {
+        inMenu = true;
+        mainButtonText.text = "PLAY";
         OpenGameMenu();
-        playButton.SetActive(true);
     }
 
-    public void PlayButton()
+    public void MainButton()
     {
-        CloseGameMenu();
-    }
-
-    public void ReplayButton()
-    {
-        if (canReplay || Settings.isGameFinished)
+        if (inMenu)
         {
-            AudioManager.Instance.StopAllEmitters();
-            LoadingScene.Instance.TogglePlayer(false);
-            LoadingScene.Instance.StartCoroutine(LoadingScene.Instance.LoadSceneAsync(Settings.curSceneNum, Settings.curSceneNum));
+            CloseGameMenu();
+        }
+        else if (inGameOver)
+        {
+            if (canReplay || Settings.isGameFinished)
+            {
+                AudioManager.Instance.StopAllEmitters();
+                LoadingScene.Instance.TogglePlayer(false);
+                LoadingScene.Instance.StartCoroutine(LoadingScene.Instance.LoadSceneAsync(Settings.curSceneNum, Settings.curSceneNum));
+            }
+            else
+            {
+                ToggleRewardedAds(true);
+            }
         }
         else
         {
-            ToggleRewardedAds(true);
+            LoadingScene.Instance.StartCoroutine(LoadingScene.Instance.LoadSceneAsync(Settings.curSceneNum+1, Settings.curSceneNum));
+            LoadingScene.Instance.TogglePlayer(false);
+            AudioManager.Instance.StopAllEmitters();
         }
-
-    }
-
-    public void NextLevelButton()
-    {
-        LoadingScene.Instance.StartCoroutine(LoadingScene.Instance.LoadSceneAsync(Settings.curSceneNum+1, Settings.curSceneNum));
-        LoadingScene.Instance.TogglePlayer(false);
-        AudioManager.Instance.StopAllEmitters();
     }
 
     public void HomeButton()
@@ -91,6 +95,11 @@ public class GameMenu : SingletonMonobehaviour<GameMenu>
         ToggleRewardedAds(false);
     }
 
+    public void PlayButtonSound()
+    {
+        AudioManager.Instance.PlayOneShot("ButtonPress");
+    }
+
 
     //otherMethods
     void OpenGameMenu()
@@ -105,9 +114,8 @@ public class GameMenu : SingletonMonobehaviour<GameMenu>
         GameManager.Instance.isMenuOpen = false;
         gameMenu.SetActive(false);
 
-        playButton.SetActive(false);
-        rePlayButton.SetActive(false);
-        nextLevelButton.SetActive(false);
+        inMenu = false;
+        inGameOver = false;
         rewardedAdBar.SetActive(false);
         canReplay = false;
         AudioManager.Instance.ToggleSFX(true);
@@ -118,26 +126,25 @@ public class GameMenu : SingletonMonobehaviour<GameMenu>
         rewardedAdBar.SetActive(val);
     }
 
-
     public void RewardPlayer()
     {
         Settings.complitedLevelsAmount = Settings.curComplitedLevelsAmount;
-        Settings.lives = 3;
         canReplay = true;
-        SaveManager.Instance.SaveDataToFile();
+        //SaveManager.Instance.SaveDataToFile();
         ToggleRewardedAds(false);
     }
 
     public void LevelComplete()
     {
-        SaveManager.Instance.SaveDataToFile();
+        mainButtonText.text = "NEXT LEVEL";
+        //SaveManager.Instance.SaveDataToFile();
         OpenGameMenu();
-        nextLevelButton.SetActive(true);
     }
 
     public void GameOver()
     {
-
+        inGameOver = true;
+        mainButtonText.text = "REPLAY";
         GameManager.Instance.isMenuOpen = true;
         Settings.lives--;
         if (Settings.lives <= 0) 
@@ -145,12 +152,13 @@ public class GameMenu : SingletonMonobehaviour<GameMenu>
             canReplay = false;
             Settings.curComplitedLevelsAmount = Settings.complitedLevelsAmount;
             Settings.complitedLevelsAmount = 0;
+            Settings.lives = 3;
         }
         else
         {
             canReplay = true;
         }
-        SaveManager.Instance.SaveDataToFile();
+        //SaveManager.Instance.SaveDataToFile();
     }
 
     public void ToggleUnputUI(bool val)
@@ -162,6 +170,5 @@ public class GameMenu : SingletonMonobehaviour<GameMenu>
     public void OpenGameOver()
     {
         OpenGameMenu();
-        rePlayButton.SetActive(true);
     }
 }

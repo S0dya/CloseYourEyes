@@ -9,6 +9,7 @@ public class Menu : SingletonMonobehaviour<Menu>
     [SerializeField] GameObject settingsBar;
     [SerializeField] GameObject newGameBar;
     [SerializeField] Level[] levels;
+    [SerializeField] Heart[] hearts;
 
     [SerializeField] Slider sfxSlider;
     [SerializeField] Slider ambienceSlider;
@@ -48,6 +49,10 @@ public class Menu : SingletonMonobehaviour<Menu>
         }
         if (levelsBar.activeSelf && !isLevelBarSet)
         {
+            for (int i = 0; i < hearts.Length; i++)
+            {
+                hearts[i].ToggleHeart(Settings.lives <= i);
+            }
             StartCoroutine(OpenLevels());
         }
 
@@ -77,6 +82,7 @@ public class Menu : SingletonMonobehaviour<Menu>
             LoadingScene.Instance.StartCoroutine(LoadingScene.Instance.LoadSceneAsync(index, 1));
         }
     }
+
 
     public void CloseNewGameBar()
     {

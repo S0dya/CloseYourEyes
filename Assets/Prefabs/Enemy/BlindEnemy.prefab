@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 2264184999671412253}
   - component: {fileID: 2264184999671412242}
   - component: {fileID: 2264184999671412243}
-  - component: {fileID: 5426997596510296634}
   m_Layer: 11
   m_Name: BlindEnemy
   m_TagString: BlindEnemy
@@ -161,34 +160,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   point: {fileID: 0}
   isWatched: 0
---- !u!114 &5426997596510296634
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2264184999671412244}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CollisionTag: 
-  EventReference:
-    Guid:
-      Data1: -827177339
-      Data2: 1180936786
-      Data3: -995366484
-      Data4: 881877227
-    Path: event:/SFX/Enemy/BlindEnemyIdle
-  Event: 
-  PlayEvent: 11
-  StopEvent: 12
-  AllowFadeout: 1
-  TriggerOnce: 0
-  Preload: 0
-  AllowNonRigidbodyDoppler: 0
-  Params: []
-  OverrideAttenuation: 0
-  OverrideMinDistance: 5
-  OverrideMaxDistance: 25
+  isFollowing: 0
