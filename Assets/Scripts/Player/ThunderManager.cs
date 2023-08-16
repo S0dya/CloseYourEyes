@@ -45,13 +45,13 @@ public class ThunderManager : SingletonMonobehaviour<ThunderManager>
     {
         while (true)
         {
-            yield return GameManager.Instance.StartCoroutine(GameManager.Instance.Timer(Random.Range(4f, 24f)));
+            yield return new WaitForSeconds(Random.Range(4f, 24f));
 
             int index = Random.Range(0, thunders.Length);
             thunders[index].pointLightOuterRadius = Random.Range(13f, 20f);
 
             thunders[index].enabled = true;
-            yield return GameManager.Instance.StartCoroutine(GameManager.Instance.Timer(Random.Range(0.05f, 0.3f)));
+            yield return new WaitForSeconds(Random.Range(0.05f, 0.3f));
             AudioManager.Instance.PlayOneShot(FMODManager.Instance.Thunder, thundersTransform[index].position);
             thunders[index].enabled = false;
 

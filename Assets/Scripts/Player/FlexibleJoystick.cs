@@ -75,7 +75,7 @@ public class FlexibleJoystick : SingletonMonobehaviour<FlexibleJoystick>
 
     void HandleFingerMove(Finger moveFinger)
     {
-        if (movementFinger == null || GameManager.Instance.isMenuOpen)
+        if (movementFinger == null)
         {
             return;
         }

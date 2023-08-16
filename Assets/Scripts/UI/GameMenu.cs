@@ -1,13 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Rendering.Universal;
 using TMPro;
 
 public class GameMenu : SingletonMonobehaviour<GameMenu>
 {
-    //delater
-    Light2D globalLight;
     [SerializeField] GameObject gameMenu;
     [SerializeField] GameObject inGameMenu;
     [SerializeField] GameObject rewardedAdBar;
@@ -15,8 +12,11 @@ public class GameMenu : SingletonMonobehaviour<GameMenu>
 
     bool canReplay;
 
-    bool inMenu;
-    bool inGameOver;
+    [HideInInspector] public bool inGame;
+    [HideInInspector] public bool inMenu;
+    [HideInInspector] public bool inBeforeGameOver;
+    [HideInInspector] public bool inGameOver;
+    [HideInInspector] public bool inRewardedAd;
 
     GameObject[] defEnemyArr;
     GameObject[] blindEnemArr;
@@ -28,13 +28,12 @@ public class GameMenu : SingletonMonobehaviour<GameMenu>
         defEnemyArr = GameObject.FindGameObjectsWithTag("DefEnemy");
         blindEnemArr = GameObject.FindGameObjectsWithTag("BlindEnemy");
 
-        globalLight = GameObject.FindGameObjectWithTag("REMOVELATER").GetComponent<Light2D>();
-        globalLight.intensity = 0f;
-
     }
 
     void Start()
     {
+        Time.timeScale = 1;
+        inGame = true;
         AudioManager.Instance.ToggleSFX(true);
     }
 
@@ -82,6 +81,7 @@ public class GameMenu : SingletonMonobehaviour<GameMenu>
 
     public void ExitButton()
     {
+        SaveManager.Instance.SaveDataToFile();
         Application.Quit();
     }
 
@@ -102,15 +102,18 @@ public class GameMenu : SingletonMonobehaviour<GameMenu>
 
 
     //otherMethods
-    void OpenGameMenu()
+    public void OpenGameMenu()
     {
+        Time.timeScale = 0;
+        inGame = false;
         AudioManager.Instance.ToggleSFX(false);
         GameManager.Instance.isMenuOpen = true;
         gameMenu.SetActive(true);
     }
 
-    void CloseGameMenu()
+    public void CloseGameMenu()
     {
+        inGame = true;
         GameManager.Instance.isMenuOpen = false;
         gameMenu.SetActive(false);
 
@@ -119,10 +122,13 @@ public class GameMenu : SingletonMonobehaviour<GameMenu>
         rewardedAdBar.SetActive(false);
         canReplay = false;
         AudioManager.Instance.ToggleSFX(true);
+        Time.timeScale = 1;
     }
 
     void ToggleRewardedAds(bool val)
     {
+        inGameOver = !val;
+        inRewardedAd = val;
         rewardedAdBar.SetActive(val);
     }
 
@@ -130,19 +136,18 @@ public class GameMenu : SingletonMonobehaviour<GameMenu>
     {
         Settings.complitedLevelsAmount = Settings.curComplitedLevelsAmount;
         canReplay = true;
-        //SaveManager.Instance.SaveDataToFile();
         ToggleRewardedAds(false);
     }
 
     public void LevelComplete()
     {
         mainButtonText.text = "NEXT LEVEL";
-        //SaveManager.Instance.SaveDataToFile();
         OpenGameMenu();
     }
 
     public void GameOver()
     {
+        inGame = false;
         inGameOver = true;
         mainButtonText.text = "REPLAY";
         GameManager.Instance.isMenuOpen = true;
@@ -158,17 +163,11 @@ public class GameMenu : SingletonMonobehaviour<GameMenu>
         {
             canReplay = true;
         }
-        //SaveManager.Instance.SaveDataToFile();
     }
 
     public void ToggleUnputUI(bool val)
     {
         inGameMenu.SetActive(val);
         GameManager.Instance.inputUI.SetActive(val);
-    }
-
-    public void OpenGameOver()
-    {
-        OpenGameMenu();
     }
 }

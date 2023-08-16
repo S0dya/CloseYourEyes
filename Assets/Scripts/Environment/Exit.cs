@@ -43,17 +43,11 @@ public class Exit : MonoBehaviour
     {
         while (light.intensity < 1)
         {
-            if (GameManager.Instance.isMenuOpen)
-            {
-                yield return null;
-            }
-
             light.intensity += Time.deltaTime;
 
             yield return null;
         }
 
-        Debug.Log("d");
         GameMenu.Instance.LevelComplete();
         GameManager.Instance.LevelComplete();
     }

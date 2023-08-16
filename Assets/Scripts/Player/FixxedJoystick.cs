@@ -72,11 +72,12 @@ public class FixxedJoystick : SingletonMonobehaviour<FixxedJoystick>
 
     void HandleFingerMove(Finger moveFinger)
     {
-        if (movementFinger == null || GameManager.Instance.isMenuOpen)
+        if (movementFinger == null)
         {
             return;
         }
-        if (GameManager.Instance.isInGame && moveFinger.currentTouch.screenPosition.x > Settings.placeForJoystickMovement.x && moveFinger.currentTouch.screenPosition.y < Settings.placeForJoystickMovement.y)
+        if (GameManager.Instance.isInGame && moveFinger.currentTouch.screenPosition.x > Settings.placeForJoystickMovement.x 
+            && moveFinger.currentTouch.screenPosition.y < Settings.placeForJoystickMovement.y)
         {
             return;
         }

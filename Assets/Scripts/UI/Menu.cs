@@ -20,6 +20,8 @@ public class Menu : SingletonMonobehaviour<Menu>
 
     bool isLevelBarSet;
 
+    
+
     protected override void Awake()
     {
         base.Awake();
@@ -28,6 +30,8 @@ public class Menu : SingletonMonobehaviour<Menu>
 
     void Start()
     {
+        Time.timeScale = 1;
+        isLevelBarSet = false;
         AudioManager.Instance.ToggleMusic(true);
         sfxSlider.value = Settings.sfxVolume;
         ambienceSlider.value = Settings.ambienceVolume;
@@ -42,34 +46,31 @@ public class Menu : SingletonMonobehaviour<Menu>
     //Buttons
     public void PlayButton()
     {
-        levelsBar.SetActive(!levelsBar.activeSelf);
         if (settingsBar.activeSelf)
         {
-            settingsBar.SetActive(!settingsBar.activeSelf);
-        }
-        if (levelsBar.activeSelf && !isLevelBarSet)
-        {
-            for (int i = 0; i < hearts.Length; i++)
-            {
-                hearts[i].ToggleHeart(Settings.lives <= i);
-            }
-            StartCoroutine(OpenLevels());
+            ToggleSettings(false);
         }
 
-        AudioManager.Instance.SetCurSFX();
+        bool active = !levelsBar.activeSelf;
+        ToggleLevels(active);
+        GameManager.Instance.inMenu = !active;
     }
 
     public void SettingsButton()
     {
-        settingsBar.SetActive(!settingsBar.activeSelf);
         if (levelsBar.activeSelf)
         {
-            levelsBar.SetActive(!levelsBar.activeSelf);
+            ToggleLevels(false);
         }
+
+        bool active = !settingsBar.activeSelf;
+        ToggleSettings(active);
+        GameManager.Instance.inMenu = !active;
     }
 
     public void ExitButton()
     {
+        SaveManager.Instance.SaveDataToFile();
         Application.Quit();
     }
 
@@ -77,6 +78,7 @@ public class Menu : SingletonMonobehaviour<Menu>
     {
         if (Settings.complitedLevelsAmount >= index)
         {
+            GameManager.Instance.inLevels = false;
             AudioManager.Instance.ToggleMusic(false);
             index += 2;
             LoadingScene.Instance.StartCoroutine(LoadingScene.Instance.LoadSceneAsync(index, 1));
@@ -122,6 +124,28 @@ public class Menu : SingletonMonobehaviour<Menu>
     }
 
     //OtherMethods
+    void ToggleLevels(bool val)
+    {
+        GameManager.Instance.inLevels = val;
+        levelsBar.SetActive(val);
+
+        if (val && !isLevelBarSet)
+        {
+            for (int i = 0; i < hearts.Length; i++)
+            {
+                hearts[i].ToggleHeart(Settings.lives <= i);
+            }
+            StartCoroutine(OpenLevels());
+        }
+
+        //AudioManager.Instance.SetCurSFX();
+    }
+    void ToggleSettings(bool val)
+    {
+        GameManager.Instance.inSettings = val;
+        settingsBar.SetActive(val);
+    }
+
     public void ToggleFlexibilityOfJoystick(bool val)
     {
         Settings.isJoystickFlexible = val;

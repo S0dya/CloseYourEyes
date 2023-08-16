@@ -139,7 +139,7 @@ public class AudioManager : SingletonMonobehaviour<AudioManager>
     {
         while (true)
         {
-            yield return GameManager.Instance.StartCoroutine(GameManager.Instance.Timer(Random.Range(70, 150)));
+            yield return new WaitForSeconds(Random.Range(70, 150));
 
             EventInstancesDict["RandomSFX"].start();
         }

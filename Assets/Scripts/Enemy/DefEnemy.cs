@@ -91,7 +91,7 @@ public class DefEnemy : MonoBehaviour
             if (distance > 0.1f)
             {
                 direction.Normalize();
-                Vector2 targetPosition = rigidbody.position + direction * 16 * Time.deltaTime;
+                Vector2 targetPosition = rigidbody.position + direction * 16.5f * Time.deltaTime;
                 rigidbody.MovePosition(targetPosition);
             }
             else
@@ -120,7 +120,7 @@ public class DefEnemy : MonoBehaviour
 
     IEnumerator WaitBeforeReturning()
     {
-        yield return GameManager.Instance.StartCoroutine(GameManager.Instance.Timer(4f));
+        yield return new WaitForSeconds(4f);
 
         point.position = startPos;
         movingCor = StartCoroutine(MoveToTarget());
@@ -135,12 +135,6 @@ public class DefEnemy : MonoBehaviour
         float r = sprite.color.r; 
         while (r <= 1)
         {
-            if (GameManager.Instance.isMenuOpen)
-            {
-                yield return null;
-                continue;
-            }
-
             r = Mathf.Lerp(r, 1.3f, 0.01f);
             sprite.color = new Color(r, sprite.color.g, sprite.color.b);
 
@@ -154,12 +148,6 @@ public class DefEnemy : MonoBehaviour
         float r = sprite.color.r;
         while (r >= 0)
         {
-            if (GameManager.Instance.isMenuOpen)
-            {
-                yield return null;
-                continue;
-            }
-
             r = Mathf.Lerp(r, -0.3f, 0.025f);
             sprite.color = new Color(r, sprite.color.g, sprite.color.b);
 

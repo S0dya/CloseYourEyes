@@ -8,7 +8,6 @@ TagManager:
   - BlindEnemy
   - Obstacle
   - Exit
-  - REMOVELATER
   layers:
   - Default
   - TransparentFX

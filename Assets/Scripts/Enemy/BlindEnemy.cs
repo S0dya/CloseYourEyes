@@ -80,22 +80,19 @@ public class BlindEnemy : MonoBehaviour
     {
         while (!isWatched)
         {
-            if (!GameManager.Instance.isMenuOpen)
-            {
-                Vector2 direction = (Vector2)point.position - rigidbody.position;
-                float distance = direction.magnitude;
+            Vector2 direction = (Vector2)point.position - rigidbody.position;
+            float distance = direction.magnitude;
 
-                if (distance > 0.1f)
-                {
-                    direction.Normalize();
-                    Vector2 targetPosition = rigidbody.position + direction * 13 * Time.deltaTime;
-                    rigidbody.MovePosition(targetPosition);
-                }
-                else
-                {
-                    OnDestinationReached();
-                    break;
-                }
+            if (distance > 0.1f)
+            {
+                direction.Normalize();
+                Vector2 targetPosition = rigidbody.position + direction * 14 * Time.deltaTime;
+                rigidbody.MovePosition(targetPosition);
+            }
+            else
+            {
+                OnDestinationReached();
+                break;
             }
 
             yield return null;
@@ -121,7 +118,7 @@ public class BlindEnemy : MonoBehaviour
 
         while (elapsedTime < duration)
         {
-            if (!GameManager.Instance.isMenuOpen && !isWatched)
+            if (!isWatched)
             {
                 elapsedTime += Time.deltaTime;
             }
@@ -144,11 +141,8 @@ public class BlindEnemy : MonoBehaviour
         float b = sprite.color.b;
         while (b <= 1)
         {
-            if (!GameManager.Instance.isMenuOpen)
-            {
-                b = Mathf.Lerp(b, 1.3f, 0.01f);
-                sprite.color = new Color(sprite.color.r, sprite.color.g, b);
-            }
+            b = Mathf.Lerp(b, 1.3f, 0.01f);
+            sprite.color = new Color(sprite.color.r, sprite.color.g, b);
 
             yield return null;
         }
@@ -160,7 +154,7 @@ public class BlindEnemy : MonoBehaviour
         float b = sprite.color.b;
         while (b >= 0)
         {
-            if (!GameManager.Instance.isMenuOpen && !isWatched)
+            if (!isWatched)
             {
                 b = Mathf.Lerp(b, -0.3f, 0.025f);
                 sprite.color = new Color(sprite.color.r, sprite.color.g, b);

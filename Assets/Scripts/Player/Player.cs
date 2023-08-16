@@ -94,18 +94,15 @@ public class Player : SingletonMonobehaviour<Player>
 
         while (radius < maxRadius)
         {
-            if (!GameManager.Instance.isMenuOpen)
-            {
-                eyeVision.pointLightOuterRadius = radius;
-                playerVisionTrigger.radius = radius;
-                radius = Mathf.Lerp(eyeVision.pointLightOuterRadius, 8, Time.deltaTime);
-            }
+            eyeVision.pointLightOuterRadius = radius;
+            playerVisionTrigger.radius = radius;
+            radius = Mathf.Lerp(eyeVision.pointLightOuterRadius, 8, Time.deltaTime);
 
             
             yield return null;
         }
         
-        yield return GameManager.Instance.StartCoroutine(GameManager.Instance.Timer(Settings.visionTime[Settings.curSceneNum-2]));
+        yield return new WaitForSeconds(Settings.visionTime[Settings.curSceneNum-2]);
         CloseEye();
     }
 
@@ -123,12 +120,9 @@ public class Player : SingletonMonobehaviour<Player>
         float radius = eyeVision.pointLightOuterRadius;
         while (radius > 0)
         {
-            if (!GameManager.Instance.isMenuOpen)
-            {
-                eyeVision.pointLightOuterRadius = radius;
-                playerVisionTrigger.radius = radius;
-                radius = Mathf.Lerp(eyeVision.pointLightOuterRadius, -9, Time.deltaTime);
-            }
+            eyeVision.pointLightOuterRadius = radius;
+            playerVisionTrigger.radius = radius;
+            radius = Mathf.Lerp(eyeVision.pointLightOuterRadius, -9, Time.deltaTime);
             
             yield return null;
         }
@@ -172,7 +166,7 @@ public class Player : SingletonMonobehaviour<Player>
 
     public void OpenGameOver()
     {
-        GameMenu.Instance.OpenGameOver();
+        GameMenu.Instance.OpenGameMenu();
         GameMenu.Instance.ToggleUnputUI(true);
     }
 }

@@ -43,11 +43,6 @@ public class LastExit : MonoBehaviour
     {
         while (light.intensity < 1)
         {
-            if (GameManager.Instance.isMenuOpen)
-            {
-                yield return null;
-            }
-
             light.intensity += Time.deltaTime;
 
             yield return null;
@@ -62,11 +57,6 @@ public class LastExit : MonoBehaviour
     {
         while (light.intensity > 0)
         {
-            if (GameManager.Instance.isMenuOpen)
-            {
-                yield return null;
-            }
-
             light.intensity -= Time.deltaTime;
 
             yield return null;

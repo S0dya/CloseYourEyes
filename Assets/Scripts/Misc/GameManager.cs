@@ -2,12 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.InputSystem;
 
 public class GameManager : SingletonMonobehaviour<GameManager>, ISaveable
 {
     [HideInInspector] public bool isMenuOpen;
     [HideInInspector] public bool isInGame;
+    [HideInInspector] public bool inMenu;
+    [HideInInspector] public bool inLevels;
+    [HideInInspector] public bool inSettings;
     public GameObject inputUI;
+
+    
 
     [HideInInspector] public bool isBlindFollowingPlayer;
     [HideInInspector] public bool isDefFollowingPlayer;
@@ -32,6 +38,42 @@ public class GameManager : SingletonMonobehaviour<GameManager>, ISaveable
         SaveManager.Instance.LoadDataFromFile();
     }
 
+    void Update()
+    {
+        if (Keyboard.current.escapeKey.wasPressedThisFrame)
+        {
+            if (inMenu)
+            {
+                Menu.Instance.ExitButton();
+            }
+            else if (inLevels)
+            {
+                Menu.Instance.PlayButton();
+            }
+            else if (inSettings)
+            {
+                Menu.Instance.SettingsButton();
+            }
+            else if (GameMenu.Instance.inGame)
+            {
+                GameMenu.Instance.PauseButton();
+            }
+            else if (GameMenu.Instance.inMenu)
+            {
+                GameMenu.Instance.CloseGameMenu();
+            }
+            else if (GameMenu.Instance.inRewardedAd)
+            {
+                GameMenu.Instance.CloseRewardAdButton();
+            }
+            else if (GameMenu.Instance.inGameOver)
+            {
+                GameMenu.Instance.HomeButton();
+            }
+        }
+            
+    }
+
     public void LevelComplete()
     {
         if (Settings.curSceneNum > Settings.complitedLevelsAmount)
@@ -41,30 +83,26 @@ public class GameManager : SingletonMonobehaviour<GameManager>, ISaveable
         }
     }
 
-    public IEnumerator Timer(float duration)
+    void OnApplicationPause(bool pauseStatus)
     {
-        float elapsedTime = 0f;
-
-        while (elapsedTime < duration)
+        if (pauseStatus)
         {
-            if (isMenuOpen)
-            {
-                yield return null;
-            }
-            else
-            {
-                elapsedTime += Time.deltaTime;
-                yield return null;
-            }
+            SaveManager.Instance.SaveDataToFile();
         }
     }
 
-   
+    void OnApplicationFocus(bool hasFocus)
+    {
+        if (!hasFocus)
+        {
+            SaveManager.Instance.SaveDataToFile();
+        }
+    }
 
-
-
-
-
+    void OnApplicationQuit()
+    {
+        SaveManager.Instance.SaveDataToFile();
+    }
 
 
 

@@ -678,8 +678,8 @@ MonoBehaviour:
 
 '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: cdfbcf688148a2142bfd37ae9a086b79, type: 2}
+  m_sharedMaterial: {fileID: 1259067769309486052, guid: cdfbcf688148a2142bfd37ae9a086b79, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1017,6 +1017,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isMenuOpen: 0
   isInGame: 0
+  inMenu: 0
+  inLevels: 0
+  inSettings: 0
   inputUI: {fileID: 1460834919}
   isBlindFollowingPlayer: 0
   isDefFollowingPlayer: 0
@@ -1535,7 +1538,7 @@ MonoBehaviour:
 
 '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: cdfbcf688148a2142bfd37ae9a086b79, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -1599,7 +1602,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &2029625105
@@ -1889,6 +1892,30 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8214989070735641723, guid: 1e418c4c25bc6974b86ddc09ebe1da9d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8214989070840363490, guid: 1e418c4c25bc6974b86ddc09ebe1da9d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.99963945
+      objectReference: {fileID: 0}
+    - target: {fileID: 8214989070840363490, guid: 1e418c4c25bc6974b86ddc09ebe1da9d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8214989070840363490, guid: 1e418c4c25bc6974b86ddc09ebe1da9d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8214989070840363490, guid: 1e418c4c25bc6974b86ddc09ebe1da9d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.026852498
+      objectReference: {fileID: 0}
+    - target: {fileID: 8214989070840363491, guid: 1e418c4c25bc6974b86ddc09ebe1da9d, type: 3}
+      propertyPath: m_PointLightInnerRadius
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8214989070840363491, guid: 1e418c4c25bc6974b86ddc09ebe1da9d, type: 3}
+      propertyPath: m_PointLightOuterRadius
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
