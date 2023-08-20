@@ -24,6 +24,7 @@ public class Exit : MonoBehaviour
             {
                 StopCoroutine(stopExitingCor);
             }
+            AudioManager.Instance.PlayExit((int)light.intensity);
             exitingCor = StartCoroutine(Exiting());
         }
     }
@@ -35,6 +36,8 @@ public class Exit : MonoBehaviour
             {
                 StopCoroutine(exitingCor);
             }
+
+            AudioManager.Instance.StopExiting();
             stopExitingCor = StartCoroutine(StopExiting());
         }
     }
@@ -43,25 +46,21 @@ public class Exit : MonoBehaviour
     {
         while (light.intensity < 1)
         {
-            light.intensity += Time.deltaTime;
+            light.intensity += 0.5f * Time.deltaTime;
 
             yield return null;
         }
 
         GameMenu.Instance.LevelComplete();
         GameManager.Instance.LevelComplete();
+        AudioManager.Instance.StopExiting();
     }
 
     IEnumerator StopExiting()
     {
         while (light.intensity > 0)
         {
-            if (GameManager.Instance.isMenuOpen)
-            {
-                yield return null;
-            }
-
-            light.intensity -= Time.deltaTime;
+            light.intensity -= 0.7f * Time.deltaTime;
 
             yield return null;
         }

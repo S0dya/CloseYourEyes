@@ -8,13 +8,15 @@ public class DefEnemy : MonoBehaviour
 {
     SpriteRenderer sprite;
     Rigidbody2D rigidbody;
-    Animator animator;
+    [HideInInspector] public Animator animator;
     GameObject playerObject;
     Player player;
 
     [SerializeField] Transform point;
     [HideInInspector] public bool isFollowing;
     Vector2 startPos;
+
+    Vector2 currentVelocity = new Vector2(0, 0);
 
     Coroutine movingCor;
     Coroutine fadeInCor;
@@ -26,6 +28,7 @@ public class DefEnemy : MonoBehaviour
         sprite = GetComponent<SpriteRenderer>();
         rigidbody = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        animator.speed = 0;
         playerObject = SceneManager.GetSceneByName("PersistantScene").GetRootGameObjects().FirstOrDefault(obj => obj.CompareTag("Player"));
         player = playerObject.GetComponent<Player>();
     }
@@ -43,7 +46,7 @@ public class DefEnemy : MonoBehaviour
     public void SeePlayer()
     {
         point.position = playerObject.transform.position;
-
+        animator.speed = 1.5f;
         if (!isFollowing)
         {
             isFollowing = true;
@@ -70,6 +73,7 @@ public class DefEnemy : MonoBehaviour
     {
         if (val)
         {
+            animator.speed = 1f;
             if (movingCor != null)
             {
                 StopCoroutine(movingCor);
@@ -77,6 +81,7 @@ public class DefEnemy : MonoBehaviour
         }
         else
         {
+            animator.speed = 1.5f;
             movingCor = StartCoroutine(MoveToTarget());
         }
     }
@@ -85,24 +90,24 @@ public class DefEnemy : MonoBehaviour
     {
         while (true)
         {
-            Vector2 direction = (Vector2)point.position - rigidbody.position;
+            Vector2 direction = ((Vector2)point.position - rigidbody.position) * 5;
             float distance = direction.magnitude;
 
             if (distance > 0.1f)
             {
-                direction.Normalize();
-                Vector2 targetPosition = rigidbody.position + direction * 16.5f * Time.deltaTime;
-                rigidbody.MovePosition(targetPosition);
+                currentVelocity = Vector2.MoveTowards(currentVelocity, direction, 17 * Time.deltaTime);
+                rigidbody.velocity = currentVelocity;
             }
             else
             {
+                currentVelocity = Vector2.zero;
                 OnDestinationReached();
                 break;
             }
 
             yield return null;
         }
-        rigidbody.velocity = Vector2.zero;
+        rigidbody.velocity = currentVelocity;
     }
 
     public void OnDestinationReached()
@@ -135,7 +140,7 @@ public class DefEnemy : MonoBehaviour
         float r = sprite.color.r; 
         while (r <= 1)
         {
-            r = Mathf.Lerp(r, 1.3f, 0.01f);
+            r = Mathf.Lerp(r, 1.3f, 1.5f * Time.deltaTime);
             sprite.color = new Color(r, sprite.color.g, sprite.color.b);
 
             yield return null;
@@ -148,7 +153,7 @@ public class DefEnemy : MonoBehaviour
         float r = sprite.color.r;
         while (r >= 0)
         {
-            r = Mathf.Lerp(r, -0.3f, 0.025f);
+            r = Mathf.Lerp(r, -0.3f, 1.3f * Time.deltaTime);
             sprite.color = new Color(r, sprite.color.g, sprite.color.b);
 
             yield return null;

@@ -17,6 +17,7 @@ public class FMODManager : SingletonMonobehaviour<FMODManager>
     [field: Header("Enverenment")]
     [field: SerializeField] public EventReference RandomSFX { get; private set; }
     [field: SerializeField] public EventReference Thunder { get; private set; }
+    [field: SerializeField] public EventReference Exit { get; private set; }
 
 
     [field: Header("Player")]
@@ -37,8 +38,6 @@ public class FMODManager : SingletonMonobehaviour<FMODManager>
     [field: Header("UI")]
 
     [field: SerializeField] public EventReference ButtonPress { get; private set; }
-
-    [field: SerializeField] public EventReference PlaySound { get; private set; }
 
     protected override void Awake()
     {

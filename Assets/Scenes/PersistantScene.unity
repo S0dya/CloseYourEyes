@@ -1367,6 +1367,13 @@ MonoBehaviour:
       Data3: 1735320996
       Data4: 720549917
     Path: event:/SFX/Thunder/Lightning
+  <Exit>k__BackingField:
+    Guid:
+      Data1: -596311686
+      Data2: 1204841476
+      Data3: -1387244904
+      Data4: -2044510363
+    Path: event:/SFX/Exit/Exit
   <PlayerStepSound>k__BackingField:
     Guid:
       Data1: -249521726
@@ -1820,6 +1827,34 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 873021539436503824, guid: 1e418c4c25bc6974b86ddc09ebe1da9d, type: 3}
+      propertyPath: joystick
+      value: 
+      objectReference: {fileID: 207260933}
+    - target: {fileID: 873021539436503824, guid: 1e418c4c25bc6974b86ddc09ebe1da9d, type: 3}
+      propertyPath: joystickKnob
+      value: 
+      objectReference: {fileID: 1100413531}
+    - target: {fileID: 1642063973081079803, guid: 1e418c4c25bc6974b86ddc09ebe1da9d, type: 3}
+      propertyPath: m_Radius
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 2903136256378081814, guid: 1e418c4c25bc6974b86ddc09ebe1da9d, type: 3}
+      propertyPath: joystick
+      value: 
+      objectReference: {fileID: 207260933}
+    - target: {fileID: 2903136256378081814, guid: 1e418c4c25bc6974b86ddc09ebe1da9d, type: 3}
+      propertyPath: joystickKnob
+      value: 
+      objectReference: {fileID: 1100413531}
+    - target: {fileID: 3013977937499255841, guid: 1e418c4c25bc6974b86ddc09ebe1da9d, type: 3}
+      propertyPath: joystick
+      value: 
+      objectReference: {fileID: 207260933}
+    - target: {fileID: 3013977937499255841, guid: 1e418c4c25bc6974b86ddc09ebe1da9d, type: 3}
+      propertyPath: joystickKnob
+      value: 
+      objectReference: {fileID: 1100413531}
     - target: {fileID: 5822626226400075458, guid: 1e418c4c25bc6974b86ddc09ebe1da9d, type: 3}
       propertyPath: joystick
       value: 
@@ -1828,26 +1863,14 @@ PrefabInstance:
       propertyPath: joystickKnob
       value: 
       objectReference: {fileID: 1100413531}
-    - target: {fileID: 5979705582856242108, guid: 1e418c4c25bc6974b86ddc09ebe1da9d, type: 3}
+    - target: {fileID: 6396538808645677975, guid: 1e418c4c25bc6974b86ddc09ebe1da9d, type: 3}
       propertyPath: joystick
       value: 
       objectReference: {fileID: 207260933}
-    - target: {fileID: 5979705582856242108, guid: 1e418c4c25bc6974b86ddc09ebe1da9d, type: 3}
+    - target: {fileID: 6396538808645677975, guid: 1e418c4c25bc6974b86ddc09ebe1da9d, type: 3}
       propertyPath: joystickKnob
       value: 
       objectReference: {fileID: 1100413531}
-    - target: {fileID: 6924734275847838800, guid: 1e418c4c25bc6974b86ddc09ebe1da9d, type: 3}
-      propertyPath: joystick
-      value: 
-      objectReference: {fileID: 207260933}
-    - target: {fileID: 6924734275847838800, guid: 1e418c4c25bc6974b86ddc09ebe1da9d, type: 3}
-      propertyPath: joystickKnob
-      value: 
-      objectReference: {fileID: 1100413531}
-    - target: {fileID: 8214989070735641719, guid: 1e418c4c25bc6974b86ddc09ebe1da9d, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: fbf8261cd74744b43ba3482809a14122, type: 3}
     - target: {fileID: 8214989070735641722, guid: 1e418c4c25bc6974b86ddc09ebe1da9d, type: 3}
       propertyPath: m_Name
       value: Player
@@ -1894,30 +1917,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8214989070735641723, guid: 1e418c4c25bc6974b86ddc09ebe1da9d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8214989070840363490, guid: 1e418c4c25bc6974b86ddc09ebe1da9d, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.99963945
-      objectReference: {fileID: 0}
-    - target: {fileID: 8214989070840363490, guid: 1e418c4c25bc6974b86ddc09ebe1da9d, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8214989070840363490, guid: 1e418c4c25bc6974b86ddc09ebe1da9d, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8214989070840363490, guid: 1e418c4c25bc6974b86ddc09ebe1da9d, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0.026852498
-      objectReference: {fileID: 0}
-    - target: {fileID: 8214989070840363491, guid: 1e418c4c25bc6974b86ddc09ebe1da9d, type: 3}
-      propertyPath: m_PointLightInnerRadius
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8214989070840363491, guid: 1e418c4c25bc6974b86ddc09ebe1da9d, type: 3}
-      propertyPath: m_PointLightOuterRadius
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8734535088353419591, guid: 1e418c4c25bc6974b86ddc09ebe1da9d, type: 3}

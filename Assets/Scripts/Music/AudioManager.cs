@@ -34,6 +34,7 @@ public class AudioManager : SingletonMonobehaviour<AudioManager>
         EventInstancesDict.Add("Rain", CreateInstance(FMODManager.Instance.Rain));
 
         EventInstancesDict.Add("ButtonPress", CreateInstance(FMODManager.Instance.ButtonPress));
+        EventInstancesDict.Add("Exit", CreateInstance(FMODManager.Instance.Exit));
         //EventInstancesDict.Add("PlaySound", CreateInstance(FMODManager.Instance.PlaySound));
         //EventInstancesDict.Add("GameOverSound", CreateInstance(FMODManager.Instance.GameOverSound));
 
@@ -206,5 +207,17 @@ public class AudioManager : SingletonMonobehaviour<AudioManager>
         {
             EventInstancesDict["Rain"].stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         }
+    }
+
+    public void PlayExit(int time)
+    {
+        StopExiting();
+
+        EventInstancesDict["Exit"].setTimelinePosition(time);
+        EventInstancesDict["Exit"].start();
+    }
+    public void StopExiting()
+    {
+        EventInstancesDict["Exit"].stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
     }
 }

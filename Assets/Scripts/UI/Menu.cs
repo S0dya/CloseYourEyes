@@ -70,7 +70,6 @@ public class Menu : SingletonMonobehaviour<Menu>
 
     public void ExitButton()
     {
-        SaveManager.Instance.SaveDataToFile();
         Application.Quit();
     }
 
@@ -137,8 +136,6 @@ public class Menu : SingletonMonobehaviour<Menu>
             }
             StartCoroutine(OpenLevels());
         }
-
-        //AudioManager.Instance.SetCurSFX();
     }
     void ToggleSettings(bool val)
     {

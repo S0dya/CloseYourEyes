@@ -8,14 +8,14 @@ public static class Settings
     /// save
     /// </summary>
     public static int complitedLevelsAmount;
-    public static int lives;
+    public static int lives = 3;
     public static bool isGameFinished;
     public static bool isJoystickFlexible;
 
     //sound
-    public static float sfxVolume;
-    public static float ambienceVolume;
-    public static float musicVolume;
+    public static float sfxVolume = 1;
+    public static float ambienceVolume = 1;
+    public static float musicVolume = 1;
     public static float curSfxVolume;
 
     public static string GameScene = "Menu";
@@ -51,5 +51,6 @@ public static class Settings
         screen = new Vector2(Screen.width, Screen.height);
         screenHalf = screen/2;
         placeForJoystickMovement = new Vector2(Screen.width /1.5f, screenHalf.y);
+
     }
 }

@@ -9,7 +9,7 @@ public class BlindEnemy : MonoBehaviour
 {
     SpriteRenderer sprite;
     Rigidbody2D rigidbody;
-    Animator animator;
+    [HideInInspector] public Animator animator;
     GameObject playerObject;
     Player player;
 
@@ -17,6 +17,8 @@ public class BlindEnemy : MonoBehaviour
     [HideInInspector] public bool isWatched;
     [HideInInspector] public bool isFollowing;
     Vector2 startPos;
+
+    Vector2 currentVelocity = new Vector2(0, 0);
 
     Coroutine movingCor;
     Coroutine fadeInCor;
@@ -28,6 +30,7 @@ public class BlindEnemy : MonoBehaviour
         sprite = GetComponent<SpriteRenderer>();
         rigidbody = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        animator.speed = 0;
         playerObject = SceneManager.GetSceneByName("PersistantScene").GetRootGameObjects().FirstOrDefault(obj => obj.CompareTag("Player"));
         player = playerObject.GetComponent<Player>();
     }
@@ -41,6 +44,7 @@ public class BlindEnemy : MonoBehaviour
     public void HearPlayer()
     {
         point.position = playerObject.transform.position;
+        animator.speed = 1.5f;
         if (!isFollowing)
         {
             isFollowing = true;
@@ -72,7 +76,12 @@ public class BlindEnemy : MonoBehaviour
         isWatched = val;
         if (!val)
         {
+            animator.speed = 1.5f;
             movingCor = StartCoroutine(MoveToTarget());
+        }
+        else
+        {
+            animator.speed = 1f;
         }
     }
 
@@ -80,23 +89,25 @@ public class BlindEnemy : MonoBehaviour
     {
         while (!isWatched)
         {
-            Vector2 direction = (Vector2)point.position - rigidbody.position;
+            Vector2 direction = ((Vector2)point.position - rigidbody.position) * 5;
             float distance = direction.magnitude;
 
             if (distance > 0.1f)
             {
-                direction.Normalize();
-                Vector2 targetPosition = rigidbody.position + direction * 14 * Time.deltaTime;
-                rigidbody.MovePosition(targetPosition);
+                currentVelocity = Vector2.MoveTowards(currentVelocity, direction, 17 * Time.deltaTime);
+                rigidbody.velocity = currentVelocity;
             }
             else
             {
+                currentVelocity = Vector2.zero;
                 OnDestinationReached();
                 break;
             }
 
             yield return null;
         }
+        currentVelocity = Vector2.zero;
+        rigidbody.velocity = currentVelocity;
     }
 
     public void OnDestinationReached()
@@ -141,7 +152,7 @@ public class BlindEnemy : MonoBehaviour
         float b = sprite.color.b;
         while (b <= 1)
         {
-            b = Mathf.Lerp(b, 1.3f, 0.01f);
+            b = Mathf.Lerp(b, 1.3f, 1.5f * Time.deltaTime);
             sprite.color = new Color(sprite.color.r, sprite.color.g, b);
 
             yield return null;
@@ -156,7 +167,7 @@ public class BlindEnemy : MonoBehaviour
         {
             if (!isWatched)
             {
-                b = Mathf.Lerp(b, -0.3f, 0.025f);
+                b = Mathf.Lerp(b, -0.3f, 1.3f * Time.deltaTime);
                 sprite.color = new Color(sprite.color.r, sprite.color.g, b);
             }
 

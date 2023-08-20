@@ -54,9 +54,10 @@ public class GameMenu : SingletonMonobehaviour<GameMenu>
         {
             if (canReplay || Settings.isGameFinished)
             {
-                AudioManager.Instance.StopAllEmitters();
-                LoadingScene.Instance.TogglePlayer(false);
                 LoadingScene.Instance.StartCoroutine(LoadingScene.Instance.LoadSceneAsync(Settings.curSceneNum, Settings.curSceneNum));
+                AudioManager.Instance.StopAllEmitters();
+                AudioManager.Instance.ToggleSFX(true);
+                LoadingScene.Instance.TogglePlayer(false);
             }
             else
             {
@@ -67,6 +68,7 @@ public class GameMenu : SingletonMonobehaviour<GameMenu>
         {
             LoadingScene.Instance.StartCoroutine(LoadingScene.Instance.LoadSceneAsync(Settings.curSceneNum+1, Settings.curSceneNum));
             LoadingScene.Instance.TogglePlayer(false);
+            AudioManager.Instance.ToggleSFX(true);
             AudioManager.Instance.StopAllEmitters();
         }
     }

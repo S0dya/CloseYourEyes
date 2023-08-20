@@ -13,13 +13,10 @@ public class GameManager : SingletonMonobehaviour<GameManager>, ISaveable
     [HideInInspector] public bool inSettings;
     public GameObject inputUI;
 
-    
-
     [HideInInspector] public bool isBlindFollowingPlayer;
     [HideInInspector] public bool isDefFollowingPlayer;
 
     public int[] visionTime;
-
 
     GameObjectSave _gameObjectSave;
     public GameObjectSave GameObjectSave { get { return _gameObjectSave; } set { _gameObjectSave = value; } }
@@ -36,7 +33,6 @@ public class GameManager : SingletonMonobehaviour<GameManager>, ISaveable
     void Start()
     {
         SaveManager.Instance.LoadDataFromFile();
-        Settings.complitedLevelsAmount = 15;
     }
 
     void Update()

@@ -139,7 +139,7 @@ public class LoadingScene : SingletonMonobehaviour<LoadingScene>
         float newAlpha = curC.a;
         while (newAlpha > 0)
         {
-            newAlpha = Mathf.Lerp(newAlpha, -0.3f, 0.009f);
+            newAlpha = Mathf.Lerp(newAlpha, -0.3f, 1.2f * Time.unscaledDeltaTime);
             Epigraph.color = new Color(curC.r, curC.g, curC.b, newAlpha);
 
             yield return null;
