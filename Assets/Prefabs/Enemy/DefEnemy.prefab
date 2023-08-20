@@ -78,7 +78,7 @@ SpriteRenderer:
   m_SortingLayerID: -613482785
   m_SortingLayer: 7
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 1035b6ff59d6ef3499b28b5e19e2c0f1, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d722ce03a3c64a540b26b6037a719dba, type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -125,7 +125,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.7
+  m_Radius: 1
 --- !u!95 &6369202741569013486
 Animator:
   serializedVersion: 5
@@ -160,7 +160,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   point: {fileID: 0}
-  isFollowingPlayer: 0
+  isFollowing: 0
 --- !u!114 &-6627292821189713079
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -190,5 +190,5 @@ MonoBehaviour:
   AllowNonRigidbodyDoppler: 0
   Params: []
   OverrideAttenuation: 0
-  OverrideMinDistance: 5
-  OverrideMaxDistance: 25
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 46

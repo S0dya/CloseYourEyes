@@ -35,16 +35,14 @@ public static class Settings
 
     public static float curVisionRadious;
 
-    public static float[] visionRadious = { 6.5f, 3f, 6.3f, 6.2f, 6.1f, 6.5f, 3f, 6.3f, 6.2f, 6.1f, 6.5f, 3f, 6.3f, 6.2f, 6.1f };
-    public static float[] visionTime = { 4, 1, 4, 1, 4, 1, 4, 1, 4, 1, 4, 1, 4, 1, 4, 1, 4, 1, 4, 1, };
+    public static float[] visionRadious = { 6.5f, 3f, 6.3f, 6.1f, 3f, 5.9f, 5.7f, 3f, 5.5f, 5.3f, 5.1f, 3f, 4.9f, 4.7f, 4.5f, 3f, 4.3f, 4.1f, 3.9f };
+    public static float[] visionTime = { 6, 5, 4, 3, 2, 1, 6, 5, 4, 3, 2, 1, 5, 4, 3, 2, 1, 0.5f};
     public static string[] epigraphs = 
-        { 
-        ".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",
-        "...i dont see...","...i dont hear...","...i dont hear...","...i dont hear...","...i dont hear...","...i dont hear...",
-        "...i dont hear...","...i dont hear...","...i dont hear...","...i dont hear...","...i dont hear...","...i dont hear...",
-        "...i dont hear...","...i dont hear...","...i dont hear...","...i dont hear...","...i dont hear...","...i dont hear..." 
+        { "closed eyes", "despair linger", "through darkness", "shadows persist", "light elusive", "a futile struggle",
+        "closed ears", "silence reigns", "unveil sorrow"," shattered hope", "silence drowns hope","...i dont hear...",
+        "void","steps echo futility","labyrinth of despair","racing heart","haunting realization","chasing light "
         };
-    public static int[] rainLevels = { 1, 3, 4, 5 };
+    public static int[] rainLevels = { 1, 4, 7, 8, 11, 15};
 
 
 

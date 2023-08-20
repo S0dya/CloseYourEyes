@@ -36,6 +36,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>, ISaveable
     void Start()
     {
         SaveManager.Instance.LoadDataFromFile();
+        Settings.complitedLevelsAmount = 15;
     }
 
     void Update()

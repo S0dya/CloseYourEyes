@@ -47,7 +47,7 @@ public class BlindEnemy : MonoBehaviour
 
             if (!GameManager.Instance.isBlindFollowingPlayer)
             {
-                AudioManager.Instance.PlayOneShot(FMODManager.Instance.DefJump, transform.position);
+                AudioManager.Instance.PlayOneShot(FMODManager.Instance.BlindJump, transform.position); 
             }
 
             if (waitBeforeReturning != null)

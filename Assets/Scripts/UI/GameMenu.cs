@@ -34,7 +34,6 @@ public class GameMenu : SingletonMonobehaviour<GameMenu>
     {
         Time.timeScale = 1;
         inGame = true;
-        AudioManager.Instance.ToggleSFX(true);
     }
 
     //Buttons

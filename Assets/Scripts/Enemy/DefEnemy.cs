@@ -50,7 +50,7 @@ public class DefEnemy : MonoBehaviour
 
             if (!GameManager.Instance.isBlindFollowingPlayer)
             {
-                AudioManager.Instance.PlayOneShot(FMODManager.Instance.BlindJump, transform.position);
+                AudioManager.Instance.PlayOneShot(FMODManager.Instance.DefJump, transform.position);
             }
 
             if (fadeOutCor != null)
