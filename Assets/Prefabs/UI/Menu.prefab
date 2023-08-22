@@ -966,7 +966,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 6253187741351698388}
         m_TargetAssemblyTypeName: GameMenu, Assembly-CSharp
-        m_MethodName: ExitButton
+        m_MethodName: PlayButtonSound
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -978,7 +978,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 6253187741351698388}
         m_TargetAssemblyTypeName: GameMenu, Assembly-CSharp
-        m_MethodName: PlayButtonSound
+        m_MethodName: ExitButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

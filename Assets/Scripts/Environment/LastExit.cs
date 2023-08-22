@@ -24,6 +24,7 @@ public class LastExit : MonoBehaviour
             {
                 StopCoroutine(stopExitingCor);
             }
+            AudioManager.Instance.PlayExit((int)light.intensity);
             exitingCor = StartCoroutine(Exiting());
         }
     }
@@ -35,6 +36,7 @@ public class LastExit : MonoBehaviour
             {
                 StopCoroutine(exitingCor);
             }
+            AudioManager.Instance.StopExiting();
             stopExitingCor = StartCoroutine(StopExiting());
         }
     }

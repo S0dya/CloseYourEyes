@@ -1430,13 +1430,6 @@ MonoBehaviour:
       Data3: -1534009724
       Data4: 1643611253
     Path: event:/SFX/UI/PressButton
-  <PlaySound>k__BackingField:
-    Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
 --- !u!1 &1952029822
 GameObject:
   m_ObjectHideFlags: 0

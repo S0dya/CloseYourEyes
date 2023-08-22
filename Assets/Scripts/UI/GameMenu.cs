@@ -82,7 +82,6 @@ public class GameMenu : SingletonMonobehaviour<GameMenu>
 
     public void ExitButton()
     {
-        SaveManager.Instance.SaveDataToFile();
         Application.Quit();
     }
 
