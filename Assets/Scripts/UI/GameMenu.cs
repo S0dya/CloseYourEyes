@@ -9,6 +9,7 @@ public class GameMenu : SingletonMonobehaviour<GameMenu>
     [SerializeField] GameObject inGameMenu;
     [SerializeField] GameObject rewardedAdBar;
     [SerializeField] TextMeshProUGUI mainButtonText;
+    [SerializeField] TextMeshProUGUI PauseText;
 
     bool canReplay;
 
@@ -40,6 +41,7 @@ public class GameMenu : SingletonMonobehaviour<GameMenu>
     public void PauseButton()
     {
         inMenu = true;
+        PauseText.text = "PAUSE";
         mainButtonText.text = "PLAY";
         OpenGameMenu();
     }
@@ -141,6 +143,7 @@ public class GameMenu : SingletonMonobehaviour<GameMenu>
 
     public void LevelComplete()
     {
+        PauseText.text = "LEVEL COMPLETE";
         mainButtonText.text = "NEXT LEVEL";
         OpenGameMenu();
     }
@@ -149,6 +152,7 @@ public class GameMenu : SingletonMonobehaviour<GameMenu>
     {
         inGame = false;
         inGameOver = true;
+        PauseText.text = "GAMEOVER";
         mainButtonText.text = "REPLAY";
         GameManager.Instance.isMenuOpen = true;
         Settings.lives--;
