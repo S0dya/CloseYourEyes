@@ -146,7 +146,6 @@ public class GameMenu : SingletonMonobehaviour<GameMenu>
         PauseText.text = "LEVEL COMPLETE";
         mainButtonText.text = "NEXT LEVEL";
         OpenGameMenu();
-        SaveManager.Instance.SaveDataToFile();
     }
 
     public void GameOver()

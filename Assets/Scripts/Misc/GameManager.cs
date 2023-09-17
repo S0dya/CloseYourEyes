@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 using UnityEngine.InputSystem;
 
-public class GameManager : SingletonMonobehaviour<GameManager>, ISaveable
+public class GameManager : SingletonMonobehaviour<GameManager>
 {
     [HideInInspector] public bool isMenuOpen;
     [HideInInspector] public bool isInGame;
@@ -18,21 +18,16 @@ public class GameManager : SingletonMonobehaviour<GameManager>, ISaveable
 
     public int[] visionTime;
 
-    GameObjectSave _gameObjectSave;
-    public GameObjectSave GameObjectSave { get { return _gameObjectSave; } set { _gameObjectSave = value; } }
-
-
     protected override void Awake()
     {
         base.Awake();
-        GameObjectSave = new GameObjectSave();
 
         Settings.Initialize();
     }
     
     void Start()
     {
-        SaveManager.Instance.LoadDataFromFile();
+        LoadData();
     }
 
     void Update()
@@ -84,7 +79,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>, ISaveable
     {
         if (pauseStatus)
         {
-            SaveManager.Instance.SaveDataToFile();
+            SaveData();
         }
     }
 
@@ -92,103 +87,48 @@ public class GameManager : SingletonMonobehaviour<GameManager>, ISaveable
     {
         if (!hasFocus)
         {
-            SaveManager.Instance.SaveDataToFile();
+            SaveData();
         }
     }
 
     void OnApplicationQuit()
     {
-        SaveManager.Instance.SaveDataToFile();
+        SaveData();
     }
 
-
-
-
-    void OnEnable()
+    public void SaveData()
     {
-        ISaveableRegister();
-    }
-    void OnDisable()
-    {
-        ISaveableDeregister();
-    }
+        PlayerPrefs.SetInt("complitedLevelsAmount", Settings.complitedLevelsAmount);
+        PlayerPrefs.SetInt("lives", Settings.lives);
 
-    public void ISaveableRegister()
-    {
-        SaveManager.Instance.iSaveableObjectList.Add(this);
+        PlayerPrefs.SetFloat("ambienceVolume", Settings.ambienceVolume);
+        PlayerPrefs.SetFloat("sfxVolume", Settings.sfxVolume);
+        PlayerPrefs.SetFloat("musicVolume", Settings.musicVolume);
+
+        PlayerPrefs.SetInt("isFirstOpen", (Settings.isFirstOpen ? 1 : 0));
+        PlayerPrefs.SetInt("isGameFinished", (Settings.isGameFinished ? 1 : 0));
+        PlayerPrefs.SetInt("isJoystickFlexible", (Settings.isJoystickFlexible ? 1 : 0));
     }
 
-    public void ISaveableDeregister()
+    public void LoadData()
     {
-        SaveManager.Instance.iSaveableObjectList.Remove(this);
-    }
-
-    public GameObjectSave ISaveableSave()
-    {
-        GameObjectSave.sceneData.Remove(Settings.GameScene);
-
-        SceneSave sceneSave = new SceneSave();
-
-        sceneSave.intDictionary = new Dictionary<string, int>();
-        sceneSave.floatDictionary = new Dictionary<string, float>();
-        sceneSave.boolDictionary = new Dictionary<string, bool>();
-
-        sceneSave.intDictionary.Add("complitedLevelsAmount", Settings.complitedLevelsAmount);
-        sceneSave.intDictionary.Add("lives", Settings.lives);
-
-        sceneSave.floatDictionary.Add("ambienceVolume", Settings.ambienceVolume);
-        sceneSave.floatDictionary.Add("sfxVolume", Settings.sfxVolume);
-        sceneSave.floatDictionary.Add("musicVolume", Settings.musicVolume);
-
-        sceneSave.boolDictionary.Add("isGameFinished", Settings.isGameFinished);
-        sceneSave.boolDictionary.Add("isJoystickFlexible", Settings.isJoystickFlexible);
-        
-        GameObjectSave.sceneData.Add(Settings.GameScene, sceneSave);
-        return GameObjectSave;
-    }
-
-
-    public void ISaveableLoad(GameObjectSave gameObjectSave)
-    {
-        if (gameObjectSave.sceneData.TryGetValue(Settings.GameScene, out SceneSave sceneSave))
+        Settings.isFirstOpen = (PlayerPrefs.GetFloat("isFirstOpen") == 1);
+        if (Settings.isFirstOpen)
         {
-            if (sceneSave.intDictionary != null)
-            {
-                if (sceneSave.intDictionary.TryGetValue("complitedLevelsAmount", out int complitedLevelsAmount))
-                {
-                    Settings.complitedLevelsAmount = complitedLevelsAmount;
-                }
-                if (sceneSave.intDictionary.TryGetValue("lives", out int lives))
-                {
-                    Settings.lives = lives;
-                }
-            }
-            if (sceneSave.floatDictionary != null)
-            {
-                if (sceneSave.floatDictionary.TryGetValue("ambienceVolume", out float ambienceVolume))
-                {
-                    Settings.ambienceVolume = ambienceVolume;
-                }
-                if (sceneSave.floatDictionary.TryGetValue("sfxVolume", out float sfxVolume))
-                {
-                    Settings.sfxVolume = sfxVolume;
-                }
-                if (sceneSave.floatDictionary.TryGetValue("musicVolume", out float musicVolume))
-                {
-                    Settings.musicVolume = musicVolume;
-                }
-            }
-            if (sceneSave.boolDictionary != null)
-            {
-                if (sceneSave.boolDictionary.TryGetValue("isGameFinished", out bool isGameFinished))
-                {
-                    Settings.isGameFinished = isGameFinished;
-                }
-                if (sceneSave.boolDictionary.TryGetValue("isJoystickFlexible", out bool isJoystickFlexible))
-                {
-                    Settings.isJoystickFlexible = isJoystickFlexible;
-                }
-            }
+            Settings.isFirstOpen = false;
+            return;
         }
+        
+        Settings.complitedLevelsAmount = PlayerPrefs.GetInt("complitedLevelsAmount");
+        Settings.lives = PlayerPrefs.GetInt("lives");
+
+        Settings.ambienceVolume = PlayerPrefs.GetFloat("ambienceVolume");
+        Settings.sfxVolume = PlayerPrefs.GetFloat("sfxVolume");
+        Settings.musicVolume = PlayerPrefs.GetFloat("musicVolume");
+        
+
+
+        Settings.isGameFinished = (PlayerPrefs.GetFloat("isGameFinished") == 1);
+        Settings.isJoystickFlexible = (PlayerPrefs.GetFloat("isJoystickFlexible") == 1);
     }
 }

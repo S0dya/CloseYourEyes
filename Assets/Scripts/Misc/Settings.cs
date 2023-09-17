@@ -9,6 +9,7 @@ public static class Settings
     /// </summary>
     public static int complitedLevelsAmount;
     public static int lives = 3;
+    public static bool isFirstOpen = true;
     public static bool isGameFinished;
     public static bool isJoystickFlexible;
 
