@@ -1090,7 +1090,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8214989070735641723}
   - component: {fileID: 8214989070735641720}
-  - component: {fileID: 57317020736453589}
+  - component: {fileID: 9059696333259155541}
   - component: {fileID: 5822626226400075458}
   - component: {fileID: 8214989070735641719}
   - component: {fileID: 8214989070735641718}
@@ -1143,7 +1143,7 @@ MonoBehaviour:
   canOpenEye: 1
   onWater: 0
   isThunderLevel: 0
---- !u!114 &57317020736453589
+--- !u!114 &9059696333259155541
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
