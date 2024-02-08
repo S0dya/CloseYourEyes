@@ -2140,6 +2140,7 @@ MonoBehaviour:
   rewardedAdBar: {fileID: 7585104343737682121}
   mainButtonText: {fileID: 8006753451987914132}
   PauseText: {fileID: 2262061925698210732}
+  MenuButtonObj: {fileID: 6253187740747286770}
   inGame: 0
   inMenu: 0
   inBeforeGameOver: 0

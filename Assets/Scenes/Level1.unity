@@ -2263,6 +2263,14 @@ PrefabInstance:
       propertyPath: m_hasFontAssetChanged
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6253187740747286770, guid: ba0cb06746333644bb342e72d11cf133, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6253187741351698388, guid: ba0cb06746333644bb342e72d11cf133, type: 3}
+      propertyPath: MenuButtonObj
+      value: 
+      objectReference: {fileID: 6253187741351698382}
     - target: {fileID: 6253187742272289152, guid: ba0cb06746333644bb342e72d11cf133, type: 3}
       propertyPath: m_Name
       value: Menu
@@ -2357,6 +2365,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ba0cb06746333644bb342e72d11cf133, type: 3}
+--- !u!1 &6253187741351698382 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6253187740747286770, guid: ba0cb06746333644bb342e72d11cf133, type: 3}
+  m_PrefabInstance: {fileID: 6253187741351698381}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6692705754083270691
 PrefabInstance:
   m_ObjectHideFlags: 0

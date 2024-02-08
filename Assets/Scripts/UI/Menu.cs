@@ -18,6 +18,8 @@ public class Menu : SingletonMonobehaviour<Menu>
     [SerializeField] Image flexibleJoystick;
     [SerializeField] Image fixedJoystick;
 
+    [SerializeField] GameObject MobileUISettings;
+
     bool isLevelBarSet;
 
     
@@ -26,6 +28,11 @@ public class Menu : SingletonMonobehaviour<Menu>
     {
         base.Awake();
 
+#if UNITY_ANDROID || UNITY_IOS
+        MobileUISettings.SetActive(true);
+#else
+        MobileUISettings.SetActive(false);
+#endif
     }
 
     void Start()

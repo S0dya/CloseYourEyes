@@ -10,6 +10,7 @@ public class GameMenu : SingletonMonobehaviour<GameMenu>
     [SerializeField] GameObject rewardedAdBar;
     [SerializeField] TextMeshProUGUI mainButtonText;
     [SerializeField] TextMeshProUGUI PauseText;
+    [SerializeField] GameObject MenuButtonObj;
 
     bool canReplay;
 
@@ -29,6 +30,11 @@ public class GameMenu : SingletonMonobehaviour<GameMenu>
         defEnemyArr = GameObject.FindGameObjectsWithTag("DefEnemy");
         blindEnemArr = GameObject.FindGameObjectsWithTag("BlindEnemy");
 
+#if UNITY_ANDROID || UNITY_IOS
+        MenuButtonObj.SetActive(true);
+#else
+        MenuButtonObj.SetActive(false);
+#endif
     }
 
     void Start()
